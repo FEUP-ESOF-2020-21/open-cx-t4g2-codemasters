@@ -10,10 +10,10 @@ class LoginScreen extends StatelessWidget {
     columnChildren.add(
       Container(
         child: Text(
-          "Login",
+          "Sign In",
           style: bigText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
       ),
     );
 
@@ -23,55 +23,68 @@ class LoginScreen extends StatelessWidget {
           "Username:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 20, 150, 20),
+        margin: EdgeInsets.fromLTRB(0, 20, 150, 10),
       ),
     );
-    columnChildren.add(
-      Container(
-        child: Form(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-            ),
-          ),
+    columnChildren.add(Container(
+      alignment: Alignment.centerLeft,
+      decoration: inputBoxDecoration,
+      height: 60.0,
+      width: 238,
+      child: TextField(
+        keyboardType: TextInputType.text,
+        style: TextStyle(
+          color: Colors.black87,
         ),
-        color: accentGrey,
-        //decoration: Decoration(),
-        width: 238,
-        height: 40,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 14.0),
+          prefixIcon: Icon(
+            Icons.alternate_email,
+            color: Colors.black54,
+          ),
+          hintText: 'Enter your Username',
+          hintStyle: hintText,
+        ),
       ),
-    );
+    ));
+
     columnChildren.add(Container(
         child: Text(
           "Password:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 20, 150, 20)));
-    columnChildren.add(
-      Container(
-        child: Form(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-            ),
-          ),
+        margin: EdgeInsets.fromLTRB(0, 30, 150, 10)));
+    columnChildren.add(Container(
+      alignment: Alignment.centerLeft,
+      decoration: inputBoxDecoration,
+      height: 60.0,
+      width: 238,
+      child: TextField(
+        obscureText: true,
+        keyboardType: TextInputType.text,
+        style: TextStyle(
+          color: Colors.black87,
         ),
-        color: accentGrey,
-        width: 238,
-        height: 40,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 14.0),
+          prefixIcon: Icon(
+            Icons.lock,
+            color: Colors.black54,
+          ),
+          hintText: 'Enter your Password',
+          hintStyle: hintText,
+        ),
       ),
-    );
+    ));
     columnChildren.add(
       Container(
         child: Text(
           "Don't have an account?",
           style: smallerText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+        margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
       ),
     );
 
