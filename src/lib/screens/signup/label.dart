@@ -15,7 +15,7 @@ class Label extends StatelessWidget {
         _label,
         style: mediumText,
     ),
-    margin: EdgeInsets.fromLTRB(0, 20, 210, 10)
+    margin: EdgeInsets.fromLTRB(0, 20, 190, 10)
     );
   }
 }
