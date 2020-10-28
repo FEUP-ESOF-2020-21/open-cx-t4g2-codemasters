@@ -27,9 +27,10 @@ class Field extends StatelessWidget {
           ),
           decoration: InputDecoration(
             border: InputBorder.none,
-            contentPadding: EdgeInsets.only(left: 14.0),
-            icon: _icon,
+            contentPadding: EdgeInsets.only(top: 14.0),
+            prefixIcon: _icon,
             hintText: _hint,
+            hintStyle: hintText,
             ),
 
       ),

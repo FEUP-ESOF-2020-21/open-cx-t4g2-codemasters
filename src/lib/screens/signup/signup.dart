@@ -30,7 +30,9 @@ class SignupScreen extends StatelessWidget {
 
                 // FIELDS FROM FORM
                 new Label("name"),
-                new Field("name", _name)
+                new Field("name", _name),
+
+
               ],
             )));
   }
