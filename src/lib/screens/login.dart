@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "../style.dart";
-import "../ui_elements.dart";
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -151,7 +150,7 @@ class LoginScreen extends StatelessWidget {
         child: column,
         width: double.infinity,
       ),
-      // no login ainda não temos a app e navigation bar
+      resizeToAvoidBottomPadding: false,
     );
 
     return scaffold;
