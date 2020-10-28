@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "../style.dart";
-import "../ui_elements.dart";
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -10,10 +9,10 @@ class LoginScreen extends StatelessWidget {
     columnChildren.add(
       Container(
         child: Text(
-          "Login",
+          "Sign In",
           style: bigText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 50),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
       ),
     );
 
@@ -23,63 +22,121 @@ class LoginScreen extends StatelessWidget {
           "Username:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 20, 150, 20),
+        margin: EdgeInsets.fromLTRB(0, 20, 180, 10),
       ),
     );
-    columnChildren.add(
-      Container(
-        child: Form(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-            ),
-          ),
+    columnChildren.add(Container(
+      alignment: Alignment.centerLeft,
+      decoration: inputBoxDecoration,
+      height: 60.0,
+      width: 278,
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 1.1,
         ),
-        color: accentGrey,
-        //decoration: Decoration(),
-        width: 238,
-        height: 40,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 14.0),
+          prefixIcon: Icon(
+            Icons.alternate_email,
+            color: Colors.black54,
+          ),
+          hintText: 'Enter your Username',
+          hintStyle: hintText,
+        ),
       ),
-    );
+    ));
+
     columnChildren.add(Container(
         child: Text(
           "Password:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 20, 150, 20)));
-    columnChildren.add(
-      Container(
-        child: Form(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(35),
-              ),
-            ),
+        margin: EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren.add(Container(
+      alignment: Alignment.centerLeft,
+      decoration: inputBoxDecoration,
+      height: 60.0,
+      width: 278,
+      child: TextFormField(
+        obscureText: true,
+        keyboardType: TextInputType.text,
+        style: TextStyle(
+          color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 1.1,
+        ),
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          contentPadding: EdgeInsets.only(top: 14.0),
+          prefixIcon: Icon(
+            Icons.lock,
+            color: Colors.black54,
+          ),
+          hintText: 'Enter your Password',
+          hintStyle: hintText,
+        ),
+      ),
+    ));
+
+    columnChildren.add(Container(
+      padding: EdgeInsets.symmetric(vertical: 45.0),
+      width: 278,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () => print('Login Button Pressed'),
+        padding: EdgeInsets.all(20.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Colors.orangeAccent,
+        child: Text(
+          'LOGIN',
+          style: TextStyle(
+            color: Colors.white,
+            letterSpacing: 2.0,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        color: accentGrey,
-        width: 238,
-        height: 40,
       ),
-    );
+    ));
+
     columnChildren.add(
       Container(
         child: Text(
           "Don't have an account?",
           style: smallerText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 30, 0, 0),
+        margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
       ),
     );
 
     columnChildren.add(
       Container(
-        child: Text(
-          "Sign up",
-          style: TextStyle(color: accentOrange, fontSize: 15),
+        child: FlatButton(
+          onPressed: () => print('Sign up Button pressed'),
+          child: Text(
+            "Sign up",
+            style: TextStyle(
+              color: accentOrange,
+              fontSize: 25,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.4,
+              shadows: [
+                BoxShadow(
+                  color: Colors.orangeAccent,
+                  blurRadius: 4.0,
+                  offset: Offset(1, 1),
+                ),
+              ],
+            ),
+          ),
         ),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
       ),
@@ -96,8 +153,7 @@ class LoginScreen extends StatelessWidget {
         child: column,
         width: double.infinity,
       ),
-      appBar: appBar,
-      bottomNavigationBar: navigationBar,
+      resizeToAvoidBottomPadding: false,
     );
 
     return scaffold;
