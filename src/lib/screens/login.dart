@@ -119,20 +119,23 @@ class LoginScreen extends StatelessWidget {
 
     columnChildren.add(
       Container(
-        child: Text(
-          "Sign up",
-          style: TextStyle(
-            color: accentOrange,
-            fontSize: 25,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1.4,
-            shadows: [
-              BoxShadow(
-                color: Colors.orangeAccent,
-                blurRadius: 4.0,
-                offset: Offset(1, 1),
-              ),
-            ],
+        child: FlatButton(
+          onPressed: () => print('Sign up Button pressed'),
+          child: Text(
+            "Sign up",
+            style: TextStyle(
+              color: accentOrange,
+              fontSize: 25,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 1.4,
+              shadows: [
+                BoxShadow(
+                  color: Colors.orangeAccent,
+                  blurRadius: 4.0,
+                  offset: Offset(1, 1),
+                ),
+              ],
+            ),
           ),
         ),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
