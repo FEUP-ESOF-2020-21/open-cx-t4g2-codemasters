@@ -1,4 +1,5 @@
 import 'package:ESOF/screens/login.dart';
+import 'package:ESOF/screens/signup/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
-    return MaterialApp(home: LoginScreen());
+    return MaterialApp(home: SignupScreen());
   }
 }
 /*
