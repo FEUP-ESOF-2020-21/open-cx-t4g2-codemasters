@@ -41,7 +41,7 @@ app.*.symbols
 app.*.map.json
 
 # Others
-ios
-android
-test
-.metadata
+#ios
+#android
+#test
+#.metadata
