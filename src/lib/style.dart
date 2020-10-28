@@ -16,7 +16,7 @@ const TextStyle mediumText = TextStyle(
 
 const TextStyle bigText = TextStyle(
   color: Colors.black,
-  fontSize: 40,
+  fontSize: 35,
   fontWeight: FontWeight.bold,
   letterSpacing: 1.5,
   shadows: [

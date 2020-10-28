@@ -13,7 +13,7 @@ class LoginScreen extends StatelessWidget {
           "Sign In",
           style: bigText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 40),
+        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
       ),
     );
 
@@ -84,13 +84,37 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
     ));
+
+    columnChildren.add(Container(
+      padding: EdgeInsets.symmetric(vertical: 45.0),
+      width: 278,
+      child: RaisedButton(
+        elevation: 5.0,
+        onPressed: () => print('Login Button Pressed'),
+        padding: EdgeInsets.all(20.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        color: Colors.orangeAccent,
+        child: Text(
+          'LOGIN',
+          style: TextStyle(
+            color: Colors.white,
+            letterSpacing: 2.0,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ));
+
     columnChildren.add(
       Container(
         child: Text(
           "Don't have an account?",
           style: smallerText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 50, 0, 0),
+        margin: EdgeInsets.fromLTRB(0, 40, 0, 0),
       ),
     );
 
@@ -107,7 +131,7 @@ class LoginScreen extends StatelessWidget {
               BoxShadow(
                 color: Colors.orangeAccent,
                 blurRadius: 4.0,
-                offset: Offset(1.5, 1.5),
+                offset: Offset(1, 1),
               ),
             ],
           ),
@@ -127,8 +151,7 @@ class LoginScreen extends StatelessWidget {
         child: column,
         width: double.infinity,
       ),
-      appBar: appBar,
-      bottomNavigationBar: navigationBar,
+      // no login ainda não temos a app e navigation bar
     );
 
     return scaffold;
