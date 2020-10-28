@@ -23,18 +23,21 @@ class LoginScreen extends StatelessWidget {
           "Username:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 20, 150, 10),
+        margin: EdgeInsets.fromLTRB(0, 20, 180, 10),
       ),
     );
     columnChildren.add(Container(
       alignment: Alignment.centerLeft,
       decoration: inputBoxDecoration,
       height: 60.0,
-      width: 238,
+      width: 278,
       child: TextField(
         keyboardType: TextInputType.text,
         style: TextStyle(
           color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 1.1,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -54,17 +57,20 @@ class LoginScreen extends StatelessWidget {
           "Password:",
           style: mediumText,
         ),
-        margin: EdgeInsets.fromLTRB(0, 30, 150, 10)));
+        margin: EdgeInsets.fromLTRB(0, 30, 180, 10)));
     columnChildren.add(Container(
       alignment: Alignment.centerLeft,
       decoration: inputBoxDecoration,
       height: 60.0,
-      width: 238,
+      width: 278,
       child: TextField(
         obscureText: true,
         keyboardType: TextInputType.text,
         style: TextStyle(
           color: Colors.black87,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 1.1,
         ),
         decoration: InputDecoration(
           border: InputBorder.none,
@@ -92,7 +98,19 @@ class LoginScreen extends StatelessWidget {
       Container(
         child: Text(
           "Sign up",
-          style: TextStyle(color: accentOrange, fontSize: 15),
+          style: TextStyle(
+            color: accentOrange,
+            fontSize: 25,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.4,
+            shadows: [
+              BoxShadow(
+                color: Colors.orangeAccent,
+                blurRadius: 4.0,
+                offset: Offset(1.5, 1.5),
+              ),
+            ],
+          ),
         ),
         margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
       ),
