@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
       decoration: inputBoxDecoration,
       height: 60.0,
       width: 278,
-      child: TextField(
+      child: TextFormField(
         keyboardType: TextInputType.text,
         style: TextStyle(
           color: Colors.black87,
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
       decoration: inputBoxDecoration,
       height: 60.0,
       width: 278,
-      child: TextField(
+      child: TextFormField(
         obscureText: true,
         keyboardType: TextInputType.text,
         style: TextStyle(
