@@ -4,14 +4,14 @@ import "../../style.dart";
 class RecommendedCarousel extends StatelessWidget {
   final List<Map<String, String>> conferences = [
     {
-      'title': 'title1',
+      'title': 'title0',
       'description':
-          'description1description1description1description1description1description1description1description1',
+          'description1description1description1description1description1description1description1description1'
     },
     {
       'title': 'title1',
       'description':
-          'description2description2description2description2description2description2description2description2',
+          'description2description2description2description2description2description2description2description2'
     },
     {'title': 'title2', 'description': 'description3'},
     {'title': 'title3', 'description': 'description4'},
