@@ -5,11 +5,6 @@ Container getContainerizedText(String text, [TextStyle textStyle = mediumText]) 
   return Container(child: Text(text, style: textStyle));
 }
 
-String capitalizeFirstLetter(String str) =>
-    "${str[0].toUpperCase()}${str.substring(1)}";
-
-String formatDate(DateTime date) => "${date.day}/${date.month}/${date.year}";
-
 final BottomNavigationBar navigationBar = BottomNavigationBar(
   backgroundColor: accentOrange,
   type: BottomNavigationBarType.fixed,
