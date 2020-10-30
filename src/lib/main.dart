@@ -1,6 +1,7 @@
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:flutter/material.dart';
+import "screens/post.dart";
 
 void main() => runApp(MyApp());
 
@@ -28,6 +29,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
-    return MaterialApp(home: SignupScreen());
+    return MaterialApp(home: PostScreen());
   }
 }
