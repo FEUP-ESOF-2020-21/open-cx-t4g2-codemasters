@@ -13,15 +13,13 @@ class SignupScreen extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar,
-        bottomNavigationBar: navigationBar,
         body: Container(
             child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
           Column(children: [
             // TITLE
             Container(
               child: Text(
-                "SignUp",
+                "Sign Up",
                 style: bigText,
               ),
               margin: EdgeInsets.fromLTRB(0, 80, 0, 50),
@@ -43,7 +41,7 @@ class SignupScreen extends StatelessWidget {
             new Label("Confirm password:"),
             new Field("confirm password", _key),
 
-            //BUTTON SIGNUP
+            //BUTTON SIGN UP
             Container(
               padding: EdgeInsets.symmetric(vertical: 45.0),
               width: 278,
@@ -56,7 +54,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 color: Colors.orangeAccent,
                 child: Text(
-                  'SIGNUP',
+                  'SIGN UP',
                   style: TextStyle(
                     color: Colors.white,
                     letterSpacing: 2.0,
@@ -74,6 +72,7 @@ class SignupScreen extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
             ),
 
+            //BACK TO LOGIN BUTTON
             Container(
               child: FlatButton(
                 onPressed: () => print('Login Button pressed'),
