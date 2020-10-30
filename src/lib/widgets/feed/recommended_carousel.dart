@@ -60,9 +60,18 @@ class RecommendedCarousel extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(10.0),
           ),
-          child: Text(
-            conferences[i],
-            style: smallerText,
+          child: Column(
+            children: [
+              SizedBox(height: 10),
+              Image(
+                image: AssetImage('assets/images/conference_test.jpg'),
+              ),
+              SizedBox(height: 10),
+              Text(
+                conferences[i],
+                style: smallerText,
+              ),
+            ],
           ),
         ),
       );
