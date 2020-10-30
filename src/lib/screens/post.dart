@@ -1,3 +1,4 @@
+import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
