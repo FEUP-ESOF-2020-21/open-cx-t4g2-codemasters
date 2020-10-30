@@ -1,3 +1,5 @@
+import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/ui_elements.dart';
@@ -18,12 +20,12 @@ class PostScreen extends StatelessWidget {
     switch (content) {
       case "date":
         {
-          rightElemText = formatDate(this._conf.getDate());
+          rightElemText = formatDate(this._conf.date);
           break;
         }
       case "place":
         {
-          rightElemText = this._conf.getPlace();
+          rightElemText = this._conf.place;
           break;
         }
       default:
@@ -46,13 +48,17 @@ class PostScreen extends StatelessWidget {
 
     speakerRowChildren.add(getContainerizedText("Speakers:"));
 
-    List<Widget> speakers = (this._conf.getSpeakers())
-        .map((speaker) => getContainerizedText(speaker.getName()))
-        .toList();
+    List<Speaker> speakers = (this._conf.speakers);
+    List<Widget> widgSpeakers = List();
+
+    for (var i in speakers) {
+      widgSpeakers.add(getContainerizedText(i.name));
+    }
+
     speakerRowChildren.add(
       Container(
         child: Column(
-          children: speakers,
+          children: widgSpeakers,
         ),
       ),
     );
@@ -66,8 +72,7 @@ class PostScreen extends StatelessWidget {
     List<Widget> columnElems = List();
 
     columnElems.add(getContainerizedText("Description:"));
-    columnElems
-        .add(getContainerizedText(this._conf.getDescription(), smallerText));
+    columnElems.add(getContainerizedText(this._conf.description, smallerText));
 
     return Column(
       children: columnElems,

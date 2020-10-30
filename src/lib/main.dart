@@ -1,3 +1,4 @@
+import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
-    return MaterialApp(home: PostScreen());
+    return MaterialApp(
+        home: PostScreen(Conference(
+            "", "", DateTime(2020), "Porto", "afasfafafafafafafa", 5)));
   }
 }

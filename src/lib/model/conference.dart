@@ -11,15 +11,26 @@ class Conference {
   List<Speaker> _speakers = [];
   final String _description;
 
-  Conference(
-      {this.photo,
-      this.title,
-      this.happensOn,
-      this.place,
-      this.description,
-      this.rating});
-
+  Conference(this._photo, this._title, this._happensOn, this._place,
+      this._description, this._rating);
+  /*
   void addPhoto(String photoPath) {
     this._photo = photoPath;
+  }*/
+
+  DateTime get date {
+    return _happensOn;
+  }
+
+  String get place {
+    return _place;
+  }
+
+  List<Speaker> get speakers {
+    return _speakers;
+  }
+
+  String get description {
+    return _description;
   }
 }
