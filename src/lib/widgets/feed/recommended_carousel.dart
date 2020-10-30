@@ -49,29 +49,34 @@ class RecommendedCarousel extends StatelessWidget {
     );
   }
 
-  List<Container> conferencesContainers() {
-    List<Container> containers = [];
+  List<GestureDetector> conferencesContainers() {
+    List<GestureDetector> containers = [];
     for (int i = 0; i < conferences.length; i++) {
       containers.add(
-        Container(
-          margin: EdgeInsets.all(10.0),
-          width: 200,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: 10),
-              Image(
-                image: AssetImage('assets/images/conference_test.jpg'),
-              ),
-              SizedBox(height: 10),
-              Text(
-                conferences[i],
-                style: smallerText,
-              ),
-            ],
+        GestureDetector(
+          onTap: () =>
+              print('Entered in the conference info: ' + conferences[i]),
+          child: Container(
+            margin: EdgeInsets.all(10.0),
+            height: 200,
+            width: 200,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: 10),
+                Image(
+                  image: AssetImage('assets/images/conference_test.jpg'),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  conferences[i],
+                  style: smallerText,
+                ),
+              ],
+            ),
           ),
         ),
       );
