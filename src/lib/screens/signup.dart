@@ -65,7 +65,37 @@ class SignupScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            )
+            ),
+            Container(
+              child: Text(
+                "Already have an account?",
+                style: smallerText,
+              ),
+              padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+            ),
+
+            Container(
+              child: FlatButton(
+                onPressed: () => print('Login Button pressed'),
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                    color: accentOrange,
+                    fontSize: 25,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: 1.4,
+                    shadows: [
+                      BoxShadow(
+                        color: Colors.orangeAccent,
+                        blurRadius: 4.0,
+                        offset: Offset(1, 1),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+            ),
           ])
         ])));
   }
