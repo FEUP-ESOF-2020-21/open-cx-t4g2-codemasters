@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import "../../style.dart";
-import "../../ui_elements.dart";
+import '../../style.dart';
+import '../../ui_elements.dart';
 
 class Label extends StatelessWidget {
 
