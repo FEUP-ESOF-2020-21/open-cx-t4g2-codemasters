@@ -28,20 +28,44 @@ class SignupScreen extends StatelessWidget {
             ),
 
             // FIELDS FROM FORM
-            new Label("Name:    "),
+            new Label("Name:"),
             new Field("name", _name),
 
-            new Label(" Username:"),
+            new Label("Username:"),
             new Field("username", _username),
 
-            new Label("Email:    "),
+            new Label("Email:"),
             new Field("email", _email),
 
             new Label("Password:"),
             new Field("password", _key),
 
             new Label("Confirm password:"),
-            new Field("confirm password", _key)
+            new Field("confirm password", _key),
+
+            //BUTTON SIGNUP
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 45.0),
+              width: 278,
+              child: RaisedButton(
+                elevation: 5.0,
+                onPressed: () => print('Login Button Pressed'),
+                padding: EdgeInsets.all(20.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                color: Colors.orangeAccent,
+                child: Text(
+                  'SIGNUP',
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 2.0,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )
           ])
         ])));
   }
