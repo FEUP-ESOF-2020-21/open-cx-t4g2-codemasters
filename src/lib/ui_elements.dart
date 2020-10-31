@@ -1,10 +1,6 @@
 import 'package:ESOF/style.dart';
 import 'package:flutter/material.dart';
 
-Container getContainerizedText(String text, [TextStyle textStyle = mediumText]) {
-  return Container(child: Text(text, style: textStyle));
-}
-
 final BottomNavigationBar navigationBar = BottomNavigationBar(
   backgroundColor: accentOrange,
   type: BottomNavigationBarType.fixed,

@@ -32,6 +32,6 @@ class MyApp extends StatelessWidget {
     );*/
     return MaterialApp(
         home: PostScreen(Conference(
-            "", "", DateTime(2020), "Porto", "afasfafafafafafafa", 5)));
+            "assets/icons/1x/ic_home_48px.png", "Random Title", DateTime(2020), "Porto", "afasfafafafafafafafafafadsfdsafasdfaf asffadsfegesgadsgwefsgawefsgeasgdsfgasffafgadfffa", 5)));
   }
 }

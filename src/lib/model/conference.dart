@@ -33,4 +33,12 @@ class Conference {
   String get description {
     return _description;
   }
+
+  String get photoPath {
+    return _photo;
+  }
+
+  String get title {
+    return _title;
+  }
 }
