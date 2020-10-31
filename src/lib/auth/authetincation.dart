@@ -8,11 +8,11 @@ class Auth {
   }
 
   registration(String email, String password) async {
-    // UserCredential userCrendential =
-    //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
-    //   email: email,
-    //   password: password,
-    // );
+    UserCredential userCrendential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
 
     // FirebaseUser user = userCrendential.user;
   }
