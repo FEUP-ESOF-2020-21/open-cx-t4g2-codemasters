@@ -33,6 +33,14 @@ class MyApp extends StatelessWidget {
     );*/
     return MaterialApp(
         home: PostScreen(Conference(
-            "assets/images/conference_test.jpg", "Random Title", DateTime(2020), "Porto", "afasfafafafafafafafafafadsfdsafasdfaf asffadsfegesgadsgwefsgdfasfdfgsafrfgdefrgsrtfgghsfrtgghdrthdrtyhdrthrhfrgfhfgghfdgghfdgsgdefasfgagdfgadffafdfgadfsfadsfdsfafdsadfagdfgadgdfasgdfasggsdfaggsdfgsfdgfedsgsfdgsdfgdfsgdsfgsdfgdfsgsdfgsdfgsdfgsfdgsdfgdfsgsdfggsdfgsdfgdfsgsdfgsfdgdfsgsdfegsdfgsdfgsdffgsdfgsdefgsdfgsdfgsdfegsdfggsefdgsdfgsdfgsdfgdfsrgsdfgdfgsdfgdioujfhnndfsiuhdsfiughdfiufhdfisuhfdiufhiaudffhiudfsahfiuadshfiudshfiusdhfiuadshfiudshfiuasdhfiuasddijhkfdchbnswdiujfhjaerwiufhjaewiufjhaerioufjhweiudfdhdsiufhdsiufhjsdiufjhdsiufhsadiufhadswiufhadsiufhasdiufhasdiufhasdiufhadsfhnhfiuadshfiuadshfiuahsdfiuadshfiudsahfiuadshfawefsgeasgdsfgasffafgadfffa", 5, [Speaker("Armindo Vaz",1,1),Speaker("Josefino Ola",1,1)])));
+            "assets/images/conference_test.jpg",
+            "Random Title",
+            DateTime(2020),
+            "Porto",
+            "afasfafafafafafafafafafadsfdsafasdfaf asffadsfegesgadsgwefsgdfasfdfgsafrfgdefrgsrtfgghsfrtgghdrthdrtyhdrthrhfrgfhfgghfdgghfdgsgdefasfgagdfgadffafdfgadfsfadsfdsfafdsadfagdfgadgdfasgdfasggsdfaggsdfgsfdgfedsgsfdgsdfgdfsgdsfgsdfgdfsgsdfgsdfgsdfgsfdgsdfgdfsgsdfggsdfgsdfgdfsgsdfgsfdgdfsgsdfegsdfgsdfgsdffgsdfgsdefgsdfgsdfgsdfegsdfggsefdgsdfgsdfgsdfgdfsrgsdfgdfgsdfgdioujfhnndfsiuhdsfiughdfiufhdfisuhfdiufhiaudffhiudfsahfiuadshfiudshfiusdhfiuadshfiudshfiuasdhfiuasddijhkfdchbnswdiujfhjaerwiufhjaewiufjhaerioufjhweiudfdhdsiufhdsiufhjsdiufjhdsiufhsadiufhadswiufhadsiufhasdiufhasdiufhasdiufhadsfhnhfiuadshfiuadshfiuahsdfiuadshfiudsahfiuadshfawefsgeasgdsfgasffafgadfffa",
+            5, [
+      Speaker("Armindo Vaz", 1, 1, "assets/images/default_profile_icon.jpeg"),
+      Speaker("Josefino Ola", 1, 1, "assets/images/default_profile_icon.jpeg")
+    ])));
   }
 }
