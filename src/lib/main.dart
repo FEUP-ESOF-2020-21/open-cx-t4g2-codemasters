@@ -2,6 +2,7 @@ import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:flutter/material.dart';
+import 'model/speaker.dart';
 import "screens/post.dart";
 
 void main() => runApp(MyApp());
@@ -32,6 +33,6 @@ class MyApp extends StatelessWidget {
     );*/
     return MaterialApp(
         home: PostScreen(Conference(
-            "assets/icons/1x/ic_home_48px.png", "Random Title", DateTime(2020), "Porto", "afasfafafafafafafafafafadsfdsafasdfaf asffadsfegesgadsgwefsgawefsgeasgdsfgasffafgadfffa", 5)));
+            "assets/images/conference_test.jpg", "Random Title", DateTime(2020), "Porto", "afasfafafafafafafafafafadsfdsafasdfaf asffadsfegesgadsgwefsgdfasfdfgsafrfgdefrgsrtfgghsfrtgghdrthdrtyhdrthrhfrgfhfgghfdgghfdgsgdefasfgagdfgadffafdfgadfsfadsfdsfafdsadfagdfgadgdfasgdfasggsdfaggsdfgsfdgfedsgsfdgsdfgdfsgdsfgsdfgdfsgsdfgsdfgsdfgsfdgsdfgdfsgsdfggsdfgsdfgdfsgsdfgsfdgdfsgsdfegsdfgsdfgsdffgsdfgsdefgsdfgsdfgsdfegsdfggsefdgsdfgsdfgsdfgdfsrgsdfgdfgsdfgdioujfhnndfsiuhdsfiughdfiufhdfisuhfdiufhiaudffhiudfsahfiuadshfiudshfiusdhfiuadshfiudshfiuasdhfiuasddijhkfdchbnswdiujfhjaerwiufhjaewiufjhaerioufjhweiudfdhdsiufhdsiufhjsdiufjhdsiufhsadiufhadswiufhadsiufhasdiufhasdiufhasdiufhadsfhnhfiuadshfiuadshfiuahsdfiuadshfiudsahfiuadshfawefsgeasgdsfgasffafgadfffa", 5, [Speaker("Armindo Vaz",1,1),Speaker("Josefino Ola",1,1)])));
   }
 }

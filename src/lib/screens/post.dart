@@ -11,6 +11,11 @@ class PostScreen extends StatelessWidget {
 
   PostScreen(this._conf);
 
+  /**
+   * Function that returns a row with two elements: two Text widgets, the first one having a processed 
+   * string derived from the function's parameter and the second one is extracted from the conference
+   * used to build this widget
+   **/
   Row generateGenericRow(String content) {
     String leftElemText = capitalizeFirstLetter(content);
     leftElemText += ":";
@@ -40,13 +45,16 @@ class PostScreen extends StatelessWidget {
       style: mediumText,
     )));
     rowChildren.add(Container(
-        child: Text(
-      rightElemText,
-      style: mediumText,
-    )));
+      child: Text(
+        rightElemText,
+        style: mediumText,
+      ),
+      margin: EdgeInsets.only(left: 10),
+    ));
 
     return Row(
       children: rowChildren,
+      mainAxisAlignment: MainAxisAlignment.center,
     );
   }
 
@@ -63,12 +71,13 @@ class PostScreen extends StatelessWidget {
     List<Speaker> speakers = (this._conf.speakers);
     List<Widget> widgSpeakers = List();
 
-    for (var i in speakers) {
+    for (var speaker in speakers) {
       widgSpeakers.add(Container(
           child: Text(
-        i.name,
+        speaker.name,
         style: mediumText,
-      )));
+      ),
+      padding: EdgeInsets.only(bottom: 10),));
     }
 
     speakerRowChildren.add(
@@ -76,11 +85,14 @@ class PostScreen extends StatelessWidget {
         child: Column(
           children: widgSpeakers,
         ),
+        margin: EdgeInsets.only(left: 10),
       ),
     );
 
     return Row(
       children: speakerRowChildren,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
     );
   }
 
@@ -88,10 +100,12 @@ class PostScreen extends StatelessWidget {
     List<Widget> columnElems = List();
 
     columnElems.add(Container(
-        child: Text(
-      "Description:",
-      style: mediumText,
-    )));
+      child: Text(
+        "Description:",
+        style: mediumText,
+      ),
+      margin: EdgeInsets.only(bottom: 15),
+    ));
 
     columnElems.add(Container(
       child: Text(
@@ -108,15 +122,19 @@ class PostScreen extends StatelessWidget {
   Stack generateImageStack() {
     List<Widget> stackChildren = List();
 
-    stackChildren.add(Container(
-      child: Image.asset(this._conf.photoPath),
+    stackChildren.add(ClipRRect(
+      child: Container(
+        child: Image.asset(this._conf.photoPath),
+      ),
+      borderRadius: BorderRadius.circular(22),
     ));
     stackChildren.add(Container(
-      child: Text(this._conf.title, style: bigText),
+      child: Text(this._conf.title, style: bigTextWhite),
     ));
 
     return Stack(
       children: stackChildren,
+      alignment: AlignmentDirectional.bottomCenter,
     );
   }
 
@@ -129,10 +147,13 @@ class PostScreen extends StatelessWidget {
     Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
 
-    listViewElems.add(imageStack);
-    listViewElems.add(dateRow);
-    listViewElems.add(placeRow);
-    listViewElems.add(speakersRow);
+    Widget bottomMargin20(Widget widget) =>
+        Container(child: widget, margin: EdgeInsets.only(bottom: 20));
+
+    listViewElems.add(bottomMargin20(imageStack));
+    listViewElems.add(bottomMargin20(dateRow));
+    listViewElems.add(bottomMargin20(placeRow));
+    listViewElems.add(bottomMargin20(speakersRow));
     listViewElems.add(descriptionColumn);
 
     Scaffold scaffold = Scaffold(
@@ -140,6 +161,7 @@ class PostScreen extends StatelessWidget {
       bottomNavigationBar: navigationBar,
       body: ListView(
         children: listViewElems,
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       ),
     );
 

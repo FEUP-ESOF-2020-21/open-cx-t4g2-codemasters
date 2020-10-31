@@ -8,11 +8,11 @@ class Conference {
   final String _place;
   final int _rating;
 
-  List<Speaker> _speakers = [];
+  final List<Speaker> _speakers;
   final String _description;
 
   Conference(this._photo, this._title, this._happensOn, this._place,
-      this._description, this._rating);
+      this._description, this._rating, this._speakers);
   /*
   void addPhoto(String photoPath) {
     this._photo = photoPath;

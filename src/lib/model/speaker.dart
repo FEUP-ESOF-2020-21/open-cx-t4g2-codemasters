@@ -6,6 +6,6 @@ class Speaker {
   Speaker(this._name, this.id, this.rating);
 
   String get name {
-    return name;
+    return _name;
   }
 }
