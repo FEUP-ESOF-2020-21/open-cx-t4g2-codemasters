@@ -49,6 +49,27 @@ const TextStyle hintText = TextStyle(
   letterSpacing: 1.1,
 );
 
+const TextStyle descriptionTextFeed = TextStyle(
+  color: Colors.black54,
+  fontSize: 13,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 1,
+);
+
+const TextStyle seeAllTextFeed = TextStyle(
+  color: accentOrange,
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 1.2,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
 const Color accentOrange = Color(0xFFF27403);
 
 const Color accentGrey = Color(0xFFC4C4C4);
