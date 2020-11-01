@@ -44,10 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     //Username field
     columnChildren.add(Field(
-      hintTxt: 'Enter your Email',
+      hintTxt: 'Email',
       icon: _email,
       validator: (String value) {
-        if (value.isEmpty) return 'Please enter your Email';
+        if (value.isEmpty) return '    Please enter your Email';
         _formKey.currentState.save();
       },
       onSaved: (String value) {
@@ -65,8 +65,9 @@ class _LoginScreenState extends State<LoginScreen> {
       isPassword: true,
       icon: _key,
       validator: (String value) {
-        if (value.isEmpty) return 'Please enter your Password';
-        if (value.length < 7) return 'Password should be minimum 7 characters';
+        if (value.isEmpty) return '    Please enter your Password';
+        if (value.length < 7)
+          return '    Password should be minimum 7 characters';
 
         _formKey.currentState.save();
         return null;

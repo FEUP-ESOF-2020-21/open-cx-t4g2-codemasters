@@ -13,12 +13,20 @@ import '../model/userModel.dart';
 import 'login.dart';
 import '../auth/validation.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
+  @override
+  _SignupScreenState createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   UserModel user = UserModel();
   Icon _username = Icon(Icons.people, color: Colors.black54);
   Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
   Icon _key = Icon(Icons.lock, color: Colors.black54);
+
+  bool signUpFailed = false;
+  String signUpFailedMsg;
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,16 +42,16 @@ class SignupScreen extends StatelessWidget {
                 "Sign Up",
                 style: bigText,
               ),
-              margin: EdgeInsets.fromLTRB(0, 80, 0, 50),
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 30),
             ),
 
             // FIELDS FROM FORM
             Label("Username:"),
             Field(
-                hintTxt: "username",
+                hintTxt: "Username",
                 icon: _username,
                 validator: (String value) {
-                  if (value.isEmpty) return 'Please enter your Username';
+                  if (value.isEmpty) return '    Please enter your Username';
                   _formKey.currentState.save();
                   return null;
                 },
@@ -53,12 +61,12 @@ class SignupScreen extends StatelessWidget {
 
             Label("Email:"),
             Field(
-              hintTxt: "email",
+              hintTxt: "Email",
               icon: _email,
               validator: (String value) {
                 String msg = validateEmail(value);
-                if (msg != null) return msg;
-                if (value.isEmpty) return 'Please enter your Email';
+                if (value.isEmpty) return '    Please enter your Email';
+                if (msg != null) return '    ' + msg;
                 _formKey.currentState.save();
               },
               onSaved: (String value) {
@@ -68,19 +76,29 @@ class SignupScreen extends StatelessWidget {
 
             Label("Password:"),
             Field(
-                hintTxt: "password",
+                hintTxt: "Password",
                 isPassword: true,
                 icon: _key,
                 validator: (String value) {
-                  if (value.isEmpty) return 'Please enter your Password';
+                  if (value.isEmpty) return '    Please enter your Password';
                   if (value.length < 7)
-                    return 'Password should be minimum 7 characters';
+                    return '    Password should be minimum 7 characters';
 
                   _formKey.currentState.save();
                 },
                 onSaved: (String value) {
                   user.password = value;
                 }),
+            signUpFailed
+                ? Container(
+                    margin: new EdgeInsets.symmetric(
+                        horizontal: 70.0, vertical: 10),
+                    child: Text(
+                      'SignUp Failed! - ' + signUpFailedMsg,
+                      style: errorMessageText,
+                    ),
+                  )
+                : Text(''),
 
             //Label("Confirm password:"),
             //Field("confirm password", _key),
@@ -94,18 +112,24 @@ class SignupScreen extends StatelessWidget {
                 onPressed: () async {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
-                  }
-                  print("USEREMAIL:\n");
-                  print(user.email);
-                  User result =
-                      await AuthService.signUp(user.email, user.password);
-                  if (result != null) {
-                    userSetup(user);
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  } else {
-                    print('Sign Up failed!');
+                    print("USEREMAIL:\n");
+                    print(user.email);
+                    String result =
+                        await AuthService.signUp(user.email, user.password);
+                    if (result == null) {
+                      userSetup(user);
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    } else {
+                      setState(() {
+                        signUpFailed = true;
+                        signUpFailedMsg = result;
+                      });
+                    }
                   }
                 },
                 padding: EdgeInsets.all(20.0),
