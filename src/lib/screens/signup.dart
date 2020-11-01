@@ -11,6 +11,7 @@ import 'utils/LabelSI.dart';
 import '../auth/userSetup.dart';
 import '../model/userModel.dart';
 import 'login.dart';
+import '../auth/validation.dart';
 
 class SignupScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -41,6 +42,11 @@ class SignupScreen extends StatelessWidget {
             Field(
                 hintTxt: "username",
                 icon: _username,
+                validator: (String value) {
+                  if (value.isEmpty) return 'Please enter your Username';
+                  _formKey.currentState.save();
+                  return null;
+                },
                 onSaved: (String value) {
                   user.username = value;
                 }),
@@ -49,6 +55,12 @@ class SignupScreen extends StatelessWidget {
             Field(
               hintTxt: "email",
               icon: _email,
+              validator: (String value) {
+                String msg = validateEmail(value);
+                if (msg != null) return msg;
+                if (value.isEmpty) return 'Please enter your Email';
+                _formKey.currentState.save();
+              },
               onSaved: (String value) {
                 user.email = value;
               },
@@ -60,9 +72,11 @@ class SignupScreen extends StatelessWidget {
                 isPassword: true,
                 icon: _key,
                 validator: (String value) {
-                  if (value.length < 7) {
+                  if (value.isEmpty) return 'Please enter your Password';
+                  if (value.length < 7)
                     return 'Password should be minimum 7 characters';
-                  }
+
+                  _formKey.currentState.save();
                 },
                 onSaved: (String value) {
                   user.password = value;
