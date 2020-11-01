@@ -23,6 +23,7 @@ class AuthService {
 
   static void signIn(String email, String password) async {
     await Firebase.initializeApp();
+
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);

@@ -31,6 +31,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
-    return MaterialApp(home: LoginForm());
+    return MaterialApp(home: LoginScreen());
   }
 }

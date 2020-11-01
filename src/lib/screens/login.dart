@@ -34,12 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     //Label Username
-    columnChildren
-        .add(LabelSI("Username", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren.add(LabelSI("Email", EdgeInsets.fromLTRB(0, 30, 180, 10)));
 
     //Username field
     columnChildren.add(Field(
-      hintTxt: 'Enter your Username',
+      hintTxt: 'Enter your Email',
       icon: Icon(
         Icons.alternate_email,
         color: Colors.black54,
@@ -82,8 +81,8 @@ class _LoginScreenState extends State<LoginScreen> {
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              print(user.email);
-              AuthService.signUp(user.email, user.password);
+              // print(user.email);
+              AuthService.signIn(user.email, user.password);
 
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => FeedScreen()));
