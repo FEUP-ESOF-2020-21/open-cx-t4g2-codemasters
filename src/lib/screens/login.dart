@@ -7,7 +7,7 @@ import "../style.dart";
 import 'utils/field.dart';
 import 'utils/LabelSI.dart';
 import 'feed.dart';
-import '../model/user.dart';
+import '../model/userModel.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -33,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
 
-    //Label Username
+    //Label Email
     columnChildren.add(LabelSI("Email", EdgeInsets.fromLTRB(0, 30, 180, 10)));
 
     //Username field
@@ -82,15 +82,17 @@ class _LoginScreenState extends State<LoginScreen> {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
               // print(user.email);
-              AuthService.signIn(user.email, user.password);
+
+              await AuthService.signIn(user.email, user.password);
+              print(AuthService.auth.currentUser.uid);
 
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => FeedScreen()));
             }
           },
-          padding: EdgeInsets.all(10.0),
+          padding: EdgeInsets.all(20.0),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(20.0),
           ),
           color: Colors.orangeAccent,
           child: Text(
