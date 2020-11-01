@@ -9,7 +9,7 @@ import 'feed.dart';
 class SignupScreen extends StatelessWidget {
   final Icon _name = Icon(Icons.person, color: Colors.black54);
   final Icon _username = Icon(Icons.people, color: Colors.black54);
-  final Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
+  final Icon _email = Icon(Icons.email, color: Colors.black54);
   final Icon _key = Icon(Icons.vpn_key, color: Colors.black54);
 
   Widget build(BuildContext context) {
@@ -31,16 +31,16 @@ class SignupScreen extends StatelessWidget {
         new Field("name", _name),
 
         new Label("Username:"),
-        new Field("username", _username),
+        new Field("Username", _username),
 
         new Label("Email:"),
-        new Field("email", _email),
+        new Field("Email", _email),
 
         new Label("Password:"),
-        new Field("password", _key),
+        new Field("Password", _key),
 
         new Label("Confirm password:"),
-        new Field("confirm password", _key),
+        new Field("Confirm Password", _key),
 
         //BUTTON SIGN UP
         Container(

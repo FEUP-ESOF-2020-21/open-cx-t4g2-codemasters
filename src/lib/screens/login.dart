@@ -23,20 +23,19 @@ class LoginScreen extends StatelessWidget {
     );
 
     //Label Username
-    columnChildren
-        .add(LabelSI("Username", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren.add(LabelSI("Email", EdgeInsets.fromLTRB(0, 30, 230, 10)));
 
     //Username field
     columnChildren.add(Field(
-        "Enter your Username",
+        "Enter your Email",
         Icon(
-          Icons.alternate_email,
+          Icons.email,
           color: Colors.black54,
         )));
 
     //Password label
     columnChildren
-        .add(LabelSI("Passowrd", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+        .add(LabelSI("Passoword", EdgeInsets.fromLTRB(0, 30, 180, 10)));
 
     //Password Field
     columnChildren.add(Field(
