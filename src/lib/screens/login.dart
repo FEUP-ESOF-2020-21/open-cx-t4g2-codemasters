@@ -1,10 +1,10 @@
+import 'package:ESOF/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "../style.dart";
 import 'utils/field.dart';
 import 'utils/LabelSI.dart';
 import 'feed.dart';
-
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -23,21 +23,20 @@ class LoginScreen extends StatelessWidget {
     );
 
     //Label Username
-    columnChildren.add(LabelSI("Username", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren
+        .add(LabelSI("Username", EdgeInsets.fromLTRB(0, 30, 180, 10)));
 
     //Username field
-    columnChildren.add(
-        Field(
-            "Enter your Username",
-            Icon(
-              Icons.alternate_email,
-              color: Colors.black54,
-            )
-        )
-    );
+    columnChildren.add(Field(
+        "Enter your Username",
+        Icon(
+          Icons.alternate_email,
+          color: Colors.black54,
+        )));
 
     //Password label
-    columnChildren.add(LabelSI("Passowrd", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren
+        .add(LabelSI("Passowrd", EdgeInsets.fromLTRB(0, 30, 180, 10)));
 
     //Password Field
     columnChildren.add(Field(
@@ -52,7 +51,10 @@ class LoginScreen extends StatelessWidget {
       width: 278,
       child: RaisedButton(
         elevation: 5.0,
-        onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => FeedScreen()));},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => FeedScreen()));
+        },
         padding: EdgeInsets.all(20.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
@@ -83,7 +85,10 @@ class LoginScreen extends StatelessWidget {
     columnChildren.add(
       Container(
         child: FlatButton(
-          onPressed: () {Navigator.push(context, MaterialPageRoute(builder: (context) => FeedScreen()));},    //Mudar para Sign in
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignupScreen()));
+          },
           child: Text(
             "Sign up",
             style: TextStyle(
@@ -122,4 +127,3 @@ class LoginScreen extends StatelessWidget {
     return scaffold;
   }
 }
-
