@@ -1,8 +1,10 @@
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
+import 'package:ESOF/screens/signup.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/create_conference.dart';
+import 'screens/login.dart';
 
 void main() => runApp(MyApp());
 
