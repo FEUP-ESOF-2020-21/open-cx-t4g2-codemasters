@@ -18,6 +18,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   UserModel user = UserModel();
+  bool loginFailed = false;
+  String loginFailedMsg;
 
   @override
   Widget build(BuildContext context) {
@@ -74,9 +76,19 @@ class _LoginScreenState extends State<LoginScreen> {
       },
     ));
 
+    if (loginFailed) {
+      columnChildren.add(Container(
+        margin: new EdgeInsets.symmetric(horizontal: 70.0, vertical: 10),
+        child: Text(
+          'Login Failed! - ' + loginFailedMsg,
+          style: errorMessageText,
+        ),
+      ));
+    }
+
     columnChildren.add(
       Container(
-        padding: EdgeInsets.symmetric(vertical: 45.0),
+        padding: EdgeInsets.symmetric(vertical: 25.0),
         width: 278,
         child: RaisedButton(
           elevation: 5.0,
@@ -85,13 +97,18 @@ class _LoginScreenState extends State<LoginScreen> {
               _formKey.currentState.save();
               // print(user.email);
 
-              User result = await AuthService.signIn(user.email, user.password);
+              String result =
+                  await AuthService.signIn(user.email, user.password);
               // print(AuthService.auth.currentUser.uid);
-              if (result != null) {
+              if (result == null) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => FeedScreen()));
-              } else
-                print('Login failed!');
+              } else {
+                setState(() {
+                  loginFailed = true;
+                  loginFailedMsg = result;
+                });
+              }
             }
           },
           padding: EdgeInsets.all(20.0),
