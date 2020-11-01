@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import '../model/userModel.dart';
 
 class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  static Future signUp(String email, String password) async {
+  static Future<User> signUp(String email, String password) async {
     await Firebase.initializeApp();
 
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
+      return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -19,20 +21,24 @@ class AuthService {
     } catch (e) {
       print(e);
     }
+
+    return null;
   }
 
-  static Future signIn(String email, String password) async {
+  static Future<User> signIn(String email, String password) async {
     await Firebase.initializeApp();
 
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+      return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+      return null;
     }
 
     // print(auth.currentUser.uid);

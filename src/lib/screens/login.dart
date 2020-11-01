@@ -20,7 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     Icon _key = Icon(Icons.lock, color: Colors.black54);
     Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
 
@@ -81,11 +80,13 @@ class _LoginScreenState extends State<LoginScreen> {
               _formKey.currentState.save();
               // print(user.email);
 
-              await AuthService.signIn(user.email, user.password);
-              print(AuthService.auth.currentUser.uid);
-
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => FeedScreen()));
+              User result = await AuthService.signIn(user.email, user.password);
+              // print(AuthService.auth.currentUser.uid);
+              if (result != null) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => FeedScreen()));
+              } else
+                print('Login failed!');
             }
           },
           padding: EdgeInsets.all(20.0),

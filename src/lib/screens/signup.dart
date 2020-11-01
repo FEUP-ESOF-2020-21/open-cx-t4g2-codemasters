@@ -1,4 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/auth/userSetup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import "../style.dart";
 import 'utils/field.dart';
 import "utils/label.dart";
 import 'utils/LabelSI.dart';
+import '../auth/userSetup.dart';
 import '../model/userModel.dart';
 import 'login.dart';
 
@@ -81,11 +83,16 @@ class SignupScreen extends StatelessWidget {
                   }
                   print("USEREMAIL:\n");
                   print(user.email);
-                  await AuthService.signUp(user.email, user.password);
-                  print(AuthService.auth.currentUser.uid);
+                  User result =
+                      await AuthService.signUp(user.email, user.password);
+                  if (result != null) {
+                    userSetup(user);
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()));
+                  } else {
+                    print('Sign Up failed!');
+                  }
                 },
                 padding: EdgeInsets.all(20.0),
                 shape: RoundedRectangleBorder(
