@@ -20,6 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    Icon _key = Icon(Icons.lock, color: Colors.black54);
+    Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
+
     List<Widget> columnChildren = new List();
 
     //Top Banner
@@ -39,10 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
     //Username field
     columnChildren.add(Field(
       hintTxt: 'Enter your Email',
-      icon: Icon(
-        Icons.alternate_email,
-        color: Colors.black54,
-      ),
+      icon: _email,
       onSaved: (String value) {
         user.email = value;
       },
@@ -56,10 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
     columnChildren.add(Field(
       hintTxt: 'Password',
       isPassword: true,
-      icon: Icon(
-        Icons.lock,
-        color: Colors.black54,
-      ),
+      icon: _key,
       validator: (String value) {
         if (value.length < 7) {
           return 'Password should be minimum 7 characters';

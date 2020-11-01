@@ -11,11 +11,12 @@ class Label extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: 278,
         child: Text(
         _label,
         style: mediumText,
     ),
-    margin: EdgeInsets.fromLTRB(0, 20, 190, 10)
+    margin: EdgeInsets.fromLTRB(0, 20, 0, 10)
     );
   }
 }

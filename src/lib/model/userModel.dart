@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserModel {
+  String username;
   String email;
   String password;
 
-  UserModel({this.email, this.password});
+  UserModel({this.username, this.email, this.password});
 }
