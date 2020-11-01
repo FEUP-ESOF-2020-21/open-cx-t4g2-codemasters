@@ -1,4 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -121,8 +122,8 @@ class _LoginScreenState extends State<LoginScreen> {
       Container(
         child: FlatButton(
           onPressed: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => FeedScreen()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => SignupScreen()));
           }, //Mudar para Sign in
           child: Text(
             "Sign up",
