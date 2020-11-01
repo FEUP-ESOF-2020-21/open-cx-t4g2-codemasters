@@ -31,11 +31,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
-    return MaterialApp(
-      home: Scaffold(
-        body: LoginForm(),
-        resizeToAvoidBottomPadding: false,
-      ),
-    );
+    return MaterialApp(home: LoginForm());
   }
 }
