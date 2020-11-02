@@ -35,6 +35,7 @@ final AppBar appBar = AppBar(
   leading: Container(
     child: new Text("Logo", style: smallerText),
     padding: EdgeInsets.fromLTRB(15, 18, 0, 0),
+    //width: double.infinity,
   ),
   backgroundColor: accentOrange,
 );
