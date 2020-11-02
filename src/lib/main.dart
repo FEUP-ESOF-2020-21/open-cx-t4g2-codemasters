@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ESOF/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
+import 'screens/explore.dart';
 
 void main() => runApp(MyApp());
 
@@ -32,6 +33,6 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );*/
 
-    return MaterialApp(home: SignupScreen());
+    return MaterialApp(home: ExploreScreen());
   }
 }
