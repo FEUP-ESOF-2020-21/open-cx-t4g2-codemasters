@@ -35,6 +35,20 @@ const TextStyle bigText = TextStyle(
   ],
 );
 
+const TextStyle bigTextWhite = TextStyle(
+  color: Colors.white,
+  fontSize: 35,
+  fontWeight: FontWeight.bold,
+  letterSpacing: 1.5,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
 const TextStyle hintText = TextStyle(
   color: Colors.black,
   fontSize: 16,
