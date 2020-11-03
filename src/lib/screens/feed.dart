@@ -1,3 +1,6 @@
+import 'package:ESOF/widgets/feed/feed_carousel.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import '../ui_elements.dart';
@@ -38,29 +41,38 @@ class _FeedScreenState extends State<FeedScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Scaffold scaffold = Scaffold(
-      body: SafeArea(
-        child: ListView(
-          padding: EdgeInsets.symmetric(vertical: 35.0),
-          children: <Widget>[
-            SizedBox(height: 20.0),
-            RecommendedCarousel(
-                conferences), // passar as conferencias ordenadas por recomendação
-            SizedBox(height: 20.0),
-            //TopRatedCarousel(),
-            TopRatedCarousel(
-                conferences), // passar as conferencias ordenadas por rating
-            SizedBox(height: 20.0),
-            //ComingNextCarousel(),
-            ComingNextCarousel(
-                conferences), // passar as conferencias ordenadas por data
-          ],
-        ),
-      ),
+    return Scaffold(
+      body: new StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection("Conference").snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Text('No Data...');
+            } else {
+              return SafeArea(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 35.0),
+                  children: <Widget>[
+                    // We still need to parse the documents regarding each Category!
+                    SizedBox(height: 20.0),
+                    RecommendedCarousel(snapshot.data
+                        .documents), // passar as conferencias ordenadas por recomendação
+                    SizedBox(height: 20.0),
+                    //TopRatedCarousel(),
+                    TopRatedCarousel(snapshot.data
+                        .documents), // passar as conferencias ordenadas por rating
+                    SizedBox(height: 20.0),
+                    //ComingNextCarousel(),
+                    ComingNextCarousel(snapshot.data
+                        .documents), // passar as conferencias ordenadas por data
+                  ],
+                ),
+              );
+            }
+          }),
       resizeToAvoidBottomPadding: false,
       appBar: appBar,
       bottomNavigationBar: navigationBar,
     );
-    return scaffold;
   }
 }

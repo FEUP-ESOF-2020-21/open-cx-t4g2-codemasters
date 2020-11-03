@@ -1,11 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../style.dart';
 
 abstract class FeedCarousel extends StatelessWidget {
   final String title;
-  final List<Map<String, String>> conferences;
+  List<Map<String, String>> conferences = [];
 
-  FeedCarousel(this.title, this.conferences);
+  FeedCarousel(this.title, List<DocumentSnapshot> confs) {
+    confs.forEach((conf) {
+      this
+          .conferences
+          .add({'title': conf['title'], 'description': conf['description']});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
