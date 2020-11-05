@@ -49,9 +49,9 @@ People use Rate-A-Talk to share and achieve new knowledge based on what the best
 Do you ever get overwhelmed by the quantity of talks and conferences and how scattered they are through social media?
 
 Rate-A-Talk aims to make your life simpler and provide a platform where you can discover the best talks suited for you!
-In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what set us aside from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
+In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what sets us apart from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
 
-So, what are you waiting for? Sign in today!
+So, what are you waiting for? Sign up today!
 
 
 ---
@@ -431,7 +431,7 @@ As a user I want to be able to create a post for a conference
 
 
 ### Story #16
-As an user I want to be able to interact with the feed results (pick one and go to the respective page)
+As a user I want to be able to interact with the feed results (pick one and go to the respective page)
 
 ### User interface mockup
 [a introduzir]
