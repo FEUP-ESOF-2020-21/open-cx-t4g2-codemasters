@@ -46,7 +46,7 @@ People use Rate-A-Talk to share and achieve new knowledge based on what the best
 ----
 ## Elevator Pitch
 
-Do you ever get overwhelmed by quantity of talks and conferences and how scattered they are through social media?
+Do you ever get overwhelmed by the quantity of talks and conferences and how scattered they are through social media?
 
 Rate-A-Talk aims to make your life simpler and provide a platform where you can discover the best talks suited for you!
 In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what set us aside from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
@@ -101,42 +101,6 @@ So, what are you waiting for? Sign in today!
 
 <br>
 
-### Rate a talk
-
-* **Actor**: Attendee
-* **Description**: Allows the user to rate a talk that he/she attended.
-* **Preconditions and Postconditions**: The user wants to rate a speaker. After rating, the app processes the rating and displays the new speaker rating.
-* **Normal Flow**:
-    * **User**: After the talk, clicks on the link given by
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
-* **Alternative Flows and Exceptions**:
-    * **User**: Clicks in the search bar.
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
-
-<br>
-
-### Rate a speaker
-
-* **Actor**: Attendee
-* **Description**: Allows the user to rate a talk that he/she attended.
-* **Preconditions and Postconditions**: The user wants to rate a speaker. After rating, the app processes the rating and displays the new speaker rating.
-* **Normal Flow**:
-    * **User**: After the talk, clicks on the link given by
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
-* **Alternative Flows and Exceptions**:
-    * **User**: Clicks in the search bar.
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
-
-
-<br>
 
 ### Add a talk
 
