@@ -41,12 +41,12 @@ Thank you!
 ----
 
 ## Product Vision
-People use Rate-A-Talk to share and achieve new knowledge based on what the best conferences have to offer.
+People use Rate-A-Talk to share and obtain new knowledge based on what the best talks have to offer.
 
 ----
 ## Elevator Pitch
 
-Do you ever get overwhelmed by the quantity of talks and conferences and how scattered they are through social media?
+Do you ever get overwhelmed by the quantity of talks and how scattered they are through social media?
 
 Rate-A-Talk aims to make your life simpler and provide a platform where you can discover the best talks suited for you!
 In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what sets us apart from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
