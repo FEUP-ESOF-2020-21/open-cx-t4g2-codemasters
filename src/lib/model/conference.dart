@@ -7,12 +7,13 @@ class Conference {
   final DateTime _happensOn;
   final String _place;
   final int _rating;
+  final String _tag;
 
   final List<Speaker> _speakers;
   final String _description;
 
   Conference(this._photo, this._title, this._happensOn, this._place,
-      this._description, this._rating, this._speakers);
+      this._description, this._rating, this._tag, this._speakers);
   /*
   void addPhoto(String photoPath) {
     this._photo = photoPath;
@@ -40,5 +41,9 @@ class Conference {
 
   String get title {
     return _title;
+  }
+
+  String get tag {
+    return _tag;
   }
 }

@@ -111,6 +111,29 @@ class PostScreen extends StatelessWidget {
     );
   }
 
+  Column generateTagColumn() {
+    List<Widget> columnElems = List();
+
+    columnElems.add(Container(
+      child: Text(
+        "Tag:",
+        style: mediumText,
+      ),
+      margin: EdgeInsets.only(bottom: 15, top: 15),
+    ));
+
+    columnElems.add(Container(
+      child: Text(
+        this._conf.tag,
+        style: smallerText,
+      ),
+    ));
+
+    return Column(
+      children: columnElems,
+    );
+  }
+
   Column generateDescriptionColumn() {
     List<Widget> columnElems = List();
 
@@ -161,6 +184,7 @@ class PostScreen extends StatelessWidget {
     Row placeRow = generateGenericRow("place");
     Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
+    Column tagColumn = generateTagColumn();
 
     Widget bottomMargin20(Widget widget) =>
         Container(child: widget, margin: EdgeInsets.only(bottom: 20));
@@ -170,6 +194,7 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(bottomMargin20(placeRow));
     listViewElems.add(bottomMargin20(speakersRow));
     listViewElems.add(descriptionColumn);
+    listViewElems.add(tagColumn);
 
     Scaffold scaffold = Scaffold(
       appBar: appBar,

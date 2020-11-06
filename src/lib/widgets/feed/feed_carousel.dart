@@ -1,16 +1,16 @@
+import 'package:ESOF/model/conference.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../style.dart';
+import '../../screens/post.dart';
 
 abstract class FeedCarousel extends StatelessWidget {
   final String title;
-  List<Map<String, String>> conferences = [];
+  List<Map<String, dynamic>> conferences = [];
 
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
-      this
-          .conferences
-          .add({'title': conf['title'], 'description': conf['description']});
+      this.conferences.add(conf.data());
     });
   }
 
@@ -42,20 +42,34 @@ abstract class FeedCarousel extends StatelessWidget {
           color: Colors.transparent,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            children: displayConferences(),
+            children: displayConferences(context),
           ),
         ),
       ],
     );
   }
 
-  List<GestureDetector> displayConferences() {
+  List<GestureDetector> displayConferences(context) {
     List<GestureDetector> containers = [];
     for (int i = 0; i < conferences.length; i++) {
       containers.add(
         GestureDetector(
-          onTap: () => print(
-              'Entered in the conference info: ' + conferences[i]['title']),
+          onTap: () {
+            print('Entered in the conference info: ' + conferences[i]['title']);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => PostScreen(new Conference(
+                        'assets/images/conference_test.jpg',
+                        conferences[i]['title'],
+                        DateTime.fromMillisecondsSinceEpoch(
+                            conferences[i]['date'].seconds * 1000),
+                        conferences[i]['location'],
+                        conferences[i]['description'],
+                        conferences[i]['rate'],
+                        conferences[i]['tag'],
+                        []))));
+          },
           child: Container(
             margin: EdgeInsets.all(10.0),
             width: 250,
