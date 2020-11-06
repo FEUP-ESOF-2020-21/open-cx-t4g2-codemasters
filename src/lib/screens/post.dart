@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
@@ -59,7 +61,7 @@ class PostScreen extends StatelessWidget {
   }
 
   /// Function that returns a row with two elements: a text box with the text "Speakers:" and a column with the speakers
-  Row generateSpeakersRows() {
+  Row generateSpeakersRows(List<Speaker> speakers) {
     List<Widget> speakerRowChildren = List();
 
     speakerRowChildren.add(Container(
@@ -68,7 +70,8 @@ class PostScreen extends StatelessWidget {
       style: mediumText,
     )));
 
-    List<Speaker> speakers = (this._conf.speakers);
+    // this._conf.getSpeakers()
+
     List<Widget> widgSpeakers = List();
 
     for (var speaker in speakers) {
@@ -182,7 +185,20 @@ class PostScreen extends StatelessWidget {
     Stack imageStack = generateImageStack();
     Row dateRow = generateGenericRow("date");
     Row placeRow = generateGenericRow("place");
-    Row speakersRow = generateSpeakersRows();
+    Container speakersRow = Container(
+        child: FutureBuilder(
+      future: this._conf.getSpeakers(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+          return generateSpeakersRows(snapshot.data);
+        else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    ));
+    // Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
     Column tagColumn = generateTagColumn();
 

@@ -7,10 +7,38 @@ import '../../screens/post.dart';
 abstract class FeedCarousel extends StatelessWidget {
   final String title;
   List<Map<String, dynamic>> conferences = [];
+  List<DocumentReference> conferencesRef =
+      []; // Holds references to the Conferences in Firebase
 
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
+      this.conferencesRef.add(conf.reference);
+
+      // Stream<QuerySnapshot> inst = FirebaseFirestore.instance
+      //     .collection('Conference_Speakers')
+      //     .where('conference', isEqualTo: conf.reference)
+      //     .snapshots();
+
+      // inst.forEach((snapshot) {
+      //   // print('... ' + conf.reference.id);
+      //   if (snapshot.docs.length > 0) {
+      //     print('--');
+      //     DocumentReference aux = snapshot.docs[0].data()['speaker'];
+      //     aux.get().then((value) => print(value.data()));
+      //     // print(snapshot.docs[0].data()['speaker']);
+      //     // print(snapshot.docs[1].data()['speaker'].id);
+      //     print('--');
+      //   }
+      //   // DocumentReference newInst = FirebaseFirestore.instance
+      //   //     .collection('Speaker')
+      //   //     .doc(snapshot.docs[0].data()['speaker'].id);
+      //   // print(newInst.get());
+      // });
+      // inst.map((snapshot) => snapshot.docs.forEach((doc) {
+      //       print(doc.reference);
+      //     }));
+      // print(conf.reference);
     });
   }
 
@@ -68,7 +96,7 @@ abstract class FeedCarousel extends StatelessWidget {
                         conferences[i]['description'],
                         conferences[i]['rate'],
                         conferences[i]['tag'],
-                        []))));
+                        conferencesRef[i]))));
           },
           child: Container(
             margin: EdgeInsets.all(10.0),
