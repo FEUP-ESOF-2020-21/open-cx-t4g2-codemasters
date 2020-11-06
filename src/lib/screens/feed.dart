@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import '../ui_elements.dart';
 import '../widgets/feed/recommended_carousel.dart';
 import '../widgets/feed/top_rated_carousel.dart';
 import '../widgets/feed/coming_next_carousel.dart';
@@ -65,8 +64,6 @@ class _FeedScreenState extends State<FeedScreen> {
             }
           }),
       resizeToAvoidBottomPadding: false,
-      appBar: appBar,
-      bottomNavigationBar: navigationBar,
     );
   }
 }

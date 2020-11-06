@@ -2,7 +2,6 @@ import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
-import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -172,8 +171,6 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(descriptionColumn);
 
     Scaffold scaffold = Scaffold(
-      appBar: appBar,
-      bottomNavigationBar: navigationBar,
       body: ListView(
         children: listViewElems,
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),

@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import "../style.dart";
 import 'utils/field.dart';
 import 'utils/LabelSI.dart';
-import 'feed.dart';
+import '../ui_elements.dart';
 import '../model/userModel.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // print(AuthService.auth.currentUser.uid);
               if (result == null) {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FeedScreen()));
+                    MaterialPageRoute(builder: (context) => MyHome()));
               } else {
                 setState(() {
                   loginFailed = true;
