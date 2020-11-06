@@ -41,17 +41,17 @@ Thank you!
 ----
 
 ## Product Vision
-People use Rate-A-Talk to share and achieve new knowledge based on what the best conferences have to offer.
+People use Rate-A-Talk to share and obtain new knowledge based on what the best talks have to offer.
 
 ----
 ## Elevator Pitch
 
-Do you ever get overwhelmed by quantity of talks and conferences and how scattered they are through social media?
+Do you ever get overwhelmed by the quantity of talks and how scattered they are through social media?
 
 Rate-A-Talk aims to make your life simpler and provide a platform where you can discover the best talks suited for you!
-In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what set us aside from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
+In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what sets us apart from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
 
-So, what are you waiting for? Sign in today!
+So, what are you waiting for? Sign up today!
 
 
 ---
@@ -65,7 +65,7 @@ So, what are you waiting for? Sign in today!
 
 <br>
 
-### Search for a conference
+### Search for a talk
 
 * **Actor**: Attendee
 * **Description**: Allows the user to search for a talk post.
@@ -73,13 +73,13 @@ So, what are you waiting for? Sign in today!
 * **Normal Flow**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **User**: Types and sends the name of the talk
+    * **System**: Searches in the database for the talk, and returns the results.
 * **Alternative Flows and Exceptions**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
     * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **System**: Searches in the database for the talk, and returns the results.
 
 <br>
 
@@ -91,52 +91,16 @@ So, what are you waiting for? Sign in today!
 * **Normal Flow**:
     * **User**: After the talk, clicks on the link given by
     * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **User**: Types and sends the name of the talk
+    * **System**: Searches in the database for the talk, and returns the results.
 * **Alternative Flows and Exceptions**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
     * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **System**: Searches in the database for the talk, and returns the results.
 
 <br>
 
-### Rate a talk
-
-* **Actor**: Attendee
-* **Description**: Allows the user to rate a talk that he/she attended.
-* **Preconditions and Postconditions**: The user wants to rate a speaker. After rating, the app processes the rating and displays the new speaker rating.
-* **Normal Flow**:
-    * **User**: After the talk, clicks on the link given by
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
-* **Alternative Flows and Exceptions**:
-    * **User**: Clicks in the search bar.
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
-
-<br>
-
-### Rate a speaker
-
-* **Actor**: Attendee
-* **Description**: Allows the user to rate a talk that he/she attended.
-* **Preconditions and Postconditions**: The user wants to rate a speaker. After rating, the app processes the rating and displays the new speaker rating.
-* **Normal Flow**:
-    * **User**: After the talk, clicks on the link given by
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
-* **Alternative Flows and Exceptions**:
-    * **User**: Clicks in the search bar.
-    * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
-
-
-<br>
 
 ### Add a talk
 
@@ -153,7 +117,7 @@ So, what are you waiting for? Sign in today!
    * **User**: Click on create post button
     * **System**: Directs the user to the Create Conference Page
     * **User**: Adds the information needed and clicks on create talk
-    * **System**: Verifies that a conference with the same Title, Date and Place exists. Throws an error
+    * **System**: Verifies that a talk with the same Title, Date and Place exists. Throws an error
 
 <br>
 
@@ -210,7 +174,7 @@ As a user I want to be able to rate a talk
 
 ### Scenery
 * Rate a talk.
-* **Given:** A conference that I have attended
+* **Given:** A talk that I have attended
 * **When:**I tap “Rate this talk”
 * **Then:**I give a score between 0 and 10
 
@@ -229,7 +193,7 @@ As a user I want to be able to leave a comment about the talk
 
 ### Scenery
 * Leave a comment about a talk
-* **Given:** A conference that I have attended and rated
+* **Given:** A talk that I have attended and rated
 * **When:** I tap “leave comment”
 * **Then:** I can post a comment about that talk
 
@@ -242,15 +206,15 @@ As a user I want to be able to leave a comment about the talk
 
 
 ### Story #5
-As a user I want to be able to see the current rating of a conference
+As a user I want to be able to see the current rating of a talk
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* See rating of a conference
-* **Given:** A conference that is presented in the feed
-* **When:** I click a conference post
+* See rating of a talk
+* **Given:** A talk that is presented in the feed
+* **When:** I click a talk post
 * **Then:** Conference rating is presented
 
 ### Acceptance tests
@@ -262,14 +226,14 @@ As a user I want to be able to see the current rating of a conference
 
 
 ### Story #6
-As a user I want to be able to edit the given rating to a conference
+As a user I want to be able to edit the given rating to a talk
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Edit rating of a conference
-* **Given:** A conference that I have rated
+* Edit rating of a talk
+* **Given:** A talk that I have rated
 * **When:** I tap “edit rating” button
 * **Then:** I can modify the initial rating
 
@@ -282,14 +246,14 @@ As a user I want to be able to edit the given rating to a conference
 
 
 ### Story #7
-As a user I want to be able to edit my conference’s post
+As a user I want to be able to edit my talk’s post
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Edit conference’s post
-* **Given:** A conference’s post that was published by me
+* Edit talk’s post
+* **Given:** A talk’s post that was published by me
 * **When:** I tap the “edit post” button
 * **And:** I change what I’ve written initially in the post
 * **Then:** The information on my post changes
@@ -324,7 +288,7 @@ As a user I want to be able to edit my profile
 
 
 ### Story #9
-As a user I want to be able to check which conferences a speaker participated
+As a user I want to be able to check which talks a speaker participated
 
 ### User interface mockup
 [a introduzir]
@@ -333,7 +297,7 @@ As a user I want to be able to check which conferences a speaker participated
 * Inspecting a speaker profile
 * **Given:** The speaker profile
 * **When:** I check it’s info
-* **Then:** I should see which conferences a speaker participated
+* **Then:** I should see which talks a speaker participated
 
 ### Acceptance tests
 [a introduzir]
@@ -344,15 +308,15 @@ As a user I want to be able to check which conferences a speaker participated
 
 
 ### Story #10
-As a user I want to be able to check which conferences a lecturer participated in
+As a user I want to be able to check which talks a lecturer participated in
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Look up a specific conference
-* **Given:** A conference that is presented in the feed
-* **When:** I click a conference post
+* Look up a specific talk
+* **Given:** A talk that is presented in the feed
+* **When:** I click a talk post
 * **Then:** Conference detailed info is presented
 
 ### Acceptance tests
@@ -447,7 +411,7 @@ As a user I want to be able to interact with the search results (pick one and go
 
 
 ### Story #15
-As a user I want to be able to create a post for a conference
+As a user I want to be able to create a post for a talk
 
 ### User interface mockup
 [a introduzir]
@@ -467,16 +431,16 @@ As a user I want to be able to create a post for a conference
 
 
 ### Story #16
-As an user I want to be able to interact with the feed results (pick one and go to the respective page)
+As a user I want to be able to interact with the feed results (pick one and go to the respective page)
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
 * A user is looking at a feed
-* **Given:** The conferences shown are clickable
-* **When:** The user taps a conference
-* **Then:** The user is taken to the page that corresponds to that conference
+* **Given:** The talks shown are clickable
+* **When:** The user taps a talk
+* **Then:** The user is taken to the page that corresponds to that talk
 
 ### Acceptance tests
 [a introduzir]
