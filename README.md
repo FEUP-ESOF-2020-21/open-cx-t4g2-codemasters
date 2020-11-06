@@ -65,7 +65,7 @@ So, what are you waiting for? Sign up today!
 
 <br>
 
-### Search for a conference
+### Search for a talk
 
 * **Actor**: Attendee
 * **Description**: Allows the user to search for a talk post.
@@ -73,13 +73,13 @@ So, what are you waiting for? Sign up today!
 * **Normal Flow**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **User**: Types and sends the name of the talk
+    * **System**: Searches in the database for the talk, and returns the results.
 * **Alternative Flows and Exceptions**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
     * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **System**: Searches in the database for the talk, and returns the results.
 
 <br>
 
@@ -91,13 +91,13 @@ So, what are you waiting for? Sign up today!
 * **Normal Flow**:
     * **User**: After the talk, clicks on the link given by
     * **System**: Opens the search submenu and presents the last searches from the user.
-    * **User**: Types and sends the name of the conference
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **User**: Types and sends the name of the talk
+    * **System**: Searches in the database for the talk, and returns the results.
 * **Alternative Flows and Exceptions**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
     * **User**: Clicks on one of the suggestions.
-    * **System**: Searches in the database for the conference, and returns the results.
+    * **System**: Searches in the database for the talk, and returns the results.
 
 <br>
 
@@ -117,7 +117,7 @@ So, what are you waiting for? Sign up today!
    * **User**: Click on create post button
     * **System**: Directs the user to the Create Conference Page
     * **User**: Adds the information needed and clicks on create talk
-    * **System**: Verifies that a conference with the same Title, Date and Place exists. Throws an error
+    * **System**: Verifies that a talk with the same Title, Date and Place exists. Throws an error
 
 <br>
 
@@ -174,7 +174,7 @@ As a user I want to be able to rate a talk
 
 ### Scenery
 * Rate a talk.
-* **Given:** A conference that I have attended
+* **Given:** A talk that I have attended
 * **When:**I tap “Rate this talk”
 * **Then:**I give a score between 0 and 10
 
@@ -193,7 +193,7 @@ As a user I want to be able to leave a comment about the talk
 
 ### Scenery
 * Leave a comment about a talk
-* **Given:** A conference that I have attended and rated
+* **Given:** A talk that I have attended and rated
 * **When:** I tap “leave comment”
 * **Then:** I can post a comment about that talk
 
@@ -206,15 +206,15 @@ As a user I want to be able to leave a comment about the talk
 
 
 ### Story #5
-As a user I want to be able to see the current rating of a conference
+As a user I want to be able to see the current rating of a talk
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* See rating of a conference
-* **Given:** A conference that is presented in the feed
-* **When:** I click a conference post
+* See rating of a talk
+* **Given:** A talk that is presented in the feed
+* **When:** I click a talk post
 * **Then:** Conference rating is presented
 
 ### Acceptance tests
@@ -226,14 +226,14 @@ As a user I want to be able to see the current rating of a conference
 
 
 ### Story #6
-As a user I want to be able to edit the given rating to a conference
+As a user I want to be able to edit the given rating to a talk
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Edit rating of a conference
-* **Given:** A conference that I have rated
+* Edit rating of a talk
+* **Given:** A talk that I have rated
 * **When:** I tap “edit rating” button
 * **Then:** I can modify the initial rating
 
@@ -246,14 +246,14 @@ As a user I want to be able to edit the given rating to a conference
 
 
 ### Story #7
-As a user I want to be able to edit my conference’s post
+As a user I want to be able to edit my talk’s post
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Edit conference’s post
-* **Given:** A conference’s post that was published by me
+* Edit talk’s post
+* **Given:** A talk’s post that was published by me
 * **When:** I tap the “edit post” button
 * **And:** I change what I’ve written initially in the post
 * **Then:** The information on my post changes
@@ -288,7 +288,7 @@ As a user I want to be able to edit my profile
 
 
 ### Story #9
-As a user I want to be able to check which conferences a speaker participated
+As a user I want to be able to check which talks a speaker participated
 
 ### User interface mockup
 [a introduzir]
@@ -297,7 +297,7 @@ As a user I want to be able to check which conferences a speaker participated
 * Inspecting a speaker profile
 * **Given:** The speaker profile
 * **When:** I check it’s info
-* **Then:** I should see which conferences a speaker participated
+* **Then:** I should see which talks a speaker participated
 
 ### Acceptance tests
 [a introduzir]
@@ -308,15 +308,15 @@ As a user I want to be able to check which conferences a speaker participated
 
 
 ### Story #10
-As a user I want to be able to check which conferences a lecturer participated in
+As a user I want to be able to check which talks a lecturer participated in
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Look up a specific conference
-* **Given:** A conference that is presented in the feed
-* **When:** I click a conference post
+* Look up a specific talk
+* **Given:** A talk that is presented in the feed
+* **When:** I click a talk post
 * **Then:** Conference detailed info is presented
 
 ### Acceptance tests
@@ -411,7 +411,7 @@ As a user I want to be able to interact with the search results (pick one and go
 
 
 ### Story #15
-As a user I want to be able to create a post for a conference
+As a user I want to be able to create a post for a talk
 
 ### User interface mockup
 [a introduzir]
@@ -438,9 +438,9 @@ As a user I want to be able to interact with the feed results (pick one and go t
 
 ### Scenery
 * A user is looking at a feed
-* **Given:** The conferences shown are clickable
-* **When:** The user taps a conference
-* **Then:** The user is taken to the page that corresponds to that conference
+* **Given:** The talks shown are clickable
+* **When:** The user taps a talk
+* **Then:** The user is taken to the page that corresponds to that talk
 
 ### Acceptance tests
 [a introduzir]
