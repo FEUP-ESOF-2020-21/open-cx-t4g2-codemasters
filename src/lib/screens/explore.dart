@@ -48,7 +48,9 @@ class ConferenceSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty ? _lastConferences: _allConferences;
+    final suggestionList = query.isEmpty ?
+      _lastConferences:
+      _allConferences.where((p) => p.startsWith(query)).toList();
     return ListView.builder(
         itemBuilder: (context, index) => ListTile(
           leading: Icon(Icons.location_city),
