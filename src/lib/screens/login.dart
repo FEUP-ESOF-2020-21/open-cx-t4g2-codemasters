@@ -1,4 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/screens/explore.dart';
 import 'package:ESOF/screens/signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -103,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
               // print(AuthService.auth.currentUser.uid);
               if (result == null) {
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => FeedScreen()));
+                    MaterialPageRoute(builder: (context) => ExploreScreen()));
               } else {
                 setState(() {
                   loginFailed = true;
