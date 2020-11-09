@@ -1,4 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/screens/explore.dart';
 import 'package:ESOF/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -100,8 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   await AuthService.signIn(user.email, user.password);
               // print(AuthService.auth.currentUser.uid);
               if (result == null) {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => MyHome()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ExploreScreen()));
               } else {
                 setState(() {
                   loginFailed = true;
