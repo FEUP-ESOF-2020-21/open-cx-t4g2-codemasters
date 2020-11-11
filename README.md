@@ -41,7 +41,7 @@ Thank you!
 ----
 
 ## Product Vision
-People use Rate-A-Talk to share and obtain new knowledge based on what the best talks have to offer.
+People use Rate-A-Talk to share and obtain new knowledge based on what the most popular talks have to offer.
 
 ----
 ## Elevator Pitch
