@@ -9,7 +9,7 @@ class CounterCountainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 100,
+      width: 98,
       padding: EdgeInsets.fromLTRB(10, 15, 10, 15),
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(

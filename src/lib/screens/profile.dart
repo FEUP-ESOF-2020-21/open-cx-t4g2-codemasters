@@ -31,9 +31,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    CounterCountainer('rates', 2),
-                    CounterCountainer('posts', 1),
-                    CounterCountainer('watched', 1242),
+                    FlatButton(
+                      onPressed: () => print('Showing user rates...'),
+                      child: CounterCountainer('rates', 2),
+                    ),
+                    FlatButton(
+                      onPressed: () => print('Showing user posts...'),
+                      child: CounterCountainer('posts', 1),
+                    ),
+                    FlatButton(
+                      onPressed: () => print('Showing user watchers...'),
+                      child: CounterCountainer('watched', 1242),
+                    ),
                   ],
                 ),
               ],
