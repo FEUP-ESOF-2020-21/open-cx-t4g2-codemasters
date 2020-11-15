@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
@@ -58,7 +60,7 @@ class PostScreen extends StatelessWidget {
   }
 
   /// Function that returns a row with two elements: a text box with the text "Speakers:" and a column with the speakers
-  Row generateSpeakersRows() {
+  Row generateSpeakersRows(List<Speaker> speakers) {
     List<Widget> speakerRowChildren = List();
 
     speakerRowChildren.add(Container(
@@ -67,7 +69,8 @@ class PostScreen extends StatelessWidget {
       style: mediumText,
     )));
 
-    List<Speaker> speakers = (this._conf.speakers);
+    // this._conf.getSpeakers()
+
     List<Widget> widgSpeakers = List();
 
     for (var speaker in speakers) {
@@ -107,6 +110,29 @@ class PostScreen extends StatelessWidget {
       children: speakerRowChildren,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Column generateTagColumn() {
+    List<Widget> columnElems = List();
+
+    columnElems.add(Container(
+      child: Text(
+        "Tag:",
+        style: mediumText,
+      ),
+      margin: EdgeInsets.only(bottom: 15, top: 15),
+    ));
+
+    columnElems.add(Container(
+      child: Text(
+        this._conf.tag,
+        style: smallerText,
+      ),
+    ));
+
+    return Column(
+      children: columnElems,
     );
   }
 
@@ -158,8 +184,22 @@ class PostScreen extends StatelessWidget {
     Stack imageStack = generateImageStack();
     Row dateRow = generateGenericRow("date");
     Row placeRow = generateGenericRow("place");
-    Row speakersRow = generateSpeakersRows();
+    Container speakersRow = Container(
+        child: FutureBuilder(
+      future: this._conf.getSpeakers(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData)
+          return generateSpeakersRows(snapshot.data);
+        else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+    ));
+    // Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
+    Column tagColumn = generateTagColumn();
 
     Widget bottomMargin20(Widget widget) =>
         Container(child: widget, margin: EdgeInsets.only(bottom: 20));
@@ -169,6 +209,7 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(bottomMargin20(placeRow));
     listViewElems.add(bottomMargin20(speakersRow));
     listViewElems.add(descriptionColumn);
+    listViewElems.add(tagColumn);
 
     Scaffold scaffold = Scaffold(
       body: ListView(

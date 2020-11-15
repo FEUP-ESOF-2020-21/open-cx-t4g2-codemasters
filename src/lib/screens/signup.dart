@@ -33,7 +33,6 @@ class _SignupScreenState extends State<SignupScreen> {
         body: Container(
             child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
       Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           key: _formKey,
           child: Column(children: [
             // TITLE
@@ -64,8 +63,8 @@ class _SignupScreenState extends State<SignupScreen> {
               hintTxt: "Email",
               icon: _email,
               validator: (String value) {
-                String msg = validateEmail(value);
                 if (value.isEmpty) return '    Please enter your Email';
+                String msg = validateEmail(value);
                 if (msg != null) return '    ' + msg;
                 _formKey.currentState.save();
               },
