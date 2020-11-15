@@ -13,8 +13,6 @@ import 'ui_elements.dart';
 
 void main() => runApp(MyApp());
 
-
-
 Future<User> getCurrentUser() async => await FirebaseAuth.instance.currentUser;
 
 class MyApp extends StatelessWidget {
@@ -22,11 +20,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     try {
       if (FirebaseAuth.instance.currentUser != null) {
-        return MyHome();
+        return MaterialApp(home: MyHome());
       }
-      return MaterialApp(home:LoginScreen());
+      return MaterialApp(home: LoginScreen());
     } catch (e) {
-      return MaterialApp(home:LoginScreen());
+      return MaterialApp(home: LoginScreen());
     }
   }
 }
