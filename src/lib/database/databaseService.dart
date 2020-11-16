@@ -6,7 +6,6 @@ class DatabaseService {
   static final dbReference = FirebaseFirestore.instance;
 
   static Future<UserModel> getUser(String uid) async {
-    print(uid);
     Query query = dbReference.collection('Users').where('uid', isEqualTo: uid);
 
     QuerySnapshot user = await query.get();
