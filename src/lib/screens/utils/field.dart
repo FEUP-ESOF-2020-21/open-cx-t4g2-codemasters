@@ -11,6 +11,7 @@ class Field extends StatelessWidget {
   final bool isEmail;
   final Icon icon;
   final double width;
+  final double height;
 
   Field(
       {this.hintTxt,
@@ -19,14 +20,15 @@ class Field extends StatelessWidget {
       this.isPassword = false,
       this.isEmail = false,
       this.icon,
-      this.width = 278});
+      this.width = 278,
+      this.height = 60});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       decoration: inputBoxDecoration,
-      height: 60.0,
+      height: height,
       width: width,
       child: TextFormField(
         keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,

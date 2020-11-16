@@ -19,11 +19,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     String leftElemText = capitalizeFirstLetter(label) + ":";
 
     Function onSavedFunction;
+    String hintText = "";
 
     switch (leftElemText) {
       case "Title:":
         {
           onSavedFunction = (String value) => this._title = value;
+          hintText = "Insert the title here";
           break;
         }
       case "Date:":
@@ -33,16 +35,19 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             this._date = DateTime(int.parse(dateElems.last),
                 int.parse(dateElems[1]), int.parse(dateElems[0]));
           };
+          hintText = "Insert the date here";
           break;
         }
       case "Place:":
         {
           onSavedFunction = (String value) => this._place = value;
+          hintText = "Insert the place here";
           break;
         }
       case "Speakers:":
         {
           onSavedFunction = (String value) => this._speakers = value.split(",");
+          hintText = "Insert the speakers here";
           break;
         }
 
@@ -52,7 +57,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
     Field field = Field(
       onSaved: onSavedFunction,
-      width: leftElemText == "Speakers:" ? 250 : 278,
+      width: leftElemText == "Speakers:" ? 245 : 278,
+      hintTxt: hintText,
     );
 
     List<Widget> rowElems = [
@@ -76,16 +82,59 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> listViewElems = [
-      Text(
-        "Create Conference",
-        style: bigText,
+      Container(
+        child: Text(
+          "Create Conference",
+          style: bigText,
+        ),
+        margin: EdgeInsets.only(left: 20),
       ),
-      bottomMargin20(
-          Text("Create here a post for the conference", style: smallerText)),
+      Container(
+        child: Text(
+          "Create here a post for the conference",
+          style: smallerText,
+        ),
+        margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
+      ),
       bottomMargin20(generateGenericLabelFieldPair("title")),
       bottomMargin20(generateGenericLabelFieldPair("date")),
       bottomMargin20(generateGenericLabelFieldPair("place")),
       bottomMargin20(generateGenericLabelFieldPair("speakers")),
+      Column(
+        children: [
+          Container(
+            child: Text("Description:", style: mediumText),
+            margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
+          ),
+          Container(
+            child: Field(
+              height: 100,
+              width: 350,
+            ),
+            margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
+          )
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      Row(
+        children: [
+          Container(
+            child: Text(
+              "Upload Image:",
+              style: mediumText,
+            ),
+            margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
+          ),
+          Container(
+            child: Image.asset(
+              "assets/icons/1x/plus_icon.png",
+              scale: 30,
+            ),
+            margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
+          ),
+        ],
+        crossAxisAlignment: CrossAxisAlignment.center,
+      ),
     ];
 
     return Scaffold(

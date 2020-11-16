@@ -19,7 +19,6 @@ Future<User> getCurrentUser() async => await FirebaseAuth.instance.currentUser;
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /*
     try {
       if (FirebaseAuth.instance.currentUser != null) {
         return MaterialApp(home: MyHome());
@@ -27,7 +26,6 @@ class MyApp extends StatelessWidget {
       return MaterialApp(home: LoginScreen());
     } catch (e) {
       return MaterialApp(home: LoginScreen());
-    }*/
-    return MaterialApp(home:CreateConferenceScreen());
+    }
   }
 }

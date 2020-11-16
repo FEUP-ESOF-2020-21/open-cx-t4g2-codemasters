@@ -1,4 +1,5 @@
 import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/screens/create_conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/profile.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'screens/login.dart';
 
 final pages = [
-  Center(child: Text('create post')),
+  CreateConferenceScreen(),
   FeedScreen(),
   Center(child: Text('explore')),
   ProfileScreen(),
