@@ -1,6 +1,7 @@
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
+import 'package:ESOF/screens/profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ESOF/screens/signup.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ final pages = [
   Center(child: Text('create post')),
   FeedScreen(),
   Center(child: Text('explore')),
-  Center(child: Text('profile'))
+  ProfileScreen(),
 ];
 
 class MyHome extends StatefulWidget {

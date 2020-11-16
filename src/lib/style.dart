@@ -49,6 +49,20 @@ const TextStyle bigTextWhite = TextStyle(
   ],
 );
 
+const TextStyle profileNameText = TextStyle(
+  color: Colors.black,
+  fontSize: 30,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 1.3,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
 const TextStyle hintText = TextStyle(
   color: Colors.black,
   fontSize: 16,
@@ -72,6 +86,55 @@ const TextStyle seeAllTextFeed = TextStyle(
     BoxShadow(
       color: Colors.black12,
       blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
+const TextStyle profileContainerText = TextStyle(
+  color: Colors.black,
+  fontSize: 15,
+  fontWeight: FontWeight.w400,
+  letterSpacing: 1.2,
+);
+
+const TextStyle profileContainerNumber = TextStyle(
+  color: Colors.black,
+  fontSize: 18,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 1.2,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
+const TextStyle bioTitleProfile = TextStyle(
+  color: Colors.black,
+  fontSize: 26,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 1.5,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 4.0,
+      offset: Offset(1.5, 1.5),
+    ),
+  ],
+);
+
+const TextStyle editProfileText = TextStyle(
+  color: accentOrange,
+  fontSize: 20,
+  fontWeight: FontWeight.w600,
+  letterSpacing: 1.3,
+  shadows: [
+    BoxShadow(
+      color: Colors.black12,
+      blurRadius: 2.0,
       offset: Offset(1.5, 1.5),
     ),
   ],
