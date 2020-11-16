@@ -101,6 +101,7 @@ class PostScreen extends StatelessWidget {
       Container(
         child: Column(
           children: widgSpeakers,
+          crossAxisAlignment: CrossAxisAlignment.start,
         ),
         margin: EdgeInsets.only(left: 10),
       ),
