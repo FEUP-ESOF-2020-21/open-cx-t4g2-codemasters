@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class CreateConferenceScreen extends StatefulWidget {
   @override
@@ -14,6 +17,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   DateTime _date;
   String _place;
   List<String> _speakers;
+  final _picker = ImagePicker();
+  File _image;
 
   Row generateGenericLabelFieldPair(String label) {
     String leftElemText = capitalizeFirstLetter(label) + ":";
@@ -79,6 +84,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
+  Future letUserPickImage() async {
+    final image = await _picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (image != null)
+        _image = File(image.path);
+      else
+        print("No image selected!");
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> listViewElems = [
@@ -87,7 +103,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           "Create Conference",
           style: bigText,
         ),
-        margin: EdgeInsets.only(left: 20),
+        margin: EdgeInsets.fromLTRB(20, 5, 0, 0),
       ),
       Container(
         child: Text(
@@ -125,12 +141,20 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             ),
             margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
           ),
-          Container(
-            child: Image.asset(
-              "assets/icons/1x/plus_icon.png",
-              scale: 30,
+          GestureDetector(
+            child: Container(
+              child: _image == null
+                  ? Image.asset(
+                      "assets/icons/1x/plus_icon.png",
+                      scale: 30,
+                    )
+                  : Image.file(
+                      _image,
+                      scale: 10,
+                    ),
+              margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
             ),
-            margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
+            onTap: letUserPickImage,
           ),
         ],
         crossAxisAlignment: CrossAxisAlignment.center,
