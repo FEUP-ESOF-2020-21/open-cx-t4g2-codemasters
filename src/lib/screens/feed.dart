@@ -1,3 +1,4 @@
+import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/widgets/feed/feed_carousel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -40,7 +41,9 @@ class _FeedScreenState extends State<FeedScreen> {
               FirebaseFirestore.instance.collection("Conference").snapshots(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Text('No Data...');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             } else {
               return SafeArea(
                 child: ListView(
