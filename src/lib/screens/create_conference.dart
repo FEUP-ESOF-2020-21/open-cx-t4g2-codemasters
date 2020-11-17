@@ -9,8 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CreateConferenceScreen extends StatefulWidget {
+  final _home;
+
+  CreateConferenceScreen(this._home);
+
   @override
-  _CreateConferenceScreenState createState() => _CreateConferenceScreenState();
+  _CreateConferenceScreenState createState() =>
+      _CreateConferenceScreenState(_home);
 }
 
 String dateValidator(String value) {
@@ -20,11 +25,11 @@ String dateValidator(String value) {
 
   List<int> dateElems = (value.split("/")).map((e) => int.parse(e)).toList();
 
-  bool isUsingWrongDateFormat = dateElems[0] > 999 || dateElems[1] > 12;
+  bool isUsingWrongDateFormat = dateElems[0] > 999 && dateElems[2] < 1000;
   if (isUsingWrongDateFormat) return "Date must be in the format DD/MM/YYYY.";
 
   bool hasInvalidValues = dateElems[0] > 31 || dateElems[1] > 12;
-  if (hasInvalidValues) return "Date contains invalid values.";
+  if (hasInvalidValues) return "Date must not contain invalid values.";
 
   return null;
 }
@@ -35,13 +40,19 @@ String notEmptyValidator(String value) {
 }
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
+  final _home;
+
+  _CreateConferenceScreenState(this._home);
+
+  //Data to be stored
   String _title;
   DateTime _date;
   String _place;
   List<String> _speakers;
   String _description;
-  final _picker = ImagePicker();
   File _image;
+
+  final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
 
   Row generateGenericLabelFieldPair(String label) {
@@ -141,10 +152,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
       ),
-      bottomMargin20(generateGenericLabelFieldPair("title")),
-      bottomMargin20(generateGenericLabelFieldPair("date")),
-      bottomMargin20(generateGenericLabelFieldPair("place")),
-      bottomMargin20(generateGenericLabelFieldPair("speakers")),
+      generateGenericLabelFieldPair("title"),
+      SizedBox(height: 20),
+      generateGenericLabelFieldPair("date"),
+      SizedBox(height: 20),
+      generateGenericLabelFieldPair("place"),
+      SizedBox(height: 20),
+      generateGenericLabelFieldPair("speakers"),
+      SizedBox(height: 20),
       Column(
         children: [
           Container(
@@ -199,9 +214,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onPressed: () async {
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
+              _home.revertToPrevScreen();
             }
-
-            //Navigator.pop(context);
           },
           child: Text(
             "Submit",
