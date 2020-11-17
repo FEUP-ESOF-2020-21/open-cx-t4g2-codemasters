@@ -80,4 +80,4 @@ final AppBar appBar = AppBar(
 );
 
 Widget bottomMargin20(Widget widget) =>
-        Container(child: widget, margin: EdgeInsets.only(bottom: 20));
+    Container(child: widget, margin: EdgeInsets.only(bottom: 20));

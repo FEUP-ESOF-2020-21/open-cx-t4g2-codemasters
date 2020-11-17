@@ -14,6 +14,7 @@ class Field extends StatelessWidget {
   final double width;
   final double height;
   final int maxLines;
+  final EdgeInsetsGeometry padding;
 
   Field(
       {this.hintTxt,
@@ -25,7 +26,8 @@ class Field extends StatelessWidget {
       this.icon,
       this.width = 278,
       this.height = 60,
-      this.maxLines = 1});
+      this.maxLines = 1,
+      this.padding = const EdgeInsets.all(0)});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,7 @@ class Field extends StatelessWidget {
       decoration: inputBoxDecoration,
       height: height,
       width: width,
+      padding: padding,
       child: TextFormField(
         maxLines: this.maxLines,
         keyboardType: isEmail

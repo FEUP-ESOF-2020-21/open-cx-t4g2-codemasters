@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
@@ -20,6 +21,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   String _description;
   final _picker = ImagePicker();
   File _image;
+  final _formKey = GlobalKey<FormState>();
 
   Row generateGenericLabelFieldPair(String label) {
     String leftElemText = capitalizeFirstLetter(label) + ":";
@@ -65,6 +67,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       onSaved: onSavedFunction,
       width: leftElemText == "Speakers:" ? 245 : 278,
       hintTxt: hintText,
+      padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+      
     );
 
     List<Widget> rowElems = [
@@ -129,6 +133,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               isMultiline: true,
               height: 100,
               width: 350,
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
               onSaved: (String value) => _description = value,
             ),
             margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
@@ -163,11 +168,31 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ],
         crossAxisAlignment: CrossAxisAlignment.center,
       ),
+      Container(
+        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.symmetric(horizontal: 100),
+        child: ElevatedButton(
+          onPressed: () async {
+            _formKey.currentState.save();
+            //Navigator.pop(context);
+          },
+          child: Text(
+            "Submit",
+            style: mediumTextWhite,
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Colors.orangeAccent,
+          ),
+        ),
+      ),
     ];
 
     return Scaffold(
-      body: ListView(
-        children: listViewElems,
+      body: Form(
+        child: ListView(
+          children: listViewElems,
+        ),
+        key: _formKey,
       ),
     );
   }
