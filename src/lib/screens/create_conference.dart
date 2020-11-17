@@ -13,6 +13,27 @@ class CreateConferenceScreen extends StatefulWidget {
   _CreateConferenceScreenState createState() => _CreateConferenceScreenState();
 }
 
+String dateValidator(String value) {
+  bool containsTwoSlashes = value.contains("/", 0) && value.contains("/", 3);
+  if (!containsTwoSlashes)
+    return "Date must contain the character '/' twice to separate the date elements.";
+
+  List<int> dateElems = (value.split("/")).map((e) => int.parse(e)).toList();
+
+  bool isUsingWrongDateFormat = dateElems[0] > 999 || dateElems[1] > 12;
+  if (isUsingWrongDateFormat) return "Date must be in the format DD/MM/YYYY.";
+
+  bool hasInvalidValues = dateElems[0] > 31 || dateElems[1] > 12;
+  if (hasInvalidValues) return "Date contains invalid values.";
+
+  return null;
+}
+
+String notEmptyValidator(String value) {
+  if (value == "") return "Field must not be empty.";
+  return null;
+}
+
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   String _title;
   DateTime _date;
@@ -29,6 +50,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     Function onSavedFunction;
     String hintText = "";
 
+    Function valFunc = notEmptyValidator;
+
     switch (leftElemText) {
       case "Title:":
         {
@@ -43,6 +66,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             this._date = DateTime(int.parse(dateElems.last),
                 int.parse(dateElems[1]), int.parse(dateElems[0]));
           };
+          valFunc = dateValidator;
           hintText = "Insert the date here";
           break;
         }
@@ -68,7 +92,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       width: leftElemText == "Speakers:" ? 245 : 278,
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-      
+      validator: valFunc,
     );
 
     List<Widget> rowElems = [
@@ -173,7 +197,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         padding: EdgeInsets.symmetric(horizontal: 100),
         child: ElevatedButton(
           onPressed: () async {
-            _formKey.currentState.save();
+            if (_formKey.currentState.validate()) {
+              _formKey.currentState.save();
+            }
+
             //Navigator.pop(context);
           },
           child: Text(
