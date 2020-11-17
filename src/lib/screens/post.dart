@@ -202,13 +202,14 @@ class PostScreen extends StatelessWidget {
     Column descriptionColumn = generateDescriptionColumn();
     Column tagColumn = generateTagColumn();
 
-    Widget bottomMargin20(Widget widget) =>
-        Container(child: widget, margin: EdgeInsets.only(bottom: 20));
-
-    listViewElems.add(bottomMargin20(imageStack));
-    listViewElems.add(bottomMargin20(dateRow));
-    listViewElems.add(bottomMargin20(placeRow));
-    listViewElems.add(bottomMargin20(speakersRow));
+    listViewElems.add(imageStack);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(dateRow);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(placeRow);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(speakersRow);
+    listViewElems.add(SizedBox(height: 20));
     listViewElems.add(descriptionColumn);
     listViewElems.add(tagColumn);
 
