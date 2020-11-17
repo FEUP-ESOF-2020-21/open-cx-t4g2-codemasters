@@ -102,8 +102,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   await AuthService.signIn(user.email, user.password);
               // print(AuthService.auth.currentUser.uid);
               if (result == null) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MyHome()));
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => MyHome()));
               } else {
                 setState(() {
                   loginFailed = true;

@@ -7,27 +7,37 @@ class Field extends StatelessWidget {
   final String hintTxt;
   final Function validator;
   final Function onSaved;
-  final bool isPassword;
-  final bool isEmail;
+  final TextInputType inputType;
   final Icon icon;
+  final bool isPassword;
+  final double width;
+  final double height;
+  final int maxLines;
+  final EdgeInsetsGeometry padding;
 
   Field(
       {this.hintTxt,
       this.validator,
       this.onSaved,
+      this.inputType = TextInputType.text,
+      this.icon,
       this.isPassword = false,
-      this.isEmail = false,
-      this.icon});
+      this.width = 278,
+      this.height = 60,
+      this.maxLines = 1,
+      this.padding = const EdgeInsets.all(0)});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
       decoration: inputBoxDecoration,
-      height: 60.0,
-      width: 278,
+      height: height,
+      width: width,
+      padding: padding,
       child: TextFormField(
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
+        maxLines: maxLines,
+        keyboardType: inputType,
         style: TextStyle(
           color: Colors.black87,
           fontSize: 16,
@@ -41,7 +51,7 @@ class Field extends StatelessWidget {
           hintText: hintTxt,
           hintStyle: hintText,
         ),
-        obscureText: isPassword ? true : false,
+        obscureText: isPassword,
         validator: validator,
         onSaved: onSaved,
       ),
