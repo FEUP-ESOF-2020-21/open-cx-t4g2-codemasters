@@ -91,6 +91,3 @@ final AppBar appBar = AppBar(
   ),
   backgroundColor: accentOrange,
 );
-
-Widget bottomMargin20(Widget widget) =>
-    Container(child: widget, margin: EdgeInsets.only(bottom: 20));
