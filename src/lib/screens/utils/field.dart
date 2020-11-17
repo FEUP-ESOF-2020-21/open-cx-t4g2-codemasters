@@ -7,10 +7,9 @@ class Field extends StatelessWidget {
   final String hintTxt;
   final Function validator;
   final Function onSaved;
-  final bool isPassword;
-  final bool isEmail;
-  final bool isMultiline;
+  final TextInputType inputType;
   final Icon icon;
+  final bool isPassword;
   final double width;
   final double height;
   final int maxLines;
@@ -20,10 +19,9 @@ class Field extends StatelessWidget {
       {this.hintTxt,
       this.validator,
       this.onSaved,
-      this.isPassword = false,
-      this.isEmail = false,
-      this.isMultiline = false,
+      this.inputType = TextInputType.text,
       this.icon,
+      this.isPassword = false,
       this.width = 278,
       this.height = 60,
       this.maxLines = 1,
@@ -38,10 +36,8 @@ class Field extends StatelessWidget {
       width: width,
       padding: padding,
       child: TextFormField(
-        maxLines: this.maxLines,
-        keyboardType: isEmail
-            ? TextInputType.emailAddress
-            : (isMultiline ? TextInputType.multiline : TextInputType.text),
+        maxLines: maxLines,
+        keyboardType: inputType,
         style: TextStyle(
           color: Colors.black87,
           fontSize: 16,
@@ -55,10 +51,11 @@ class Field extends StatelessWidget {
           hintText: hintTxt,
           hintStyle: hintText,
         ),
-        obscureText: isPassword ? true : false,
+        obscureText: isPassword,
         validator: validator,
         onSaved: onSaved,
       ),
     );
   }
 }
+

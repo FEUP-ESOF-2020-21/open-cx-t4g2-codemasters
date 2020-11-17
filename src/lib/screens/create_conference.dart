@@ -44,16 +44,70 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   _CreateConferenceScreenState(this._home);
 
-  //Data to be stored
+  //Start of data to be stored
   String _title;
   DateTime _date;
   String _place;
   List<String> _speakers;
   String _description;
   File _image;
+  //End of data to be stored
 
   final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+
+  Column generateDescriptionColumn() {
+    return Column(
+      children: [
+        Container(
+          child: Text("Description:", style: mediumText),
+          margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
+        ),
+        Container(
+          child: Field(
+            maxLines: null,
+            inputType: TextInputType.multiline,
+            height: 100,
+            width: 350,
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            onSaved: (String value) => _description = value,
+          ),
+          margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
+        )
+      ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
+  Row generateImageRow() {
+    return Row(
+      children: [
+        Container(
+          child: Text(
+            "Upload Image:",
+            style: mediumText,
+          ),
+          margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
+        ),
+        GestureDetector(
+          child: Container(
+            child: _image == null
+                ? Image.asset(
+                    "assets/icons/1x/plus_icon.png",
+                    scale: 30,
+                  )
+                : Image.file(
+                    _image,
+                    scale: 10,
+                  ),
+            margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
+          ),
+          onTap: letUserPickImage,
+        ),
+      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+    );
+  }
 
   Row generateGenericLabelFieldPair(String label) {
     String leftElemText = capitalizeFirstLetter(label) + ":";
@@ -62,6 +116,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     String hintText = "";
 
     Function valFunc = notEmptyValidator;
+    TextInputType inputType = TextInputType.text;
 
     switch (leftElemText) {
       case "Title:":
@@ -79,6 +134,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           };
           valFunc = dateValidator;
           hintText = "Insert the date here";
+          inputType = TextInputType.datetime;
           break;
         }
       case "Place:":
@@ -104,6 +160,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: valFunc,
+      inputType: inputType,
     );
 
     List<Widget> rowElems = [
@@ -124,6 +181,50 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
+  Container generateSubmitButton() {
+    return Container(
+      margin: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.symmetric(horizontal: 100),
+      child: ElevatedButton(
+        onPressed: () async {
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            _home.revertToPrevScreen();
+          }
+        },
+        child: Text(
+          "Submit",
+          style: mediumTextWhite,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.orangeAccent,
+        ),
+      ),
+    );
+  }
+
+  Column generateHeader() {
+    return Column(
+      children: [
+        Container(
+          child: Text(
+            "Create Conference",
+            style: bigText,
+          ),
+          margin: EdgeInsets.fromLTRB(20, 5, 0, 0),
+        ),
+        Container(
+          child: Text(
+            "Create here a post for the conference",
+            style: smallerText,
+          ),
+          margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
+        )
+      ],
+      crossAxisAlignment: CrossAxisAlignment.start,
+    );
+  }
+
   Future letUserPickImage() async {
     final image = await _picker.getImage(source: ImageSource.gallery);
 
@@ -138,20 +239,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> listViewElems = [
-      Container(
-        child: Text(
-          "Create Conference",
-          style: bigText,
-        ),
-        margin: EdgeInsets.fromLTRB(20, 5, 0, 0),
-      ),
-      Container(
-        child: Text(
-          "Create here a post for the conference",
-          style: smallerText,
-        ),
-        margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
-      ),
+      generateHeader(),
       generateGenericLabelFieldPair("title"),
       SizedBox(height: 20),
       generateGenericLabelFieldPair("date"),
@@ -160,72 +248,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 20),
       generateGenericLabelFieldPair("speakers"),
       SizedBox(height: 20),
-      Column(
-        children: [
-          Container(
-            child: Text("Description:", style: mediumText),
-            margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
-          ),
-          Container(
-            child: Field(
-              maxLines: null,
-              isMultiline: true,
-              height: 100,
-              width: 350,
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-              onSaved: (String value) => _description = value,
-            ),
-            margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
-          )
-        ],
-        crossAxisAlignment: CrossAxisAlignment.start,
-      ),
-      Row(
-        children: [
-          Container(
-            child: Text(
-              "Upload Image:",
-              style: mediumText,
-            ),
-            margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
-          ),
-          GestureDetector(
-            child: Container(
-              child: _image == null
-                  ? Image.asset(
-                      "assets/icons/1x/plus_icon.png",
-                      scale: 30,
-                    )
-                  : Image.file(
-                      _image,
-                      scale: 10,
-                    ),
-              margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
-            ),
-            onTap: letUserPickImage,
-          ),
-        ],
-        crossAxisAlignment: CrossAxisAlignment.center,
-      ),
-      Container(
-        margin: EdgeInsets.only(top: 20),
-        padding: EdgeInsets.symmetric(horizontal: 100),
-        child: ElevatedButton(
-          onPressed: () async {
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
-              _home.revertToPrevScreen();
-            }
-          },
-          child: Text(
-            "Submit",
-            style: mediumTextWhite,
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Colors.orangeAccent,
-          ),
-        ),
-      ),
+      generateDescriptionColumn(),
+      generateImageRow(),
+      generateSubmitButton(),
     ];
 
     return Scaffold(
