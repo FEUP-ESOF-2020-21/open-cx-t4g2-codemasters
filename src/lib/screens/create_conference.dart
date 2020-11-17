@@ -17,6 +17,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   DateTime _date;
   String _place;
   List<String> _speakers;
+  String _description;
   final _picker = ImagePicker();
   File _image;
 
@@ -126,6 +127,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             child: Field(
               height: 100,
               width: 350,
+              onSaved: (String value) => _description = value,
             ),
             margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
           )
