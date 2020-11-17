@@ -125,6 +125,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           ),
           Container(
             child: Field(
+              maxLines: null,
+              isMultiline: true,
               height: 100,
               width: 350,
               onSaved: (String value) => _description = value,

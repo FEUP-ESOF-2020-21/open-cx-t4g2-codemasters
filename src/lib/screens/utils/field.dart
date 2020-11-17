@@ -9,9 +9,11 @@ class Field extends StatelessWidget {
   final Function onSaved;
   final bool isPassword;
   final bool isEmail;
+  final bool isMultiline;
   final Icon icon;
   final double width;
   final double height;
+  final int maxLines;
 
   Field(
       {this.hintTxt,
@@ -19,9 +21,11 @@ class Field extends StatelessWidget {
       this.onSaved,
       this.isPassword = false,
       this.isEmail = false,
+      this.isMultiline = false,
       this.icon,
       this.width = 278,
-      this.height = 60});
+      this.height = 60,
+      this.maxLines = 1});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,10 @@ class Field extends StatelessWidget {
       height: height,
       width: width,
       child: TextFormField(
-        keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,
+        maxLines: this.maxLines,
+        keyboardType: isEmail
+            ? TextInputType.emailAddress
+            : (isMultiline ? TextInputType.multiline : TextInputType.text),
         style: TextStyle(
           color: Colors.black87,
           fontSize: 16,
