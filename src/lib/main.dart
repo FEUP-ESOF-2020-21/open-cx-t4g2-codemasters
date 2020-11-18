@@ -1,4 +1,5 @@
 import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/screens/create_conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:firebase_auth/firebase_auth.dart';

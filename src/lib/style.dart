@@ -14,6 +14,13 @@ const TextStyle mediumText = TextStyle(
   letterSpacing: 1.3,
 );
 
+const TextStyle mediumTextWhite = TextStyle(
+  color: Colors.white,
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+  letterSpacing: 1.3,
+);
+
 const TextStyle errorMessageText = TextStyle(
   color: Colors.red,
   fontSize: 18,

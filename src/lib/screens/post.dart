@@ -7,6 +7,8 @@ import 'package:ESOF/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import '../ui_elements.dart';
+
 class PostScreen extends StatelessWidget {
   final Conference _conf;
 

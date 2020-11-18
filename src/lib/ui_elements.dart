@@ -1,4 +1,5 @@
 import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/screens/create_conference.dart';
 import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/profile.dart';
@@ -11,26 +12,38 @@ import 'screens/post.dart';
 import 'package:flutter/material.dart';
 import 'screens/login.dart';
 
-final pages = [
-  Center(child: Text('create post')),
-  FeedScreen(),
-  Center(child: Text('explore')),
-  ProfileScreen(),
-];
-
 class MyHome extends StatefulWidget {
   @override
   _MyHomeState createState() => _MyHomeState();
 }
 
 class _MyHomeState extends State<MyHome> {
+  var _pages;
+
   int _currentIndex = 1;
+  int _lastIndex = 1;
+
+  void revertToPrevScreen() {
+    setState(() {
+      _currentIndex = _lastIndex;
+      _lastIndex = 1;
+    });
+  }
+
+  _MyHomeState() {
+    _pages = [
+      CreateConferenceScreen(this),
+      FeedScreen(),
+      Center(child: Text('explore')),
+      ProfileScreen(),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      body: pages[_currentIndex],
+      body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: accentOrange,
           type: BottomNavigationBarType.fixed,
@@ -56,6 +69,7 @@ class _MyHomeState extends State<MyHome> {
           ],
           onTap: (index) {
             setState(() {
+              _lastIndex = _currentIndex;
               _currentIndex = index;
             });
           }),
