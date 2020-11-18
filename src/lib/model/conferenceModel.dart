@@ -3,7 +3,6 @@ import 'dart:io';
 
 class ConferenceModel {
   String ref;
-  String cid; // Conference id
   String title;
   DateTime date;
   String place;
@@ -16,7 +15,6 @@ class ConferenceModel {
   ConferenceMode({Map<String, dynamic> data, String ref}) {
     this.ref = ref;
     if (data != null) {
-      this.cid = data['cid'];
       this.title = data['title'];
       this.date = data['date'];
       this.place = data['place'];
@@ -26,14 +24,13 @@ class ConferenceModel {
     }
   }
 
-    Future userSetup() async {
+    Future confSetup() async {
       final dbReference = FirebaseFirestore.instance;
 
       return await dbReference.collection('Conference').add({
         'title': this.title,
         'data': this.date,
         'place': this.place,
-        'img': this.img,
         'rate': this.rate,
         'description': this.description
       });
