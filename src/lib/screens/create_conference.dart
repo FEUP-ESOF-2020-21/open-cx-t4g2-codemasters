@@ -211,7 +211,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             "Create Conference",
             style: bigText,
           ),
-          margin: EdgeInsets.fromLTRB(20, 5, 0, 0),
+          margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
         ),
         Container(
           child: Text(
