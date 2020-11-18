@@ -180,14 +180,16 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Container generateSubmitButton(ConferenceModel confModel) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 45.0),
-      width: 278,
+      width: 200,
       child: RaisedButton(
         elevation: 5.0,
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
           }
-          confModel.print_here();
+          confModel.rate = 0;
+          confModel.userSetup();
+          _home.revertToPrevScreen();
         },
         padding: EdgeInsets.all(20.0),
         shape: RoundedRectangleBorder(

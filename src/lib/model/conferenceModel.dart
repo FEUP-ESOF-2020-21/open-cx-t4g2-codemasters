@@ -29,8 +29,7 @@ class ConferenceModel {
     Future userSetup() async {
       final dbReference = FirebaseFirestore.instance;
 
-      return await dbReference.collection('Conferences').add({
-        'cid': 'TODO', // TODO,
+      return await dbReference.collection('Conference').add({
         'title': this.title,
         'data': this.date,
         'place': this.place,
@@ -38,18 +37,6 @@ class ConferenceModel {
         'rate': this.rate,
         'description': this.description
       });
-    }
-
-    print_here() {
-    print("HEREEEEEEEEEEEEEEEEEEEEEEEEEE");
-      print(this.title);
-      print(this.cid);
-      print(this.date);
-      print(this.place);
-      print(this.img);
-      print(this.rate);
-      print(this.description);
-      print(this.speakers);
     }
   }
 // table relating conferences and users => to think
