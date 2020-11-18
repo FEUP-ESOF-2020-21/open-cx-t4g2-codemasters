@@ -10,8 +10,8 @@ class ConferenceModel {
   int rate;
   String description;
   String speakers;
+  String tag;
 
-  // ignore: non_constant_identifier_names
   ConferenceMode({Map<String, dynamic> data, String ref}) {
     this.ref = ref;
     if (data != null) {
@@ -21,6 +21,7 @@ class ConferenceModel {
       this.img = data['imgPath']; // TODO: how to hadle the image.
       this.rate = data['rate'];
       this.description = data['description'];
+      this.tag = data['tag'];
     }
   }
 
@@ -29,10 +30,11 @@ class ConferenceModel {
 
       return await dbReference.collection('Conference').add({
         'title': this.title,
-        'data': this.date,
-        'place': this.place,
+        'date': this.date,
+        'location': this.place,
         'rate': this.rate,
-        'description': this.description
+        'description': this.description,
+        'tag': this.tag
       });
     }
   }

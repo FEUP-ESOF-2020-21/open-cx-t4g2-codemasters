@@ -109,7 +109,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
     Function onSavedFunction;
     String hintText = "";
-
+    int maxSizeInput = 200;
     Function valFunc = notEmptyValidator;
     TextInputType inputType = TextInputType.text;
 
@@ -118,10 +118,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           onSavedFunction = (String value) => confModel.title = value;
           hintText = "Insert the title here";
+          maxSizeInput = 30;
           break;
         }
       case "Date:":
         {
+          maxSizeInput = 10;
           onSavedFunction = (String value) {
             List<String> dateElems = value.split("/");
             confModel.date = DateTime(int.parse(dateElems.last),
@@ -145,6 +147,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           hintText = "Insert the speakers here";
           break;
         }
+      case "Tag:":
+        {
+          onSavedFunction = (String value) => confModel.tag= value;
+          hintText = "Insert the tag here";
+          break;
+        }
+
 
       default:
         print("Invalid value for leftElemText!");
@@ -156,6 +165,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: valFunc,
+      maxSizeInput: maxSizeInput,
       inputType: inputType,
     );
 
@@ -179,31 +189,23 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   Container generateSubmitButton(ConferenceModel confModel) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 45.0),
-      width: 100,
-      child: RaisedButton(
-        elevation: 5.0,
+      margin: EdgeInsets.only(top: 20),
+      padding: EdgeInsets.symmetric(horizontal: 100),
+      child: ElevatedButton(
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
+            confModel.rate = 0;
+            confModel.confSetup();
+            _home.revertToPrevScreen();
           }
-          confModel.rate = 0;
-          confModel.confSetup();
-          _home.revertToPrevScreen();
         },
-        padding: EdgeInsets.all(20.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        color: Colors.orangeAccent,
         child: Text(
-          'Submit',
-          style: TextStyle(
-            color: Colors.white,
-            letterSpacing: 2.0,
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
-          ),
+          "Submit",
+          style: mediumTextWhite,
+        ),
+        style: ElevatedButton.styleFrom(
+          primary: Colors.orangeAccent,
         ),
       ),
     );
@@ -254,6 +256,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 20),
       generateGenericLabelFieldPair("speakers", confModel),
+      SizedBox(height: 20),
+      generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 20),
       generateDescriptionColumn(confModel),
       generateImageRow(confModel),
