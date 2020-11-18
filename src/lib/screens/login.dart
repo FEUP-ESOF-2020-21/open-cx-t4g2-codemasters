@@ -119,12 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
           color: Colors.orangeAccent,
           child: Text(
             'LOGIN',
-            style: TextStyle(
-              color: Colors.white,
-              letterSpacing: 2.0,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
+            style: submitTextWhite,
           ),
         ),
       ),
