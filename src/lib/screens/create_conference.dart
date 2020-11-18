@@ -7,6 +7,8 @@ import 'package:ESOF/style.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:ESOF/model/conferenceModel.dart';
+
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
@@ -44,19 +46,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   _CreateConferenceScreenState(this._home);
 
-  //Start of data to be stored
-  String _title;
-  DateTime _date;
-  String _place;
-  List<String> _speakers;
-  String _description;
-  File _image;
-  //End of data to be stored
-
   final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
 
-  Column generateDescriptionColumn() {
+  Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
       children: [
         Container(
@@ -65,12 +58,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         Container(
           child: Field(
-            maxLines: null,
-            inputType: TextInputType.multiline,
-            height: 100,
-            width: 350,
-            padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-            onSaved: (String value) => _description = value,
+              maxLines: null,
+              inputType: TextInputType.multiline,
+              height: 100,
+              width: 350,
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+              onSaved: (String value) {
+                confModel.description = value;
+              }
           ),
           margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
         )
@@ -79,7 +74,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Row generateImageRow() {
+  Row generateImageRow(ConferenceModel confModel) {
     return Row(
       children: [
         Container(
@@ -91,25 +86,25 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         GestureDetector(
           child: Container(
-            child: _image == null
+            child: confModel.img == null
                 ? Image.asset(
-                    "assets/icons/1x/plus_icon.png",
-                    scale: 30,
-                  )
+              "assets/icons/1x/plus_icon.png",
+              scale: 30,
+            )
                 : Image.file(
-                    _image,
-                    scale: 10,
-                  ),
+              confModel.img,
+              scale: 10,
+            ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
           ),
-          onTap: letUserPickImage,
+          onTap: () => letUserPickImage(confModel),
         ),
       ],
       crossAxisAlignment: CrossAxisAlignment.center,
     );
   }
 
-  Row generateGenericLabelFieldPair(String label) {
+  Row generateGenericLabelFieldPair(String label, ConferenceModel confModel) {
     String leftElemText = capitalizeFirstLetter(label) + ":";
 
     Function onSavedFunction;
@@ -121,7 +116,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     switch (leftElemText) {
       case "Title:":
         {
-          onSavedFunction = (String value) => this._title = value;
+          onSavedFunction = (String value) => confModel.title = value;
           hintText = "Insert the title here";
           break;
         }
@@ -129,7 +124,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           onSavedFunction = (String value) {
             List<String> dateElems = value.split("/");
-            this._date = DateTime(int.parse(dateElems.last),
+            confModel.date = DateTime(int.parse(dateElems.last),
                 int.parse(dateElems[1]), int.parse(dateElems[0]));
           };
           valFunc = dateValidator;
@@ -139,13 +134,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         }
       case "Place:":
         {
-          onSavedFunction = (String value) => this._place = value;
+          onSavedFunction = (String value) => confModel.place = value;
           hintText = "Insert the place here";
           break;
         }
       case "Speakers:":
         {
-          onSavedFunction = (String value) => this._speakers = value.split(",");
+          //TODO: what to do with speakers
+          onSavedFunction = (String value) => confModel.speakers = value;
           hintText = "Insert the speakers here";
           break;
         }
@@ -181,23 +177,33 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Container generateSubmitButton() {
+  Container generateSubmitButton(ConferenceModel confModel) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 100),
-      child: ElevatedButton(
+      padding: EdgeInsets.symmetric(vertical: 45.0),
+      width: 100,
+      child: RaisedButton(
+        elevation: 5.0,
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
-            _home.revertToPrevScreen();
           }
+          confModel.rate = 0;
+          confModel.confSetup();
+          _home.revertToPrevScreen();
         },
-        child: Text(
-          "Submit",
-          style: mediumTextWhite,
+        padding: EdgeInsets.all(20.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
         ),
-        style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
+        color: Colors.orangeAccent,
+        child: Text(
+          'Submit',
+          style: TextStyle(
+            color: Colors.white,
+            letterSpacing: 2.0,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -225,12 +231,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Future letUserPickImage() async {
+  Future letUserPickImage(ConferenceModel confModel) async {
     final image = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
       if (image != null)
-        _image = File(image.path);
+        confModel.img = File(image.path);
       else
         print("No image selected!");
     });
@@ -238,19 +244,20 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ConferenceModel confModel = new ConferenceModel();
     List<Widget> listViewElems = [
       generateHeader(),
-      generateGenericLabelFieldPair("title"),
+      generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 20),
-      generateGenericLabelFieldPair("date"),
+      generateGenericLabelFieldPair("date", confModel),
       SizedBox(height: 20),
-      generateGenericLabelFieldPair("place"),
+      generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 20),
-      generateGenericLabelFieldPair("speakers"),
+      generateGenericLabelFieldPair("speakers", confModel),
       SizedBox(height: 20),
-      generateDescriptionColumn(),
-      generateImageRow(),
-      generateSubmitButton(),
+      generateDescriptionColumn(confModel),
+      generateImageRow(confModel),
+      generateSubmitButton(confModel),
     ];
 
     return Scaffold(

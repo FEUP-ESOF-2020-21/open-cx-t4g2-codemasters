@@ -112,8 +112,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   if (_formKey.currentState.validate()) {
                     _formKey.currentState.save();
 
-                    print("USEREMAIL:\n");
-                    print(user.email);
                     String result =
                         await AuthService.signUp(user.email, user.password);
                     if (result == null) {
