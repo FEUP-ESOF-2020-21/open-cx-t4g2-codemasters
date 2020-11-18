@@ -32,6 +32,9 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
         body: Container(
             child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
+      SizedBox(
+        height: 50.0,
+      ),
       Form(
           key: _formKey,
           child: Column(children: [
