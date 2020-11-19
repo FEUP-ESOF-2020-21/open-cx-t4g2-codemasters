@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
-import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
-
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
@@ -61,13 +58,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               maxLines: null,
               inputType: TextInputType.multiline,
               height: 100,
-              width: 350,
+              width: 360,
               padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
               onSaved: (String value) {
                 confModel.description = value;
-              }
-          ),
-          margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
+              }),
+          margin: EdgeInsets.fromLTRB(30, 0, 24, 20),
         )
       ],
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,13 +84,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           child: Container(
             child: confModel.img == null
                 ? Image.asset(
-              "assets/icons/1x/plus_icon.png",
-              scale: 30,
-            )
+                    "assets/icons/1x/plus_icon.png",
+                    scale: 30,
+                  )
                 : Image.file(
-              confModel.img,
-              scale: 10,
-            ),
+                    confModel.img,
+                    scale: 10,
+                  ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
           ),
           onTap: () => letUserPickImage(confModel),
@@ -112,6 +108,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     int maxSizeInput = 200;
     Function valFunc = notEmptyValidator;
     TextInputType inputType = TextInputType.text;
+    double _width = 283;
 
     switch (leftElemText) {
       case "Title:":
@@ -138,6 +135,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           onSavedFunction = (String value) => confModel.place = value;
           hintText = "Insert the place here";
+          _width = 273;
           break;
         }
       case "Speakers:":
@@ -145,15 +143,16 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           //TODO: what to do with speakers
           onSavedFunction = (String value) => confModel.speakers = value;
           hintText = "Insert the speakers here";
+          _width = 238;
           break;
         }
       case "Tag:":
         {
-          onSavedFunction = (String value) => confModel.tag= value;
+          onSavedFunction = (String value) => confModel.tag = value;
           hintText = "Insert the tag here";
+          _width = 290;
           break;
         }
-
 
       default:
         print("Invalid value for leftElemText!");
@@ -161,7 +160,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
     Field field = Field(
       onSaved: onSavedFunction,
-      width: leftElemText == "Speakers:" ? 245 : 278,
+      width: _width,
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: valFunc,
@@ -189,9 +188,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   Container generateSubmitButton(ConferenceModel confModel) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
-      padding: EdgeInsets.symmetric(horizontal: 100),
-      child: ElevatedButton(
+      margin: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.symmetric(horizontal: 60),
+      child: FlatButton(
         onPressed: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
@@ -200,13 +199,18 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             _home.revertToPrevScreen();
           }
         },
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
         child: Text(
           "Submit",
-          style: mediumTextWhite,
+          style: submitTextWhite,
         ),
-        style: ElevatedButton.styleFrom(
+        color: Colors.orangeAccent,
+        /* style: ElevatedButton.styleFrom(
           primary: Colors.orangeAccent,
-        ),
+        ), */
       ),
     );
   }
@@ -219,17 +223,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             "Create Conference",
             style: bigText,
           ),
-          margin: EdgeInsets.fromLTRB(20, 20, 0, 0),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         ),
         Container(
           child: Text(
             "Create here a post for the conference",
             style: smallerText,
           ),
-          margin: EdgeInsets.fromLTRB(20, 0, 0, 20),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
         )
       ],
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
     );
   }
 
@@ -248,20 +252,23 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Widget build(BuildContext context) {
     ConferenceModel confModel = new ConferenceModel();
     List<Widget> listViewElems = [
+      SizedBox(height: 40),
       generateHeader(),
+      SizedBox(height: 10),
       generateGenericLabelFieldPair("title", confModel),
-      SizedBox(height: 20),
+      SizedBox(height: 30),
       generateGenericLabelFieldPair("date", confModel),
-      SizedBox(height: 20),
+      SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
-      SizedBox(height: 20),
+      SizedBox(height: 30),
       generateGenericLabelFieldPair("speakers", confModel),
-      SizedBox(height: 20),
+      SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
-      SizedBox(height: 20),
+      SizedBox(height: 30),
       generateDescriptionColumn(confModel),
       generateImageRow(confModel),
       generateSubmitButton(confModel),
+      SizedBox(height: 40),
     ];
 
     return Scaffold(

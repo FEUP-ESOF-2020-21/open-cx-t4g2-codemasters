@@ -1,9 +1,6 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/userModel.dart';
-import 'package:ESOF/screens/utils/field.dart';
-import 'package:ESOF/screens/utils/label.dart';
-import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/profile/bio.dart';
 import 'package:ESOF/widgets/profile/counter_container.dart';
 import 'package:ESOF/widgets/profile/edit_profile.dart';

@@ -7,7 +7,6 @@ import 'package:flutter/widgets.dart';
 import "../style.dart";
 import 'utils/field.dart';
 import "utils/label.dart";
-import 'utils/LabelSI.dart';
 import '../auth/userSetup.dart';
 import '../model/userModel.dart';
 import 'login.dart';
@@ -32,6 +31,9 @@ class _SignupScreenState extends State<SignupScreen> {
     return Scaffold(
         body: Container(
             child: ListView(scrollDirection: Axis.vertical, children: <Widget>[
+      SizedBox(
+        height: 50.0,
+      ),
       Form(
           key: _formKey,
           child: Column(children: [

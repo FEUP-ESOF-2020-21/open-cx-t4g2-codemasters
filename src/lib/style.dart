@@ -147,6 +147,13 @@ const TextStyle editProfileText = TextStyle(
   ],
 );
 
+const TextStyle submitTextWhite = TextStyle(
+  color: Colors.white,
+  letterSpacing: 2.0,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
+
 const Color accentOrange = Color(0xFFF27403);
 
 const Color accentGrey = Color(0xFFC4C4C4);
