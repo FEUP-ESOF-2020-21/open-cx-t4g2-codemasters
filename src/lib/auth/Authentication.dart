@@ -28,6 +28,7 @@ class AuthService {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
           email: email, password: password);
+
       return null;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found')
@@ -39,6 +40,37 @@ class AuthService {
     }
 
     // print(auth.currentUser.uid);
+  }
+
+  static Future<String> updateEmail(String newEmail) async {
+    await Firebase.initializeApp();
+    try {
+      await auth.currentUser.updateEmail(newEmail);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'email-already-in-use')
+        return 'The account already exists for that email.';
+      else if (e.code == 'invalid-email')
+        return 'Invalid Email inserted.';
+      else if (e.code == 'requires-recent-login')
+        return 'requires-recent-login';
+
+      return e.code;
+    }
+  }
+
+  static Future<String> updatePassword(String newPassword) async {
+    await Firebase.initializeApp();
+    try {
+      await auth.currentUser.updatePassword(newPassword);
+      return null;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password')
+        return 'Password too weak. Please insert another.';
+      else if (e.code == 'requires-recent-login')
+        return 'requires-recent-login';
+      return e.code;
+    }
   }
 
   static Future signOut() async {

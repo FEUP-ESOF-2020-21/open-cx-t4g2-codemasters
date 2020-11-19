@@ -1,3 +1,8 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
+import 'package:ESOF/model/userModel.dart';
+import 'package:ESOF/screens/login.dart';
+import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 
 import '../auth/validation.dart';
@@ -17,6 +22,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Icon _bio = Icon(Icons.description, color: Colors.black54);
   Icon _key = Icon(Icons.lock, color: Colors.black54);
   Icon _image = Icon(Icons.image, color: Colors.black54);
+
+  UserModel user = UserModel();
+  bool editProfileFailed = false;
+  String editProfileMsg;
+
   @override
   Widget build(BuildContext context) {
     Column mainColumn = new Column(
@@ -31,12 +41,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           hintTxt: "New Name",
           icon: _username,
           validator: (String value) {
-            if (value.isEmpty) return '    Please enter your new Name';
             _formKey.currentState.save();
-            return null;
           },
           onSaved: (String value) {
-            //user.name = value;
+            user.username = value;
           },
         ),
         Label("New Email:"),
@@ -44,28 +52,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           hintTxt: "New Email",
           icon: _email,
           validator: (String value) {
-            if (value.isEmpty) return '    Please enter your new Email';
-            String msg = validateEmail(value);
-            if (msg != null) return '    ' + msg;
             _formKey.currentState.save();
-            return null;
           },
           onSaved: (String value) {
-            //user.email = value;
+            user.email = value;
           },
         ),
         Label("New Bio:"),
         Field(
-          hintTxt: "New Bio",
+          height: 87,
+          hintTxt: "\nNew Bio",
           icon: _bio,
           maxLines: 10,
           validator: (String value) {
-            if (value.isEmpty) return '    Please enter your new Bio';
             _formKey.currentState.save();
-            return null;
           },
           onSaved: (String value) {
-            //user.bio = value;
+            user.description = value;
           },
         ),
         Label("New Password:"),
@@ -74,37 +77,80 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           isPassword: true,
           icon: _key,
           validator: (String value) {
-            if (value.isEmpty) return '    Please enter your new Password';
-            if (value.length < 7)
-              return '    Password should be minimum 7 characters';
             _formKey.currentState.save();
-            return null;
           },
           onSaved: (String value) {
-            //user.password = value;
+            user.password = value;
           },
         ),
+        editProfileFailed
+            ? Container(
+                margin:
+                    new EdgeInsets.symmetric(horizontal: 70.0, vertical: 10),
+                child: Text(
+                  'Edit Profile Failed! - ' + editProfileMsg,
+                  style: errorMessageText,
+                ),
+              )
+            : Text(''),
         SizedBox(height: 60),
         FlatButton(
           onPressed: () async {
-            print('Submit...');
+            // print('Submit...');
             if (_formKey.currentState.validate()) {
               _formKey.currentState.save();
-              // print(user.email);
 
-              //String result =
-              //await AuthService.signIn(user.email, user.password);
-              // print(AuthService.auth.currentUser.uid);
-              //if (result == null) {
-              //Navigator.push(
-              //  context, MaterialPageRoute(builder: (context) => MyHome()));
-              //} else {
-              //setState(() {
-              //loginFailed = true;
-              //loginFailedMsg = result;
-              //});
-              //}
-              //}
+              UserModel userM = await DatabaseService.getUser(
+                  AuthService.auth.currentUser.uid);
+
+              bool profileChanged = false;
+              String resultEmail, resultPassword;
+
+              if (user.email != "") {
+                resultEmail = await AuthService.updateEmail(user.email);
+                profileChanged = (resultEmail == null);
+                if (resultEmail == 'requires-recent-login')
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+              }
+              if (resultEmail == null && user.password != "") {
+                resultPassword =
+                    await AuthService.updatePassword(user.password);
+                profileChanged = (resultPassword == null);
+                if (resultEmail == 'requires-recent-login')
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LoginScreen()));
+              }
+
+              if (resultEmail == null && resultPassword == null) {
+                if (user.username != "") {
+                  userM.username = user.username;
+                  profileChanged = true;
+                }
+                if (user.description != "") {
+                  userM.description = user.description;
+                  profileChanged = true;
+                }
+
+                if (profileChanged) {
+                  await DatabaseService.updateUser(userM.ref, userM.username,
+                      userM.description, userM.imgPath);
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyHome()));
+                }
+              }
+
+              if (!profileChanged) {
+                setState(() {
+                  editProfileFailed = true;
+                  editProfileMsg = 'Nothing was inserted.';
+                  if (resultEmail != null)
+                    editProfileMsg = resultEmail;
+                  else if (resultPassword != null)
+                    editProfileMsg = resultPassword;
+                });
+              }
             }
           },
           padding: EdgeInsets.fromLTRB(100, 20, 100, 20),

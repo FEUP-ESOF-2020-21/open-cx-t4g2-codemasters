@@ -14,4 +14,13 @@ class DatabaseService {
 
     return userM;
   }
+
+  static Future updateUser(
+      String ref, String username, String description, String imagePath) async {
+    await dbReference.collection('Users').doc(ref).update({
+      'username': username,
+      'description': description,
+      'imgPath': imagePath
+    });
+  }
 }
