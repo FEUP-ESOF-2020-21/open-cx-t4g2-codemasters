@@ -7,8 +7,8 @@ Future userSetup(UserModel userModel) async {
   return await dbReference.collection('Users').add({
     'uid': FirebaseAuth.instance.currentUser.uid,
     'username': userModel.username,
-    'rate': userModel.rate,
-    'description': userModel.description,
-    'imgPath': userModel.imgPath,
+    'rate': 0,
+    'description': "",
+    'imgPath': "",
   });
 }
