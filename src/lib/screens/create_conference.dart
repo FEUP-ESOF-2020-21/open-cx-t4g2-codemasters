@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
-import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
-
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
@@ -65,8 +62,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
               onSaved: (String value) {
                 confModel.description = value;
-              }
-          ),
+              }),
           margin: EdgeInsets.fromLTRB(30, 0, 30, 20),
         )
       ],
@@ -88,13 +84,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           child: Container(
             child: confModel.img == null
                 ? Image.asset(
-              "assets/icons/1x/plus_icon.png",
-              scale: 30,
-            )
+                    "assets/icons/1x/plus_icon.png",
+                    scale: 30,
+                  )
                 : Image.file(
-              confModel.img,
-              scale: 10,
-            ),
+                    confModel.img,
+                    scale: 10,
+                  ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
           ),
           onTap: () => letUserPickImage(confModel),
@@ -149,11 +145,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         }
       case "Tag:":
         {
-          onSavedFunction = (String value) => confModel.tag= value;
+          onSavedFunction = (String value) => confModel.tag = value;
           hintText = "Insert the tag here";
           break;
         }
-
 
       default:
         print("Invalid value for leftElemText!");
