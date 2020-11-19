@@ -109,17 +109,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               if (user.email != "") {
                 resultEmail = await AuthService.updateEmail(user.email);
                 profileChanged = (resultEmail == null);
-                if (resultEmail == 'requires-recent-login')
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
               }
               if (resultEmail == null && user.password != "") {
                 resultPassword =
                     await AuthService.updatePassword(user.password);
                 profileChanged = (resultPassword == null);
-                if (resultEmail == 'requires-recent-login')
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LoginScreen()));
               }
 
               if (resultEmail == null && resultPassword == null) {
