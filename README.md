@@ -128,7 +128,8 @@ So, what are you waiting for? Sign up today!
 As a user, I want to log into the app
 
 ### User interface mockup
-[a introduzir]
+This is an iterative mockup, therefore by pressing the `present` button it's possible to simulate the application.  
+[Figma - mockup](https://www.figma.com/file/w9NXMG7oqi7XNhYV0cbSG3/ESOF?node-id=0%3A1) 
 
 ### Scenery
 * Logging in
