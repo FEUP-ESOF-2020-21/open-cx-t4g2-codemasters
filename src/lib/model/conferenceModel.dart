@@ -51,21 +51,23 @@ class ConferenceModel {
 
     for (var username in usernames) {
       // If there is a speaker with this username in database.
-      try {
         firestore
             .collection("Speaker")
             .where("username", isEqualTo: username)
             .get()
             .then((speakerRef) {
-          listSpeakerRef.add(speakerRef.docs[0].data());
-          print(speakerRef.docs[0].data());
+          if (speakerRef.docs.length == 0){
+            Speaker speaker = new Speaker.overloadConstructor(username);
+            final speakerRef = speaker.speakerSetup();
+            listSpeakerRef.add(speakerRef);
+            print(speakerRef);
+          }
+          else{
+            listSpeakerRef.add(speakerRef.docs[0].data());
+            print(speakerRef.docs[0].data());
+          }
         });
-      } catch (Error) {     // There isnt a speaker in the data base, so creates it.
-        Speaker speaker = new Speaker.overloadConstructor(username);
-        final speakerRef = speaker.speakerSetup();
-        listSpeakerRef.add(speakerRef);
-        print(speakerRef);
-      }
+
     }
   }
 
