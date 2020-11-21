@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
+import 'speaker.dart';
 
 class ConferenceModel {
-  String ref;
+  var ref;
   String title;
   DateTime date;
   String place;
@@ -11,8 +12,12 @@ class ConferenceModel {
   String description;
   String speakers;
   String tag;
+  var listSpeakerRef = [];
 
-  ConferenceMode({Map<String, dynamic> data, String ref}) {
+  FirebaseFirestore firestore =
+      FirebaseFirestore.instance; // instance to firestore
+
+  ConferenceModel({Map<String, dynamic> data, String ref}) {
     this.ref = ref;
     if (data != null) {
       this.title = data['title'];
@@ -25,17 +30,47 @@ class ConferenceModel {
     }
   }
 
-    Future confSetup() async {
-      final dbReference = FirebaseFirestore.instance;
+  Future confSetup() async {
+    findSpeakersRef();
+    // gets the reference to add reference to conference_speaker.
+    this.ref = await firestore.collection('Conference').add({
+      'title': this.title,
+      'date': this.date,
+      'location': this.place,
+      'rate': this.rate,
+      'description': this.description,
+      'tag': this.tag
+    });
+    return this.ref;
+  }
 
-      return await dbReference.collection('Conference').add({
-        'title': this.title,
-        'date': this.date,
-        'location': this.place,
-        'rate': this.rate,
-        'description': this.description,
-        'tag': this.tag
-      });
+  // If speaker found return ref,
+  Future findSpeakersRef() async {
+
+    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+
+    for (var username in usernames) {
+      // If there is a speaker with this username in database.
+      try {
+        firestore
+            .collection("Speaker")
+            .where("username", isEqualTo: username)
+            .get()
+            .then((speakerRef) {
+          listSpeakerRef.add(speakerRef.docs[0].data());
+          print(speakerRef.docs[0].data());
+        });
+      } catch (Error) {     // There isnt a speaker in the data base, so creates it.
+        Speaker speaker = new Speaker.overloadConstructor(username);
+        final speakerRef = speaker.speakerSetup();
+        listSpeakerRef.add(speakerRef);
+        print(speakerRef);
+      }
     }
   }
+
+  Future addToConferenceTable(ConferenceRef, Speakers) async {
+
+  }
+}
 // table relating conferences and users => to think
