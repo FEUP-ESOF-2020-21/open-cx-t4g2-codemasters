@@ -41,6 +41,8 @@ class ConferenceModel {
       'description': this.description,
       'tag': this.tag
     });
+    print("conferece");
+    print(this.ref);
     return this.ref;
   }
 
@@ -55,16 +57,16 @@ class ConferenceModel {
             .collection("Speaker")
             .where("username", isEqualTo: username)
             .get()
-            .then((speakerRef) {
-          if (speakerRef.docs.length == 0){
+            .then((speakerRef) async {
+          if (speakerRef.docs.length == 0) {
             Speaker speaker = new Speaker.overloadConstructor(username);
-            final speakerRef = speaker.speakerSetup();
+            final speakerRef = await speaker.speakerSetup();
             listSpeakerRef.add(speakerRef);
             print(speakerRef);
           }
           else{
             listSpeakerRef.add(speakerRef.docs[0].data());
-            print(speakerRef.docs[0].data());
+            print(speakerRef.docs[0].reference);
           }
         });
 

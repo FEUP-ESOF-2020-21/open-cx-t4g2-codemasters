@@ -22,7 +22,7 @@ class Speaker {
   }
 
   Future speakerSetup() async{
-    return firestore.collection("Speaker").add({
+    return await firestore.collection("Speaker").add({
       'description': this._description,
       'name': "",
       'rating': this.rating,
