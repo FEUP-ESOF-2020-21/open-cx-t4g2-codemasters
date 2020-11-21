@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Speaker {
   // final int id;
   String _username;
-  String _name = "";
+  String _name = "unknown";
   int rating = 0;
   String _image = "";
   String _description = "";
@@ -24,7 +24,7 @@ class Speaker {
   Future speakerSetup() async{
     return await firestore.collection("Speaker").add({
       'description': this._description,
-      'name': "",
+      'name': this._name,
       'rating': this.rating,
       'username': this._username
     });

@@ -12,7 +12,6 @@ class ConferenceModel {
   String description;
   String speakers;
   String tag;
-  var listSpeakerRef = [];
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
@@ -31,7 +30,6 @@ class ConferenceModel {
   }
 
   Future confSetup() async {
-    findSpeakersRef();
     // gets the reference to add reference to conference_speaker.
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -41,40 +39,37 @@ class ConferenceModel {
       'description': this.description,
       'tag': this.tag
     });
-    print("conferece");
-    print(this.ref);
+
+    findSpeakersRef();
     return this.ref;
   }
 
   // If speaker found return ref,
   Future findSpeakersRef() async {
-
     var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
 
     for (var username in usernames) {
       // If there is a speaker with this username in database.
-        firestore
-            .collection("Speaker")
-            .where("username", isEqualTo: username)
-            .get()
-            .then((speakerRef) async {
-          if (speakerRef.docs.length == 0) {
-            Speaker speaker = new Speaker.overloadConstructor(username);
-            final speakerRef = await speaker.speakerSetup();
-            listSpeakerRef.add(speakerRef);
-            print(speakerRef);
-          }
-          else{
-            listSpeakerRef.add(speakerRef.docs[0].data());
-            print(speakerRef.docs[0].reference);
-          }
-        });
-
+      firestore
+          .collection("Speaker")
+          .where("username", isEqualTo: username)
+          .get()
+          .then((speakerRef) async {
+        if (speakerRef.docs.length == 0) {
+          Speaker speaker = new Speaker.overloadConstructor(username);
+          final speakerRef = await speaker.speakerSetup();
+          await addToConferenceTable(speakerRef);
+        } else {
+          await this.addToConferenceTable(speakerRef.docs[0].reference);
+        }
+      });
     }
   }
 
-  Future addToConferenceTable(ConferenceRef, Speakers) async {
-
+  Future addToConferenceTable(speakerRef) async {
+    await firestore
+        .collection("Conference_Speakers")
+        .add({'conference': this.ref, 'speaker': speakerRef});
   }
 }
 // table relating conferences and users => to think
