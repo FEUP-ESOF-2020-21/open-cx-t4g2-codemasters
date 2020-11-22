@@ -195,7 +195,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
             confModel.rate = 0;
-            print(confModel.speakers);
             confModel.confSetup();
             _home.revertToPrevScreen();
           }

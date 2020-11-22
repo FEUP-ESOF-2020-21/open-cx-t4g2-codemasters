@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
-import 'speaker.dart';
 
 class ConferenceModel {
-  var ref;
+  String ref;
   String title;
   DateTime date;
   String place;
@@ -13,10 +12,7 @@ class ConferenceModel {
   String speakers;
   String tag;
 
-  FirebaseFirestore firestore =
-      FirebaseFirestore.instance; // instance to firestore
-
-  ConferenceModel({Map<String, dynamic> data, String ref}) {
+  ConferenceMode({Map<String, dynamic> data, String ref}) {
     this.ref = ref;
     if (data != null) {
       this.title = data['title'];
@@ -29,47 +25,17 @@ class ConferenceModel {
     }
   }
 
-  Future confSetup() async {
-    // gets the reference to add reference to conference_speaker.
-    this.ref = await firestore.collection('Conference').add({
-      'title': this.title,
-      'date': this.date,
-      'location': this.place,
-      'rate': this.rate,
-      'description': this.description,
-      'tag': this.tag
-    });
+    Future confSetup() async {
+      final dbReference = FirebaseFirestore.instance;
 
-    findSpeakersRef();
-    return this.ref;
-  }
-
-  // If speaker found return ref,
-  Future findSpeakersRef() async {
-    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
-
-    for (var username in usernames) {
-      // If there is a speaker with this username in database.
-      firestore
-          .collection("Speaker")
-          .where("username", isEqualTo: username)
-          .get()
-          .then((speakerRef) async {
-        if (speakerRef.docs.length == 0) {
-          Speaker speaker = new Speaker.overloadConstructor(username);
-          final speakerRef = await speaker.speakerSetup();
-          await addToConferenceTable(speakerRef);
-        } else {
-          await this.addToConferenceTable(speakerRef.docs[0].reference);
-        }
+      return await dbReference.collection('Conference').add({
+        'title': this.title,
+        'date': this.date,
+        'location': this.place,
+        'rate': this.rate,
+        'description': this.description,
+        'tag': this.tag
       });
     }
   }
-
-  Future addToConferenceTable(speakerRef) async {
-    await firestore
-        .collection("Conference_Speakers")
-        .add({'conference': this.ref, 'speaker': speakerRef});
-  }
-}
 // table relating conferences and users => to think
