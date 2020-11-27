@@ -17,16 +17,29 @@ abstract class FeedCarousel extends StatelessWidget {
     });
   }
 
-  Text _buildRatingStars(int rating) {
-    String stars = '';
+  Row _buildRatingStars(int rating) {
+    String starsYellow = '';
+    String starsWhite = '';
     for (int i = 0; i < rating; i++) {
-      stars += '⭐ ';
+      starsYellow += '⭐ ';
     }
     for (int i = 0; i < 5 - rating; i++) {
-      stars += '☆ ';
+      starsWhite += '☆ ';
     }
-    stars.trim();
-    return Text(stars);
+    starsYellow.trim();
+    starsWhite.trim();
+    return Row(
+      children: [
+        Text(
+          starsYellow,
+          textScaleFactor: 1.2,
+        ),
+        Text(
+          starsWhite,
+          textScaleFactor: 1.5,
+        )
+      ],
+    );
   }
 
   @override
