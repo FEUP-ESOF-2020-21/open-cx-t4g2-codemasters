@@ -10,10 +10,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 
 
+
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
 
   CreateConferenceScreen(this._home);
+
 
   @override
   _CreateConferenceScreenState createState() =>
@@ -44,6 +46,7 @@ String notEmptyValidator(String value) {
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
 
+  File _image;
   _CreateConferenceScreenState(this._home);
 
   final _picker = ImagePicker();
@@ -86,13 +89,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         GestureDetector(
           child: Container(
-            child: confModel.img == null
+            child: _image == null
                 ? Image.asset(
               "assets/icons/1x/plus_icon.png",
               scale: 30,
             )
                 : Image.file(
-              confModel.img,
+              _image,
               scale: 10,
             ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
@@ -196,7 +199,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
             confModel.rate = 0;
-            print(confModel.speakers);
+            confModel.img = _image;
             confModel.confSetup();
             _home.revertToPrevScreen();
           }
@@ -238,8 +241,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     final image = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
-      if (image != null)
-        confModel.img = File(image.path);
+      if (image != null) {
+        _image = File(image.path);
+      }
       else
         print("No image selected!");
     });

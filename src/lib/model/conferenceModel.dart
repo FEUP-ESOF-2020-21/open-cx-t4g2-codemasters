@@ -1,6 +1,8 @@
+import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
+import 'cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;
@@ -41,6 +43,7 @@ class ConferenceModel {
     });
 
     findSpeakersRef();
+    addImage();
     return this.ref;
   }
 
@@ -70,6 +73,13 @@ class ConferenceModel {
     await firestore
         .collection("Conference_Speakers")
         .add({'conference': this.ref, 'speaker': speakerRef});
+  }
+
+  Future addImage() async{
+    var storeImage = new CloudStorageService(this.img);
+    print(this.img);
+    print(storeImage.uploadImage());
+    print("HEEEEEEEEEERE");
   }
 }
 // table relating conferences and users => to think
