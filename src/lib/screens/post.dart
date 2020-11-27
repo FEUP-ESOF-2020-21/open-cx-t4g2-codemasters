@@ -168,7 +168,11 @@ class PostScreen extends StatelessWidget {
       borderRadius: BorderRadius.circular(22),
     ));
     stackChildren.add(Container(
-      child: Text(this._conf.title, style: bigTextWhite),
+      child: Text(
+        this._conf.title,
+        style: bigTextWhite,
+        textAlign: TextAlign.center,
+      ),
     ));
 
     return Stack(
