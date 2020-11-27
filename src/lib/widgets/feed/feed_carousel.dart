@@ -1,4 +1,5 @@
 import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import '../../style.dart';
@@ -15,31 +16,6 @@ abstract class FeedCarousel extends StatelessWidget {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
     });
-  }
-
-  Row _buildRatingStars(int rating) {
-    String starsYellow = '';
-    String starsWhite = '';
-    for (int i = 0; i < rating; i++) {
-      starsYellow += '⭐ ';
-    }
-    for (int i = 0; i < 5 - rating; i++) {
-      starsWhite += '☆ ';
-    }
-    starsYellow.trim();
-    starsWhite.trim();
-    return Row(
-      children: [
-        Text(
-          starsYellow,
-          textScaleFactor: 1.2,
-        ),
-        Text(
-          starsWhite,
-          textScaleFactor: 1.5,
-        )
-      ],
-    );
   }
 
   @override
@@ -136,8 +112,7 @@ abstract class FeedCarousel extends StatelessWidget {
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
-                        child:
-                            _buildRatingStars(conferences[i]['rate'].round()),
+                        child: RatingStars(conferences[i]['rate'].round()),
                       ),
                     ],
                   ),
