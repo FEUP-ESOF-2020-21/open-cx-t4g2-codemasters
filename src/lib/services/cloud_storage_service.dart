@@ -9,8 +9,6 @@ class CloudStorageService {
   File imgFile;
   CloudStorageService(this.imgFile);
    uploadImage() async{
-     print("UPLOAD IMAGE");
-     print(imgFile);
     var imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
     // Get the reference to the file we want to create
     final firebaseStorageRef = FirebaseStorage.instance.ref().child(imageFileName);
@@ -22,6 +20,7 @@ class CloudStorageService {
     await firebaseStorageRef.getDownloadURL().then((fileURL) {
       returnURL =  fileURL;
     });
+    print(returnURL);
     return returnURL;
 
   }

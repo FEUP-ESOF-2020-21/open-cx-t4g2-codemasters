@@ -10,6 +10,7 @@ class ConferenceModel {
   DateTime date;
   String place;
   File img;
+  String imgURL;
   int rate;
   String description;
   String speakers;
@@ -33,18 +34,20 @@ class ConferenceModel {
 
   Future confSetup() async {
     // gets the reference to add reference to conference_speaker.
+    await addImage();
+    print("IMAGE URL");
+    print(this.imgURL);
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,
       'location': this.place,
       'rate': this.rate,
       'description': this.description,
-      'tag': this.tag
+      'tag': this.tag,
+      'img': this.imgURL
     });
 
     findSpeakersRef();
-    addImage();
-    return this.ref;
   }
 
   // If speaker found return ref,
@@ -77,9 +80,7 @@ class ConferenceModel {
 
   Future addImage() async{
     var storeImage = new CloudStorageService(this.img);
-    print(this.img);
-    print(storeImage.uploadImage());
-    print("HEEEEEEEEEERE");
+    this.imgURL = await storeImage.uploadImage();
   }
 }
 // table relating conferences and users => to think
