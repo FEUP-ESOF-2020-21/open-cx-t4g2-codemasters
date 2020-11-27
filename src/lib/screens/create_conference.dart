@@ -45,6 +45,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+  List<String> _speakerNames;
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -193,11 +194,42 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       child: FlatButton(
         onPressed: () async {
           if (_formKey.currentState.validate()) {
+            /*
             _formKey.currentState.save();
             confModel.rate = 0;
             print(confModel.speakers);
             confModel.confSetup();
-            _home.revertToPrevScreen();
+            _home.revertToPrevScreen();*/
+            showDialog(
+              context: context,
+              child: SimpleDialog(
+                title: Text("Insert the speakers' names:"),
+                children: [
+                  SizedBox(height: 20),
+                  Field(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    onSaved: (value) => _speakerNames = value.split(','),
+                    validator: notEmptyValidator,
+                  ),
+                  Container(
+                    child: FlatButton(
+                      onPressed: () => print("hi"),
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Text(
+                        "OK",
+                        style: submitTextWhite,
+                      ),
+                      color: Colors.orangeAccent,
+                    ),
+                    padding: EdgeInsets.all(50),
+                  ),
+                ],
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              ),
+            );
           }
         },
         padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
