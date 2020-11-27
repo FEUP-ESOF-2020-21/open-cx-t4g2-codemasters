@@ -116,7 +116,7 @@ abstract class FeedCarousel extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     hasImage(conferences[i]),
-                    fit: BoxFit.contain
+                    fit: BoxFit.fill,
                   ),
                 ),
                 SizedBox(height: 6),
