@@ -114,9 +114,16 @@ abstract class FeedCarousel extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
+                  child: Container(
+                    width: double.infinity,
+                    height: 160,
+                    child: Align(
+                    alignment: Alignment.topCenter,
+                    child: Image.network(
                     hasImage(conferences[i]),
-                    fit: BoxFit.fill,
+                    fit: BoxFit.cover
+                  ),
+                  ),
                   ),
                 ),
                 SizedBox(height: 6),
