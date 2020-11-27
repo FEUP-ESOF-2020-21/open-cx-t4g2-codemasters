@@ -108,7 +108,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     int maxSizeInput = 200;
     Function valFunc = notEmptyValidator;
     TextInputType inputType = TextInputType.text;
-    double _width = 283;
+    double _width = 233;
 
     switch (leftElemText) {
       case "Title:":
@@ -135,7 +135,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           onSavedFunction = (String value) => confModel.place = value;
           hintText = "Insert the place here";
-          _width = 273;
           break;
         }
       case "Speakers:":
@@ -143,14 +142,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           //TODO: what to do with speakers
           onSavedFunction = (String value) => confModel.speakers = value;
           hintText = "Insert the speakers here";
-          _width = 238;
           break;
         }
       case "Tag:":
         {
           onSavedFunction = (String value) => confModel.tag = value;
           hintText = "Insert the tag here";
-          _width = 290;
           break;
         }
 
@@ -178,11 +175,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       ),
       Container(
         child: field,
+        margin: EdgeInsets.only(right: 20),
       )
     ];
 
     return Row(
       children: rowElems,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
     );
   }
 
