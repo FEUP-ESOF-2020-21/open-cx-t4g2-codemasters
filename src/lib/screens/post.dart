@@ -2,6 +2,7 @@ import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
+import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -181,6 +182,23 @@ class PostScreen extends StatelessWidget {
     );
   }
 
+  Row generateRating() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          this._conf.rate.toDouble().toString() + " / 5.0",
+          textScaleFactor: 1.2,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        RatingStars(this._conf.rate.round()),
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     List<Widget> listViewElems = List();
 
@@ -203,6 +221,7 @@ class PostScreen extends StatelessWidget {
     // Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
     Column tagColumn = generateTagColumn();
+    Row rating = generateRating();
 
     listViewElems.add(imageStack);
     listViewElems.add(SizedBox(height: 20));
@@ -214,6 +233,8 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(SizedBox(height: 20));
     listViewElems.add(descriptionColumn);
     listViewElems.add(tagColumn);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(rating);
 
     Scaffold scaffold = Scaffold(
       body: ListView(

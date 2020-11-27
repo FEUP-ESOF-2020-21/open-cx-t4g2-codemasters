@@ -28,6 +28,10 @@ class Conference {
     return _place;
   }
 
+  int get rate {
+    return _rating;
+  }
+
   Future<List<Speaker>> getSpeakers() async {
     // List<Speaker> confSpeaker = [];
 
