@@ -22,6 +22,9 @@ abstract class FeedCarousel extends StatelessWidget {
     for (int i = 0; i < rating; i++) {
       stars += '⭐ ';
     }
+    for (int i = 0; i < 5 - rating; i++) {
+      stars += '☆ ';
+    }
     stars.trim();
     return Text(stars);
   }
