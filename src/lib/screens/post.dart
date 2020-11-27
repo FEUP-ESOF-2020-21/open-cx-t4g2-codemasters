@@ -182,6 +182,23 @@ class PostScreen extends StatelessWidget {
     );
   }
 
+  Row generateRating() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          this._conf.rate.toString() + " / 5",
+          textScaleFactor: 1.2,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        RatingStars(this._conf.rate.round()),
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     List<Widget> listViewElems = List();
 
@@ -204,6 +221,7 @@ class PostScreen extends StatelessWidget {
     // Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
     Column tagColumn = generateTagColumn();
+    Row rating = generateRating();
 
     listViewElems.add(imageStack);
     listViewElems.add(SizedBox(height: 20));
@@ -215,7 +233,8 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(SizedBox(height: 20));
     listViewElems.add(descriptionColumn);
     listViewElems.add(tagColumn);
-    listViewElems.add(RatingStars(this._conf.rate.round()));
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(rating);
 
     Scaffold scaffold = Scaffold(
       body: ListView(
