@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:ESOF/model/cloud_storage_result.dart';
 import 'package:flutter/material.dart';
 
+// This class uploads a image to the database
 class CloudStorageService {
-
   File imgFile;
   CloudStorageService(this.imgFile);
    uploadImage() async{
@@ -16,12 +15,7 @@ class CloudStorageService {
     // upload
     StorageUploadTask storageSnapshot = firebaseStorageRef.putFile(imgFile);
     await storageSnapshot.onComplete;
-    String returnURL;
-    await firebaseStorageRef.getDownloadURL().then((fileURL) {
-      returnURL =  fileURL;
-    });
-    print(returnURL);
-    return returnURL;
+    return imageFileName;
 
   }
 }

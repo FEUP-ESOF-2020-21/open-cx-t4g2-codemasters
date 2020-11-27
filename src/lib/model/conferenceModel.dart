@@ -2,7 +2,7 @@ import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
-import 'cloud_storage_result.dart';
+import '../services/cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;
@@ -10,7 +10,7 @@ class ConferenceModel {
   DateTime date;
   String place;
   File img;
-  String imgURL;
+  String imgName;
   int rate;
   String description;
   String speakers;
@@ -35,8 +35,6 @@ class ConferenceModel {
   Future confSetup() async {
     // gets the reference to add reference to conference_speaker.
     await addImage();
-    print("IMAGE URL");
-    print(this.imgURL);
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,
@@ -44,7 +42,7 @@ class ConferenceModel {
       'rate': this.rate,
       'description': this.description,
       'tag': this.tag,
-      'img': this.imgURL
+      'img': this.imgName
     });
 
     findSpeakersRef();
@@ -80,7 +78,7 @@ class ConferenceModel {
 
   Future addImage() async{
     var storeImage = new CloudStorageService(this.img);
-    this.imgURL = await storeImage.uploadImage();
+    this.imgName = await storeImage.uploadImage();
   }
 }
 // table relating conferences and users => to think
