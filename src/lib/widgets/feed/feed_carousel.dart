@@ -14,32 +14,16 @@ abstract class FeedCarousel extends StatelessWidget {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
-
-      // Stream<QuerySnapshot> inst = FirebaseFirestore.instance
-      //     .collection('Conference_Speakers')
-      //     .where('conference', isEqualTo: conf.reference)
-      //     .snapshots();
-
-      // inst.forEach((snapshot) {
-      //   // print('... ' + conf.reference.id);
-      //   if (snapshot.docs.length > 0) {
-      //     print('--');
-      //     DocumentReference aux = snapshot.docs[0].data()['speaker'];
-      //     aux.get().then((value) => print(value.data()));
-      //     // print(snapshot.docs[0].data()['speaker']);
-      //     // print(snapshot.docs[1].data()['speaker'].id);
-      //     print('--');
-      //   }
-      //   // DocumentReference newInst = FirebaseFirestore.instance
-      //   //     .collection('Speaker')
-      //   //     .doc(snapshot.docs[0].data()['speaker'].id);
-      //   // print(newInst.get());
-      // });
-      // inst.map((snapshot) => snapshot.docs.forEach((doc) {
-      //       print(doc.reference);
-      //     }));
-      // print(conf.reference);
     });
+  }
+
+  Text _buildRatingStars(int rating) {
+    String stars = '';
+    for (int i = 0; i < rating; i++) {
+      stars += '⭐ ';
+    }
+    stars.trim();
+    return Text(stars);
   }
 
   @override
@@ -66,7 +50,7 @@ abstract class FeedCarousel extends StatelessWidget {
           ),
         ),
         Container(
-          height: 250.0,
+          height: 270.0,
           color: Colors.transparent,
           child: ListView(
             scrollDirection: Axis.horizontal,
@@ -133,6 +117,11 @@ abstract class FeedCarousel extends StatelessWidget {
                         style: descriptionTextFeed,
                         textAlign: TextAlign.left,
                         maxLines: 2,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+                        child:
+                            _buildRatingStars(conferences[i]['rate'].round()),
                       ),
                     ],
                   ),

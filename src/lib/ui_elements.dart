@@ -1,4 +1,5 @@
 import 'package:ESOF/screens/create_conference.dart';
+import 'package:ESOF/screens/explore.dart';
 import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/profile.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +27,7 @@ class _MyHomeState extends State<MyHome> {
     _pages = [
       CreateConferenceScreen(this),
       FeedScreen(),
-      Center(child: Text('explore')),
+      ExploreScreen(),
       ProfileScreen(),
     ];
   }
