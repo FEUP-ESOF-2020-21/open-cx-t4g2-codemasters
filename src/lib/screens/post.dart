@@ -167,7 +167,7 @@ class PostScreen extends StatelessWidget {
 
     stackChildren.add(ClipRRect(
       child: Container(
-        child: Image.asset(this._conf.photoPath),
+        child: Image.network(this._conf.photoPath),
       ),
       borderRadius: BorderRadius.circular(22),
     ));

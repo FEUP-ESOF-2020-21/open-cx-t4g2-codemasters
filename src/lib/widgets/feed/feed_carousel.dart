@@ -92,7 +92,7 @@ abstract class FeedCarousel extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PostScreen(new Conference(
-                        hasImage(conferences[i]['img']),
+                        hasImage(conferences[i]),
                         conferences[i]['title'],
                         DateTime.fromMillisecondsSinceEpoch(
                             conferences[i]['date'].seconds * 1000),
@@ -116,7 +116,7 @@ abstract class FeedCarousel extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                   child: Image.network(
                     hasImage(conferences[i]),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.contain
                   ),
                 ),
                 SizedBox(height: 6),
