@@ -17,7 +17,11 @@ class CloudStorageService {
     // upload
     StorageUploadTask storageSnapshot = firebaseStorageRef.putFile(imgFile);
     await storageSnapshot.onComplete;
-    return imageFileName;
+    String returnURL;
+    await firebaseStorageRef.getDownloadURL().then((fileURL) {
+      returnURL =  fileURL;
+    });
+    return returnURL;
 
   }
 }

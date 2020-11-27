@@ -9,12 +9,16 @@ abstract class FeedCarousel extends StatelessWidget {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef =
       []; // Holds references to the Conferences in Firebase
+  
+  // If the conference has image return the url, otherwise returns a default.
+  hasImage(conference) {
+      return conference['img'] == null ? 'http://www.theides.org/img/about.jpg' : conference['img'];
+  }
 
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
-
       // Stream<QuerySnapshot> inst = FirebaseFirestore.instance
       //     .collection('Conference_Speakers')
       //     .where('conference', isEqualTo: conf.reference)
@@ -88,7 +92,7 @@ abstract class FeedCarousel extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) => PostScreen(new Conference(
-                        'assets/images/conference_test.jpg',
+                        hasImage(conferences[i]['img']),
                         conferences[i]['title'],
                         DateTime.fromMillisecondsSinceEpoch(
                             conferences[i]['date'].seconds * 1000),
@@ -110,8 +114,8 @@ abstract class FeedCarousel extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image(
-                    image: AssetImage('assets/images/conference_test.jpg'),
+                  child: Image.network(
+                    hasImage(conferences[i]),
                     fit: BoxFit.cover,
                   ),
                 ),

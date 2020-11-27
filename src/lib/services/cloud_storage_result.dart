@@ -4,9 +4,9 @@ class CloudStorageResult {
   String imageUrl;
   final String imageFileName;
 
-  CloudStorageResult(this.imageUrl, this.imageFileName);
+  CloudStorageResult(this.imageFileName);
 
-  downloadImage() async {
+  urlImage() async {
     final ref = FirebaseStorage.instance.ref().child(this.imageFileName);
     this.imageUrl = await ref.getDownloadURL();
   }

@@ -10,7 +10,7 @@ class ConferenceModel {
   DateTime date;
   String place;
   File img;
-  String imgName;
+  String imgURL;
   int rate;
   String description;
   String speakers;
@@ -18,19 +18,6 @@ class ConferenceModel {
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
-
-  ConferenceModel({Map<String, dynamic> data, String ref}) {
-    this.ref = ref;
-    if (data != null) {
-      this.title = data['title'];
-      this.date = data['date'];
-      this.place = data['place'];
-      this.img = data['imgPath']; // TODO: how to hadle the image.
-      this.rate = data['rate'];
-      this.description = data['description'];
-      this.tag = data['tag'];
-    }
-  }
 
   Future confSetup() async {
     // gets the reference to add reference to conference_speaker.
@@ -42,7 +29,7 @@ class ConferenceModel {
       'rate': this.rate,
       'description': this.description,
       'tag': this.tag,
-      'img': this.imgName
+      'img': this.imgURL
     });
 
     findSpeakersRef();
@@ -78,7 +65,7 @@ class ConferenceModel {
 
   Future addImage() async{
     var storeImage = new CloudStorageService(this.img);
-    this.imgName = await storeImage.uploadImage();
+    this.imgURL = await storeImage.uploadImage();
   }
 }
 // table relating conferences and users => to think
