@@ -1,7 +1,14 @@
+import 'package:firebase_storage/firebase_storage.dart';
+
 class CloudStorageResult {
-  final String imageUrl;
+  String imageUrl;
   final String imageFileName;
 
   CloudStorageResult(this.imageUrl, this.imageFileName);
+
+  downloadImage() async {
+    final ref = FirebaseStorage.instance.ref().child(this.imageFileName);
+    this.imageUrl = await ref.getDownloadURL();
+  }
 }
 

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 class CloudStorageService {
   File imgFile;
   CloudStorageService(this.imgFile);
+
+
    uploadImage() async{
     var imageFileName = DateTime.now().millisecondsSinceEpoch.toString();
     // Get the reference to the file we want to create
