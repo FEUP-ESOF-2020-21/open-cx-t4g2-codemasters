@@ -2,6 +2,7 @@ import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
+import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -214,6 +215,7 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(SizedBox(height: 20));
     listViewElems.add(descriptionColumn);
     listViewElems.add(tagColumn);
+    listViewElems.add(RatingStars(this._conf.rate.round()));
 
     Scaffold scaffold = Scaffold(
       body: ListView(

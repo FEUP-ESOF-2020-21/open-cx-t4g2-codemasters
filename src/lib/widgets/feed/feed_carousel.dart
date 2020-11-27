@@ -42,7 +42,7 @@ abstract class FeedCarousel extends StatelessWidget {
           ),
         ),
         Container(
-          height: 270.0,
+          height: 280.0,
           color: Colors.transparent,
           child: ListView(
             scrollDirection: Axis.horizontal,
