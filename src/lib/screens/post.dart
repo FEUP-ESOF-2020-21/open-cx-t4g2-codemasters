@@ -8,6 +8,8 @@ import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+import 'add_comment.dart';
+
 class PostScreen extends StatelessWidget {
   final Conference _conf;
 
@@ -233,8 +235,8 @@ class PostScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FlatButton(
-          onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => FeedScreen())),
+          onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => AddCommentScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
