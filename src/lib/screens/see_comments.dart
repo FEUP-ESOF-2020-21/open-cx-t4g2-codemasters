@@ -1,5 +1,6 @@
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/style.dart';
+import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';
 
 class SeeCommentsScreen extends StatefulWidget {
@@ -58,9 +59,15 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
               SizedBox(
                 height: 10,
               ),
-              Text(
-                comments[i]['user'],
-                style: smallerText,
+              Row(
+                children: [
+                  Text(
+                    comments[i]['user'],
+                    style: smallerText,
+                  ),
+                  SizedBox(width: 10),
+                  RatingStars(4),
+                ],
               ),
               SizedBox(
                 height: 10,
