@@ -1,6 +1,7 @@
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/feed.dart';
+import 'package:ESOF/screens/rate_talk.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
@@ -206,7 +207,7 @@ class PostScreen extends StatelessWidget {
       children: [
         FlatButton(
           onPressed: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => FeedScreen())),
+              .push(MaterialPageRoute(builder: (context) => RateTalkScreen())),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
