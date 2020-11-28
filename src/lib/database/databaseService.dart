@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:ESOF/model/userModel.dart';
 
 class DatabaseService {
@@ -14,5 +13,14 @@ class DatabaseService {
     UserModel userM = UserModel(data: userData, ref: user.docs[0].id);
 
     return userM;
+  }
+
+  static Future updateUser(
+      String ref, String username, String description, String imagePath) async {
+    await dbReference.collection('Users').doc(ref).update({
+      'username': username,
+      'description': description,
+      'imgPath': imagePath
+    });
   }
 }

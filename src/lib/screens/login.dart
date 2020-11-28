@@ -1,7 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/screens/signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import "../style.dart";
@@ -119,12 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
           color: Colors.orangeAccent,
           child: Text(
             'LOGIN',
-            style: TextStyle(
-              color: Colors.white,
-              letterSpacing: 2.0,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
+            style: submitTextWhite,
           ),
         ),
       ),

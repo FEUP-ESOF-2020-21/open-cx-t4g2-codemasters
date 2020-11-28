@@ -41,7 +41,8 @@ Thank you!
 ----
 
 ## Product Vision
-People use Rate-A-Talk to share and obtain new knowledge based on what the most popular talks have to offer.
+People use Rate-A-Talk app to share and fetch the most popular talks.
+
 
 ----
 ## Elevator Pitch
@@ -49,7 +50,7 @@ People use Rate-A-Talk to share and obtain new knowledge based on what the most 
 Do you ever get overwhelmed by the quantity of talks and how scattered they are through social media?
 
 Rate-A-Talk aims to make your life simpler and provide a platform where you can discover the best talks suited for you!
-In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what sets us apart from the competition is the ability to rank the talks and their speakers! This way, you can find the best speakers to listen from.
+In the app, you can find all kinds of talks, from Machine Learning to Perfomative Arts. But what sets us apart from the competition is the ability to rank the talks and their speakers in a colaborative way! Thus, you can find the best speakers to listen from.
 
 So, what are you waiting for? Sign up today!
 
@@ -68,8 +69,8 @@ So, what are you waiting for? Sign up today!
 ### Search for a talk
 
 * **Actor**: Attendee
-* **Description**: Allows the user to search for a talk post.
-* **Preconditions and Postconditions**: The user may want to learn more about a talk, like the date and location. After searching, he/she will know everything about it.
+* **Description**: Allows the user to search for a talk post. The user can search by name, location, or even date. The search redirects the user to the post of the talk
+* **Preconditions and Postconditions**: The user may want to learn more about a talk, like the date and location. After the search, he/she will know everything about it.
 * **Normal Flow**:
     * **User**: Clicks in the search bar.
     * **System**: Opens the search submenu and presents the last searches from the user.
@@ -86,7 +87,7 @@ So, what are you waiting for? Sign up today!
 ### Rate a talk
 
 * **Actor**: Attendee
-* **Description**: Allows the user to rate a talk that he/she attended.
+* **Description**: Allows the user to rate a talk that he/she attended. After the talk, the attendee will be able to rate from 1 star (very bad), to a maximum of 5 start (excellent). 
 * **Preconditions and Postconditions**: The user wants to rate a speaker. After rating, the app processes the rating and displays the new speaker rating.
 * **Normal Flow**:
     * **User**: After the talk, clicks on the link given by
@@ -105,7 +106,7 @@ So, what are you waiting for? Sign up today!
 ### Add a talk
 
 * **Actor**: Speaker
-* **Description**: Allows a speaker to create a talk
+* **Description**: Allows a speaker to create a talk. The speaker introduces information about the talk, like the date, place, duration and other speakers. When finished, the post of the talk will be accessible to all other users.
 * **Preconditions and Postconditions**: The speaker wants to create a talk to let other users know about it
 * **Normal Flow**:
     * **User**: Click on create post button
@@ -123,19 +124,20 @@ So, what are you waiting for? Sign up today!
 
 ## User Stories
 
-### Story #1
 
-As a user, I want to log into the app
+### Story #1
+As a user, i want to insert my personal information and create a password for my account so that I can access the app;
 
 ### User interface mockup
 [a introduzir]
 
 ### Scenery
-* Logging in
-* **Given:** There are fields for entering the username/email and password
-* **When:** The user puts their information in those fields
-* **And:** The provided values are correct
-* **Then:** The user is logged in
+* Opening the app for the first time
+* **Given:** There is an option for creating a new account
+* **When:** The user selects that option
+* **And:** Provides the information required for a profile
+* **Then:** A new profile is created
+
 
 ### Acceptance tests
 [a introduzir]
@@ -146,28 +148,7 @@ As a user, I want to log into the app
 
 
 ### Story #2
-As a user, i want to insert my personal information and create a password for my account;
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* Opening the app for the first time
-* **Given:** There is an option for creating a new account
-* **When:** The user selects that option
-* **And:** Provides the information required for a profile
-* **Then:**A new profile is created
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #3
-As a user I want to be able to rate a talk
+As a user I want to be able to rate a talk so that other users can use my rating to decise if they want to attend a similar talk???
 
 ### User interface mockup
 [a introduzir]
@@ -175,8 +156,8 @@ As a user I want to be able to rate a talk
 ### Scenery
 * Rate a talk.
 * **Given:** A talk that I have attended
-* **When:**I tap “Rate this talk”
-* **Then:**I give a score between 0 and 10
+* **When:** I tap “Rate this talk”
+* **Then:** I give a score between 0 and 10
 
 ### Acceptance tests
 [a introduzir]
@@ -185,8 +166,8 @@ As a user I want to be able to rate a talk
 * Value: Must have
 * Effort: XL
 
-### Story #4
-As a user I want to be able to leave a comment about the talk
+### Story #3
+As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
 ### User interface mockup
 [a introduzir]
@@ -205,8 +186,8 @@ As a user I want to be able to leave a comment about the talk
 * Effort: XL
 
 
-### Story #5
-As a user I want to be able to see the current rating of a talk
+### Story #4
+As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
 ### User interface mockup
 [a introduzir]
@@ -225,8 +206,8 @@ As a user I want to be able to see the current rating of a talk
 * Effort: M
 
 
-### Story #6
-As a user I want to be able to edit the given rating to a talk
+### Story #5
+As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
 
 ### User interface mockup
 [a introduzir]
@@ -245,8 +226,8 @@ As a user I want to be able to edit the given rating to a talk
 * Effort: M
 
 
-### Story #7
-As a user I want to be able to edit my talk’s post
+### Story #6
+As a user I want to be able to edit my talk’s post so that it can reflect the most current and up to date information about my talk 
 
 ### User interface mockup
 [a introduzir]
@@ -266,8 +247,8 @@ As a user I want to be able to edit my talk’s post
 * Effort: M
 
 
-### Story #8
-As a user I want to be able to edit my profile
+### Story #7
+As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
 
 ### User interface mockup
 [a introduzir]
@@ -287,8 +268,8 @@ As a user I want to be able to edit my profile
 * Effort: M
 
 
-### Story #9
-As a user I want to be able to check which talks a speaker participated
+### Story #8
+As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
 
 ### User interface mockup
 [a introduzir]
@@ -307,28 +288,8 @@ As a user I want to be able to check which talks a speaker participated
 * Effort: A DEFINIR
 
 
-### Story #10
-As a user I want to be able to check which talks a lecturer participated in
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* Look up a specific talk
-* **Given:** A talk that is presented in the feed
-* **When:** I click a talk post
-* **Then:** Conference detailed info is presented
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #11
-As a user I want to be able to apply filters to narrow down the search results, such as (the speaker, theme, rating, etc)
+### Story #9
+As a user I want to be able to apply filters to narrow down the search results, such as (the speaker, theme, rating, etc), so that I can find the talks best suited for me and my preferences
 
 ### User interface mockup
 [a introduzir]
@@ -348,8 +309,8 @@ As a user I want to be able to apply filters to narrow down the search results, 
 * Effort: M
 
 
-### Story #12
-As a user I want to be able to sort the search results based on several criteria
+### Story #10
+As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are mote interesting to me
 
 ### User interface mockup
 [a introduzir]
@@ -369,8 +330,8 @@ As a user I want to be able to sort the search results based on several criteria
 * Effort: M
 
 
-### Story #13
-As a user I want to be able to insert a query in the search bar and get matching results
+### Story #11
+As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
 
 ### User interface mockup
 [a introduzir]
@@ -390,8 +351,8 @@ As a user I want to be able to insert a query in the search bar and get matching
 * Effort: XL
 
 
-### Story #14
-As a user I want to be able to interact with the search results (pick one and go to the respective page)
+### Story #12
+As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
 
 ### User interface mockup
 [a introduzir]
@@ -410,8 +371,8 @@ As a user I want to be able to interact with the search results (pick one and go
 * Effort: L
 
 
-### Story #15
-As a user I want to be able to create a post for a talk
+### Story #13
+As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
 ### User interface mockup
 [a introduzir]
@@ -430,8 +391,8 @@ As a user I want to be able to create a post for a talk
 * Effort: L
 
 
-### Story #16
-As a user I want to be able to interact with the feed results (pick one and go to the respective page)
+### Story #14
+As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
 ### User interface mockup
 [a introduzir]

@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/gestures.dart';
-import "package:flutter/material.dart";
 import "speaker.dart";
 
 class Conference {
@@ -30,6 +26,10 @@ class Conference {
 
   String get place {
     return _place;
+  }
+
+  int get rate {
+    return _rating;
   }
 
   Future<List<Speaker>> getSpeakers() async {
