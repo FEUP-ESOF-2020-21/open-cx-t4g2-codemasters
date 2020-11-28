@@ -1,4 +1,3 @@
-import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';

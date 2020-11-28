@@ -1,11 +1,9 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/userModel.dart';
-import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 
-import '../auth/validation.dart';
 import '../style.dart';
 import 'utils/field.dart';
 import 'utils/label.dart';
