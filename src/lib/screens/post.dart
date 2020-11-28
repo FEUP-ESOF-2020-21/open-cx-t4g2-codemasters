@@ -1,7 +1,7 @@
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
-import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/screens/rate_talk.dart';
+import 'package:ESOF/screens/see_comments.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
@@ -257,6 +257,33 @@ class PostScreen extends StatelessWidget {
     );
   }
 
+  Row generateSeeComments(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FlatButton(
+          onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => SeeCommentsScreen())),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.comment_bank,
+                size: 30,
+                color: Colors.grey,
+              ),
+              SizedBox(width: 5.0),
+              Text(
+                'See all comments',
+                style: mediumText,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget build(BuildContext context) {
     List<Widget> listViewElems = List();
 
@@ -282,6 +309,7 @@ class PostScreen extends StatelessWidget {
     Row rating = generateRating();
     Row giveRating = generateGiveRating(context);
     Row giveComment = generateGiveComment(context);
+    Row seeComments = generateSeeComments(context);
 
     listViewElems.add(imageStack);
     listViewElems.add(SizedBox(height: 20));
@@ -299,6 +327,8 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(giveRating);
     listViewElems.add(SizedBox(height: 20));
     listViewElems.add(giveComment);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(seeComments);
 
     Scaffold scaffold = Scaffold(
       body: ListView(
