@@ -1,6 +1,8 @@
+import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
+import '../services/cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;
@@ -8,6 +10,7 @@ class ConferenceModel {
   DateTime date;
   String place;
   File img;
+  String imgURL;
   int rate;
   String description;
   String speakers;
@@ -16,32 +19,20 @@ class ConferenceModel {
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
 
-  ConferenceModel({Map<String, dynamic> data, String ref}) {
-    this.ref = ref;
-    if (data != null) {
-      this.title = data['title'];
-      this.date = data['date'];
-      this.place = data['place'];
-      this.img = data['imgPath']; // TODO: how to hadle the image.
-      this.rate = data['rate'];
-      this.description = data['description'];
-      this.tag = data['tag'];
-    }
-  }
-
   Future confSetup() async {
     // gets the reference to add reference to conference_speaker.
+    await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,
       'location': this.place,
       'rate': this.rate,
       'description': this.description,
-      'tag': this.tag
+      'tag': this.tag,
+      'img': this.imgURL
     });
 
     findSpeakersRef();
-    return this.ref;
   }
 
   // If speaker found return ref,
@@ -70,6 +61,11 @@ class ConferenceModel {
     await firestore
         .collection("Conference_Speakers")
         .add({'conference': this.ref, 'speaker': speakerRef});
+  }
+
+  Future addImage() async{
+    var storeImage = new CloudStorageService(this.img);
+    this.imgURL = await storeImage.uploadImage();
   }
 }
 // table relating conferences and users => to think
