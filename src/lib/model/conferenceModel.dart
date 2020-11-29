@@ -13,7 +13,7 @@ class ConferenceModel {
   String imgURL;
   int rate;
   String description;
-  String speakers;
+  String speakers = "";
   String tag;
 
   FirebaseFirestore firestore =

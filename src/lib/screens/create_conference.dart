@@ -47,7 +47,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
-  List<String> _speakerNames;
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -140,13 +139,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           hintText = "Insert the place here";
           break;
         }
-      case "Speakers:":
-        {
-          //TODO: what to do with speakers
-          onSavedFunction = (String value) => confModel.speakers = value;
-          hintText = "Insert the speakers here";
-          break;
-        }
       case "Tag:":
         {
           onSavedFunction = (String value) => confModel.tag = value;
@@ -188,6 +180,54 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
+  Row generateSpeakerRow(ConferenceModel confModel) {
+    showDialog(
+      context: context,
+      child: SimpleDialog(
+        title: Text("Insert the speakers' names:"),
+        children: [
+          SizedBox(height: 20),
+          Field(
+            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+            onSaved: (value) {
+              confModel.speakers == ""
+                  ? confModel.speakers = value
+                  : confModel.speakers += "," + value;
+            },
+            validator: notEmptyValidator,
+          ),
+          Container(
+            child: Button(
+              buttonText: "OK",
+              onPressedFunc: () => print("hi"),
+            ),
+            padding: EdgeInsets.all(50),
+          ),
+        ],
+        contentPadding: EdgeInsets.symmetric(horizontal: 20),
+      ),
+    );
+
+    List<Widget> rowElems = [
+      Container(
+        child: Text(
+          "Speakers:",
+          style: mediumText,
+        ),
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      ),
+      Container(
+        child: Text("hey"),
+        margin: EdgeInsets.only(right: 20),
+      )
+    ];
+
+    return Row(
+      children: rowElems,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    );
+  }
+
   Container generateSubmitButton(ConferenceModel confModel) {
     return Container(
       margin: EdgeInsets.only(top: 30),
@@ -196,34 +236,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-            /*
             _formKey.currentState.save();
             confModel.rate = 0;
             confModel.img = _image;
             confModel.confSetup();
-            _home.revertToPrevScreen();*/
-            showDialog(
-              context: context,
-              child: SimpleDialog(
-                title: Text("Insert the speakers' names:"),
-                children: [
-                  SizedBox(height: 20),
-                  Field(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    onSaved: (value) => _speakerNames = value.split(','),
-                    validator: notEmptyValidator,
-                  ),
-                  Container(
-                    child: Button(
-                      buttonText: "OK",
-                      onPressedFunc: () => print("hi"),
-                    ),
-                    padding: EdgeInsets.all(50),
-                  ),
-                ],
-                contentPadding: EdgeInsets.symmetric(horizontal: 20),
-              ),
-            );
+            _home.revertToPrevScreen();
           }
         },
       ),
@@ -276,7 +293,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateGenericLabelFieldPair("speakers", confModel),
+      generateSpeakerRow(confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
