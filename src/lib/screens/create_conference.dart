@@ -204,7 +204,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onTap: () => showDialog(
             context: context,
             child: SimpleDialog(
-              title: Text("Insert the speakers' names:"),
+              title: Text("Insert the speaker's name:"),
               children: [
                 SizedBox(height: 20),
                 Form(
