@@ -183,6 +183,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   Row generateSpeakerRow(ConferenceModel confModel) {
     Counter counter = Counter();
+    var formKey = GlobalKey<FormState>();
 
     List<Widget> rowElems = [
       Container(
@@ -193,36 +194,50 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
       counter,
-      Button(
-        buttonText: "hey",
-        margin: EdgeInsets.only(right:20),
-        onPressedFunc: () => showDialog(
-          context: context,
-          child: SimpleDialog(
-            title: Text("Insert the speakers' names:"),
-            children: [
-              SizedBox(height: 20),
-              Field(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                onSaved: (value) {
-                  confModel.speakers == ""
-                      ? confModel.speakers = value
-                      : confModel.speakers += "," + value;
-                },
-                validator: notEmptyValidator,
-              ),
-              Container(
-                child: Button(
-                  buttonText: "OK",
-                  onPressedFunc: () => counter.incrementCounter(),
+      Container(
+        margin: EdgeInsets.only(right: 20),
+        child: GestureDetector(
+          child: Image.asset(
+            "assets/icons/1x/plus_icon.png",
+            scale: 30,
+          ),
+          onTap: () => showDialog(
+            context: context,
+            child: SimpleDialog(
+              title: Text("Insert the speakers' names:"),
+              children: [
+                SizedBox(height: 20),
+                Form(
+                  key: formKey,
+                  child: Field(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    onSaved: (value) {
+                      confModel.speakers == ""
+                          ? confModel.speakers = value
+                          : confModel.speakers += "," + value;
+                    },
+                    validator: notEmptyValidator,
+                  ),
                 ),
-                padding: EdgeInsets.all(50),
-              ),
-            ],
-            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                Container(
+                  child: Button(
+                    buttonText: "OK",
+                    onPressedFunc: () {
+                      if (formKey.currentState.validate()) {
+                        formKey.currentState.save();
+                        counter.incrementCounter();
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  padding: EdgeInsets.all(50),
+                ),
+              ],
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+            ),
           ),
         ),
-      )
+      ),
     ];
 
     return Row(
