@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ESOF/screens/utils/button.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
@@ -11,7 +12,6 @@ class CreateConferenceScreen extends StatefulWidget {
   final _home;
 
   CreateConferenceScreen(this._home);
-
 
   @override
   _CreateConferenceScreenState createState() =>
@@ -91,8 +91,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     scale: 30,
                   )
                 : Image.file(
-                  _image,
-                  scale: 10,
+                    _image,
+                    scale: 10,
                   ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
           ),
@@ -192,8 +192,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     return Container(
       margin: EdgeInsets.only(top: 30),
       padding: EdgeInsets.symmetric(horizontal: 60),
-      child: FlatButton(
-        onPressed: () async {
+      child: Button(
+        buttonText: "Submit",
+        onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
             /*
             _formKey.currentState.save();
@@ -213,17 +214,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     validator: notEmptyValidator,
                   ),
                   Container(
-                    child: FlatButton(
-                      onPressed: () => print("hi"),
-                      padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                      ),
-                      child: Text(
-                        "OK",
-                        style: submitTextWhite,
-                      ),
-                      color: Colors.orangeAccent,
+                    child: Button(
+                      buttonText: "OK",
+                      onPressedFunc: () => print("hi"),
                     ),
                     padding: EdgeInsets.all(50),
                   ),
@@ -233,18 +226,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             );
           }
         },
-        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Text(
-          "Submit",
-          style: submitTextWhite,
-        ),
-        color: Colors.orangeAccent,
-        /* style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
-        ), */
       ),
     );
   }
@@ -277,8 +258,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     setState(() {
       if (image != null) {
         _image = File(image.path);
-      }
-      else
+      } else
         print("No image selected!");
     });
   }

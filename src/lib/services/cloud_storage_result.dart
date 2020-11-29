@@ -11,4 +11,3 @@ class CloudStorageResult {
     this.imageUrl = await ref.getDownloadURL();
   }
 }
-
