@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ESOF/screens/utils/button.dart';
+import 'package:ESOF/screens/utils/counter.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
@@ -181,32 +182,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateSpeakerRow(ConferenceModel confModel) {
-    showDialog(
-      context: context,
-      child: SimpleDialog(
-        title: Text("Insert the speakers' names:"),
-        children: [
-          SizedBox(height: 20),
-          Field(
-            padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-            onSaved: (value) {
-              confModel.speakers == ""
-                  ? confModel.speakers = value
-                  : confModel.speakers += "," + value;
-            },
-            validator: notEmptyValidator,
-          ),
-          Container(
-            child: Button(
-              buttonText: "OK",
-              onPressedFunc: () => print("hi"),
-            ),
-            padding: EdgeInsets.all(50),
-          ),
-        ],
-        contentPadding: EdgeInsets.symmetric(horizontal: 20),
-      ),
-    );
+    Counter counter = Counter();
 
     List<Widget> rowElems = [
       Container(
@@ -216,9 +192,36 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      Container(
-        child: Text("hey"),
-        margin: EdgeInsets.only(right: 20),
+      counter,
+      Button(
+        buttonText: "hey",
+        margin: EdgeInsets.only(right:20),
+        onPressedFunc: () => showDialog(
+          context: context,
+          child: SimpleDialog(
+            title: Text("Insert the speakers' names:"),
+            children: [
+              SizedBox(height: 20),
+              Field(
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                onSaved: (value) {
+                  confModel.speakers == ""
+                      ? confModel.speakers = value
+                      : confModel.speakers += "," + value;
+                },
+                validator: notEmptyValidator,
+              ),
+              Container(
+                child: Button(
+                  buttonText: "OK",
+                  onPressedFunc: () => counter.incrementCounter(),
+                ),
+                padding: EdgeInsets.all(50),
+              ),
+            ],
+            contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          ),
+        ),
       )
     ];
 
