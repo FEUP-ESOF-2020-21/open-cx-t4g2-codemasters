@@ -10,10 +10,12 @@ abstract class FeedCarousel extends StatelessWidget {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef =
       []; // Holds references to the Conferences in Firebase
-  
+
   // If the conference has image return the url, otherwise returns a default.
   hasImage(conference) {
-      return conference['img'] == null ? 'http://www.theides.org/img/about.jpg' : conference['img'];
+    return conference['img'] == null
+        ? 'http://www.theides.org/img/about.jpg'
+        : conference['img'];
   }
 
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
@@ -95,12 +97,10 @@ abstract class FeedCarousel extends StatelessWidget {
                     width: double.infinity,
                     height: 160,
                     child: Align(
-                    alignment: Alignment.topCenter,
-                    child: Image.network(
-                    hasImage(conferences[i]),
-                    fit: BoxFit.cover
-                  ),
-                  ),
+                      alignment: Alignment.topCenter,
+                      child: Image.network(hasImage(conferences[i]),
+                          fit: BoxFit.cover),
+                    ),
                   ),
                 ),
                 SizedBox(height: 6),

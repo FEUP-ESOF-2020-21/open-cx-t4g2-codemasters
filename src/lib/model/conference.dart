@@ -6,7 +6,7 @@ class Conference {
   final String _title;
   final DateTime _happensOn;
   final String _place;
-  final int _rating;
+  final double _rating;
   final String _tag;
 
   DocumentReference _confReference;
@@ -32,7 +32,7 @@ class Conference {
     return _place;
   }
 
-  int get rate {
+  double get rate {
     return _rating;
   }
 

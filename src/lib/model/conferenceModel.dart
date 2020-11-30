@@ -11,7 +11,7 @@ class ConferenceModel {
   String place;
   File img;
   String imgURL;
-  int rate;
+  double rate;
   String description;
   String speakers;
   String tag;
@@ -63,7 +63,7 @@ class ConferenceModel {
         .add({'conference': this.ref, 'speaker': speakerRef});
   }
 
-  Future addImage() async{
+  Future addImage() async {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
