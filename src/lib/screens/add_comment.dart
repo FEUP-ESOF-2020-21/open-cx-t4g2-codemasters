@@ -1,18 +1,32 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddCommentScreen extends StatefulWidget {
+  final DocumentReference currentConf;
+  AddCommentScreen({this.currentConf});
+
   @override
-  _AddCommentScreenState createState() => _AddCommentScreenState();
+  _AddCommentScreenState createState() =>
+      _AddCommentScreenState(currentConf: this.currentConf);
 }
 
 class _AddCommentScreenState extends State<AddCommentScreen> {
   final _formKey = GlobalKey<FormState>();
+  String comment = "";
+
+  final DocumentReference currentConf;
+  _AddCommentScreenState({this.currentConf});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+        body: Form(
+      key: _formKey,
+      child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 250),
         children: [
           Column(
@@ -30,7 +44,10 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                 validator: (String value) {
                   _formKey.currentState.save();
                 },
-                onSaved: (String value) {},
+                onSaved: (String value) {
+                  print(value);
+                  comment = value;
+                },
               ),
               SizedBox(height: 40),
               Row(
@@ -42,7 +59,18 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     color: Colors.orangeAccent,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+
+                        DatabaseService.leaveConfComment(
+                            AuthService.auth.currentUser.uid,
+                            this.currentConf,
+                            comment);
+
+                        Navigator.of(context).pop();
+                      }
+                    },
                     child: Text(
                       'Leave Comment',
                       style: submitTextWhite,
@@ -54,6 +82,6 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
 }

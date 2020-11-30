@@ -17,8 +17,8 @@ class RateTalkScreen extends StatefulWidget {
 }
 
 class _RateTalkScreenState extends State<RateTalkScreen> {
-  double _rating = 0;
-  String _rate_description = "";
+  num _rating = 3;
+  String _rate_description = "It was OK";
 
   final DocumentReference currentConf;
   _RateTalkScreenState({this.currentConf});
@@ -115,8 +115,6 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                       ),
                       color: Colors.orangeAccent,
                       onPressed: () {
-                        // print(_rating);
-                        // print(this.currentConf);
                         DatabaseService.updateUserRating(
                             AuthService.auth.currentUser.uid,
                             this.currentConf,
