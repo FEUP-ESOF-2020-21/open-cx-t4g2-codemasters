@@ -1,5 +1,6 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
+import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -114,13 +115,15 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                       ),
                       color: Colors.orangeAccent,
                       onPressed: () {
-                        print('Ok Button');
-                        print(_rating);
-                        print(this.currentConf);
+                        // print(_rating);
+                        // print(this.currentConf);
                         DatabaseService.updateUserRating(
                             AuthService.auth.currentUser.uid,
                             this.currentConf,
                             _rating);
+
+                        // Return to Feed
+                        Navigator.of(context).pop();
                         Navigator.of(context).pop();
                       },
                       child: Text(

@@ -192,7 +192,7 @@ class PostScreen extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
-          this._conf.rate.toDouble().toString() + " / 5.0",
+          this._conf.rate.toString() + " / 5.0",
           textScaleFactor: 1.2,
         ),
         SizedBox(

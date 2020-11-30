@@ -40,7 +40,7 @@ class DatabaseService {
     });
 
     double averageRatingConf = confRatingSum / numRatings;
-    print(averageRatingConf);
+    // print(averageRatingConf);
 
     confReference.update({'rate': averageRatingConf});
   }
