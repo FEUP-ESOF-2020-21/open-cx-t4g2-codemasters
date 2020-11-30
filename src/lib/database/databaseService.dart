@@ -10,17 +10,17 @@ class DatabaseService {
     QuerySnapshot user = await query.get();
 
     Map<String, dynamic> userData = user.docs[0].data();
-    print(user.docs[0].reference);
-    print(user.docs[0].data());
-    print(user.docs[0].id);
-    UserModel userM = UserModel(data: userData, ref: user.docs[0].id);
+    // print(user.docs[0].reference);
+    // print(user.docs[0].data());
+    // print(user.docs[0].id);
+    UserModel userM = UserModel(data: userData, ref: user.docs[0].reference);
 
     return userM;
   }
 
-  static Future updateUser(
-      String ref, String username, String description, String imagePath) async {
-    await dbReference.collection('Users').doc(ref).update({
+  static Future updateUser(DocumentReference ref, String username,
+      String description, String imagePath) async {
+    await ref.update({
       'username': username,
       'description': description,
       'imgPath': imagePath
