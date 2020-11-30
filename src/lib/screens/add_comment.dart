@@ -9,10 +9,14 @@ class AddCommentScreen extends StatefulWidget {
 
 class _AddCommentScreenState extends State<AddCommentScreen> {
   final _formKey = GlobalKey<FormState>();
+  String comment = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+        body: Form(
+      key: _formKey,
+      child: ListView(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 250),
         children: [
           Column(
@@ -30,7 +34,10 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                 validator: (String value) {
                   _formKey.currentState.save();
                 },
-                onSaved: (String value) {},
+                onSaved: (String value) {
+                  print(value);
+                  comment = value;
+                },
               ),
               SizedBox(height: 40),
               Row(
@@ -42,7 +49,14 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                       borderRadius: BorderRadius.circular(20.0),
                     ),
                     color: Colors.orangeAccent,
-                    onPressed: () => Navigator.of(context).pop(),
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        _formKey.currentState.save();
+                        print('Leave Comment');
+                        print(comment);
+                        Navigator.of(context).pop();
+                      }
+                    },
                     child: Text(
                       'Leave Comment',
                       style: submitTextWhite,
@@ -54,6 +68,6 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
 }
