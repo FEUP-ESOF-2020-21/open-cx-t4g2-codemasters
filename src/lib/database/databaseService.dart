@@ -48,6 +48,7 @@ class DatabaseService {
   static Future updateUserRating(
       String uid, DocumentReference confReference, double rating) async {
     UserModel currentUser = await getUser(uid);
+    print(currentUser);
     Query ratingQuery = dbReference.collection('UserRating_Conference');
     ratingQuery = ratingQuery.where('user', isEqualTo: currentUser.ref);
     ratingQuery = ratingQuery.where('conference', isEqualTo: confReference);
@@ -67,7 +68,19 @@ class DatabaseService {
             .update({'rating': rating});
       }
 
-      updateConfRating(confReference);
+      await updateConfRating(confReference);
+    });
+  }
+
+  static Future leaveConfComment(
+      String uid, DocumentReference confReference, String comment) async {
+    UserModel currentUser = await getUser(uid);
+    DateTime now = DateTime.now();
+    dbReference.collection('Comments').add({
+      'conference': confReference,
+      'user': currentUser.ref,
+      'text': comment,
+      'date': now
     });
   }
 }

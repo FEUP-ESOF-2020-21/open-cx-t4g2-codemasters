@@ -1,15 +1,25 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class AddCommentScreen extends StatefulWidget {
+  final DocumentReference currentConf;
+  AddCommentScreen({this.currentConf});
+
   @override
-  _AddCommentScreenState createState() => _AddCommentScreenState();
+  _AddCommentScreenState createState() =>
+      _AddCommentScreenState(currentConf: this.currentConf);
 }
 
 class _AddCommentScreenState extends State<AddCommentScreen> {
   final _formKey = GlobalKey<FormState>();
   String comment = "";
+
+  final DocumentReference currentConf;
+  _AddCommentScreenState({this.currentConf});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +64,12 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                         _formKey.currentState.save();
                         print('Leave Comment');
                         print(comment);
+                        print(this.currentConf);
+                        DatabaseService.leaveConfComment(
+                            AuthService.auth.currentUser.uid,
+                            this.currentConf,
+                            comment);
+
                         Navigator.of(context).pop();
                       }
                     },

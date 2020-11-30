@@ -17,7 +17,7 @@ class RateTalkScreen extends StatefulWidget {
 }
 
 class _RateTalkScreenState extends State<RateTalkScreen> {
-  double _rating = 3;
+  num _rating = 3;
   String _rate_description = "It was OK";
 
   final DocumentReference currentConf;
