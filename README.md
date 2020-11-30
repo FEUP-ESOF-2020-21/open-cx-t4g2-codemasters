@@ -389,18 +389,12 @@ As a user I want to be able to interact with the feed results (pick one and go t
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is looking at a feed
-* **Given:** The talks shown are clickable
-* **When:** The user taps a talk
-* **Then:** The user is taken to the page that corresponds to that talk
-
 ### Acceptance tests
 ```Gherkin
 Scenario: Looking at the feed
   Given The feed screen
   When I tap a suggested talk
-  Then I'm taken  taken to the talk's post
+  Then I'm taken to the talk's post
 ```
 
 ### Value and effort
