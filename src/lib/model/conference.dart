@@ -20,6 +20,10 @@ class Conference {
     this._photo = photoPath;
   }*/
 
+  DocumentReference get confReference {
+    return _confReference;
+  }
+
   DateTime get date {
     return _happensOn;
   }

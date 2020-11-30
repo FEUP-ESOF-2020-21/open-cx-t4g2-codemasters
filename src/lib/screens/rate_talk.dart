@@ -1,16 +1,26 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/style.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RateTalkScreen extends StatefulWidget {
+  final DocumentReference currentConf;
+  RateTalkScreen({this.currentConf});
+
   @override
-  _RateTalkScreenState createState() => _RateTalkScreenState();
+  _RateTalkScreenState createState() =>
+      _RateTalkScreenState(currentConf: this.currentConf);
 }
 
 class _RateTalkScreenState extends State<RateTalkScreen> {
   double _rating = 0;
   String _rate_description = "";
+
+  final DocumentReference currentConf;
+  _RateTalkScreenState({this.currentConf});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +113,16 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       color: Colors.orangeAccent,
-                      onPressed: () => Navigator.of(context).pop(),
+                      onPressed: () {
+                        print('Ok Button');
+                        print(_rating);
+                        print(this.currentConf);
+                        DatabaseService.updateRating(
+                            AuthService.auth.currentUser.uid,
+                            this.currentConf,
+                            _rating);
+                        Navigator.of(context).pop();
+                      },
                       child: Text(
                         'OK',
                         style: submitTextWhite,
