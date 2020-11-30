@@ -62,9 +62,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         _formKey.currentState.save();
-                        print('Leave Comment');
-                        print(comment);
-                        print(this.currentConf);
+
                         DatabaseService.leaveConfComment(
                             AuthService.auth.currentUser.uid,
                             this.currentConf,

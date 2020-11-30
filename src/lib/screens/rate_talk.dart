@@ -115,8 +115,6 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                       ),
                       color: Colors.orangeAccent,
                       onPressed: () {
-                        // print(_rating);
-                        // print(this.currentConf);
                         DatabaseService.updateUserRating(
                             AuthService.auth.currentUser.uid,
                             this.currentConf,
