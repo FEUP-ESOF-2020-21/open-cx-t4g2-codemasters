@@ -9,7 +9,6 @@ class RatingStars extends StatelessWidget {
   Widget build(BuildContext context) {
     String starsYellow = '';
     String starsWhite = '';
-    print(rating);
     for (int i = 0; i < rating; i++) {
       starsYellow += '⭐ ';
     }
