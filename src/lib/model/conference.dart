@@ -6,7 +6,7 @@ class Conference {
   final String _title;
   final DateTime _happensOn;
   final String _place;
-  final dynamic _rating;
+  final num _rating;
   final String _tag;
 
   DocumentReference _confReference;
@@ -32,7 +32,7 @@ class Conference {
     return _place;
   }
 
-  dynamic get rate {
+  num get rate {
     return _rating;
   }
 

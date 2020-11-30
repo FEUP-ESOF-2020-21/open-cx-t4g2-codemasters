@@ -117,7 +117,7 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                         print('Ok Button');
                         print(_rating);
                         print(this.currentConf);
-                        DatabaseService.updateRating(
+                        DatabaseService.updateUserRating(
                             AuthService.auth.currentUser.uid,
                             this.currentConf,
                             _rating);

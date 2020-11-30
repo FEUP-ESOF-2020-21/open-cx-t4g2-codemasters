@@ -25,7 +25,27 @@ class DatabaseService {
     });
   }
 
-  static Future updateRating(
+  static Future updateConfRating(DocumentReference confReference) async {
+    double confRatingSum = 0.0;
+    int numRatings;
+    await dbReference
+        .collection('UserRating_Conference')
+        .where('conference', isEqualTo: confReference)
+        .get()
+        .then((userRatings) {
+      numRatings = userRatings.docs.length;
+      userRatings.docs.forEach((userRating) {
+        confRatingSum += userRating['rating'];
+      });
+    });
+
+    double averageRatingConf = confRatingSum / numRatings;
+    print(averageRatingConf);
+
+    confReference.update({'rate': averageRatingConf});
+  }
+
+  static Future updateUserRating(
       String uid, DocumentReference confReference, double rating) async {
     UserModel currentUser = await getUser(uid);
     Query ratingQuery = dbReference.collection('UserRating_Conference');
@@ -46,6 +66,8 @@ class DatabaseService {
             .doc(ratingRef.docs[0].id)
             .update({'rating': rating});
       }
+
+      updateConfRating(confReference);
     });
   }
 }
