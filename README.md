@@ -126,22 +126,20 @@ So, what are you waiting for? Sign up today!
 
 
 ### Story #1
-As a user, i want to insert my personal information and create a password for my account so that I can access the app;
+As a user, i want to insert my personal information and a password to create an account so that I can access the app;
 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Opening the app for the first time
-* **Given:** There is an option for creating a new account
-* **When:** The user selects that option
-* **And:** Provides the information required for a profile
-* **Then:** A new profile is created
-
-
 ### Acceptance tests
-[a introduzir]
-
+```Gherkin
+Scenario: Creating a new account
+  Given I open the app for the first time
+  And There is an option for creating a new account
+  When I select that option
+  And provide the information required for a profile
+  Then a new profile is created
+```
 ### Value and effort
 * Value: Must have
 * Effort: L
@@ -153,14 +151,15 @@ As a user I want to be able to rate a talk so that other users can use my rating
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Rate a talk.
-* **Given:** A talk that I have attended
-* **When:** I tap “Rate this talk”
-* **Then:** I give a score between 0 and 10
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Rate a talk.
+  Given The post of a talk that I have attended
+  When I tap “Rate this talk”
+  Then I give a score between 0 and 10
+  And submit my rating
+```
 
 ### Value and effort
 * Value: Must have
@@ -172,15 +171,14 @@ As a user I want to be able to leave a comment about the talk so that I can give
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Leave a comment about a talk
-* **Given:** A talk that I have attended and rated
-* **When:** I tap “leave comment”
-* **Then:** I can post a comment about that talk
-
 ### Acceptance tests
-[a introduzir]
-
+```Gherkin
+Scenario: Leave a comment about a talk
+  Given A talk's post that I have attended and rated
+  When I tap “Leave comment”
+  Then I can write a comment about that talk
+  And tap the submit button to submit my comment
+```
 ### Value and effort
 * Value: Must have
 * Effort: XL
@@ -192,14 +190,13 @@ As a user I want to be able to see the current rating of a talk so that I can ma
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* See rating of a talk
-* **Given:** A talk that is presented in the feed
-* **When:** I click a talk post
-* **Then:** Conference rating is presented
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: See rating of a talk
+  Given A talk's post that is presented in the feed
+  When I tap the talk post
+  Then the conference rating appears on screen
+```
 
 ### Value and effort
 * Value: Must have
@@ -212,14 +209,13 @@ As a user I want to be able to edit the given rating to a talk so that I can cor
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Edit rating of a talk
-* **Given:** A talk that I have rated
-* **When:** I tap “edit rating” button
-* **Then:** I can modify the initial rating
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Edit rating of a talk
+  Given A post of a talk that I have rated
+  When I tap the “Edit rating” button
+  Then I can change the previous rating
+```
 
 ### Value and effort
 * Value: Must have
@@ -232,15 +228,14 @@ As a user I want to be able to edit my talk’s post so that it can reflect the 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Edit talk’s post
-* **Given:** A talk’s post that was published by me
-* **When:** I tap the “edit post” button
-* **And:** I change what I’ve written initially in the post
-* **Then:** The information on my post changes
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Edit talk’s post
+  Given A talk’s post that was created by me
+  When I tap the “Edit post” button
+  And I change what I’ve written previously in the post
+  Then the information on my post changes
+```
 
 ### Value and effort
 * Value: Could have
@@ -253,15 +248,14 @@ As a user I want to be able to edit my profile so that I can update my current i
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Edit the user profile
-* **Given:** My profile
-* **When:** I go to my profile
-* **And:** I tap “edit profile” button
-* **Then:**I should be able to edit my profile informations
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Edit the user profile
+  Given My profile (screen or page????)
+  When I tap “Edit profile” button
+  And I change what I’ve written previously in my profile
+  Then the information in my profile changes
+```
 
 ### Value and effort
 * Value: Could have
@@ -274,14 +268,13 @@ As a user I want to be able to check which talks a speaker participated so that 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Inspecting a speaker profile
-* **Given:** The speaker profile
-* **When:** I check it’s info
-* **Then:** I should see which talks a speaker participated
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Inspecting a speaker profile
+  Given The talk's speaker profile
+  When I tap the "View talks" button
+  Then I am redirected to a list of the talks the speaker participated
+```
 
 ### Value and effort
 * Value: Cool to
@@ -289,20 +282,20 @@ As a user I want to be able to check which talks a speaker participated so that 
 
 
 ### Story #9
-As a user I want to be able to apply filters to narrow down the search results, such as (the speaker, theme, rating, etc), so that I can find the talks best suited for me and my preferences
+As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is searching for something
-* **Given:** There is an option to apply filters
-* **When:** The user selects the filters they want to apply
-* **And:** Provides the values for each filter
-* **Then:** Only results that match the provided filters are shown
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Search for a talk with filters
+  Given The explore screen
+  When I select the filters I want to apply
+  And provide the values for each filter
+  And tap the "Search" button
+  Then the filtered results are shown
+```
 
 ### Value and effort
 * Value: Cool to have
@@ -315,15 +308,15 @@ As a user I want to be able to sort the talks search results based on several cr
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is searching for something
-* **Given:** There is an option to sort the results
-* **When:** The user selects the sorting criteria
-* **And:** Provides the values for each criteria (ascending/descending)
-* **Then:** The results are sorted based on the provided sorting criteria
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Search for a talk by criteria
+  Given The explore screen
+  When I select the sorting criteria
+  And provide the values for each criteria (ascending/descending)
+  And tap the "Search" button
+  Then the sorted results are shown
+```
 
 ### Value and effort
 * Value: Cool to have
@@ -336,15 +329,15 @@ As a user I want to be able to insert a query in the search bar and get matching
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is searching for something
-* **Given:** There is search bar where I can type
-* **When:** I enter some information in the search bar
-* **And:** I tap the “search” button
-* **Then:** Conferences and users related to what I’ve searched are shown
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Search for a talk with a query
+  Given The explore screen
+  When I tap the search bar
+  And enter some information 
+  And tap the "Search" button
+  Then the matching results are shown
+```
 
 ### Value and effort
 * Value: Must have
@@ -357,14 +350,14 @@ As a user I want to be able to interact with the search results (pick one and go
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is looking at search results
-* **Given:** The results are clickable
-* **When:** The user taps a result
-* **Then:** The user is taken to the page that corresponds to that result
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: See search results
+  Given The explore screen
+  When I search a talk
+  And tap one of the results
+  Then I'm taken to the talk's post
+```
 
 ### Value and effort
 * Value: Must have
@@ -377,14 +370,13 @@ As a user I want to be able to create a post for a talk so that other users can 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user wants to create a post
-* **Given:** A button that allows them to do so
-* **When:** The user taps that button
-* **Then:** The user is taken to the post creation page
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: A user wants to create a post
+  Given The bottom navigation bar
+  When I tap the "Create Post" button
+  Then I'm taken to the post creation page
+```
 
 ### Value and effort
 * Value: Must have
@@ -404,7 +396,12 @@ As a user I want to be able to interact with the feed results (pick one and go t
 * **Then:** The user is taken to the page that corresponds to that talk
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Looking at the feed
+  Given The feed screen
+  When I tap a suggested talk
+  Then I'm taken  taken to the talk's post
+```
 
 ### Value and effort
 * Value: Must have
