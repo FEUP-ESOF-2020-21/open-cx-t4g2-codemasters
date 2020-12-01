@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/userModel.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ESOF/widgets/profile/profile_photo.dart';
 
 import '../style.dart';
 import 'utils/field.dart';
@@ -21,9 +25,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Icon _key = Icon(Icons.lock, color: Colors.black54);
   Icon _image = Icon(Icons.image, color: Colors.black54);
 
+  /// Upload image
+  File _imageFile;
+  final _picker = ImagePicker();
+
   UserModel user = UserModel();
   bool editProfileFailed = false;
   String editProfileMsg;
+
+
+  Future letUserPickImage(UserModel userModel) async {
+    final image = await _picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (image != null) {
+        _imageFile = File(image.path);
+      } else
+        print("No image selected!");
+    });
+  }
+
+  /// If the actual photo is null, display the default one.
+  displayPhoto(){
+    if (user.imgPath == null) return ProfilePhoto('assets/images/perfil.jpg');
+    else return ProfilePhotoNetwork(user.imgPath);
+  }
+
+  GestureDetector generateImageRow(UserModel userModel) {
+    return GestureDetector(
+      child: Container(
+        child: _imageFile == null
+            ? displayPhoto()
+            : ProfilePhotoFile(_imageFile)
+      ),
+      onTap: () => letUserPickImage(userModel),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         Label("New Photo:"),
         SizedBox(height: 20),
-        _image,
+        generateImageRow(user),
         SizedBox(height: 20),
         Label("New Name:"),
         Field(
@@ -83,13 +119,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ),
         editProfileFailed
             ? Container(
-                margin:
-                    new EdgeInsets.symmetric(horizontal: 70.0, vertical: 10),
-                child: Text(
-                  'Edit Profile Failed! - ' + editProfileMsg,
-                  style: errorMessageText,
-                ),
-              )
+          margin:
+          new EdgeInsets.symmetric(horizontal: 70.0, vertical: 10),
+          child: Text(
+            'Edit Profile Failed! - ' + editProfileMsg,
+            style: errorMessageText,
+          ),
+        )
             : Text(''),
         SizedBox(height: 60),
         FlatButton(
@@ -110,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               }
               if (resultEmail == null && user.password != "") {
                 resultPassword =
-                    await AuthService.updatePassword(user.password);
+                await AuthService.updatePassword(user.password);
                 profileChanged = (resultPassword == null);
               }
 
