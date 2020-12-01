@@ -42,7 +42,7 @@ String notEmptyValidator(String value) {
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
-
+  String _speakers = "";
   File _image;
 
   _CreateConferenceScreenState(this._home);
@@ -182,7 +182,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Row generateSpeakerRow(ConferenceModel confModel) {
+  Row generateSpeakerRow() {
     Counter counter = Counter();
     var formKey = GlobalKey<FormState>();
 
@@ -213,10 +213,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                   child: Field(
                     padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                     onSaved: (value) {
-                      confModel.speakers == ""
-                          ? confModel.speakers = value
-                          : confModel.speakers += "," + value;
-                      confModel.printVariables();   // TODO: delete later
+                      this._speakers == ""
+                          ? this._speakers = value
+                          : this._speakers += "," + value;
                     },
                     validator: notEmptyValidator,
                   ),
@@ -256,9 +255,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-            confModel.printVariables();     // TODO: delete later
             _formKey.currentState.save();
             confModel.rate = 0;
+            confModel.speakers = _speakers;
             confModel.img = _image;
             confModel.confSetup();
             _home.revertToPrevScreen();
@@ -314,7 +313,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateSpeakerRow(confModel),
+      generateSpeakerRow(),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
