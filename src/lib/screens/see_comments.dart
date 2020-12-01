@@ -1,46 +1,23 @@
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class SeeCommentsScreen extends StatefulWidget {
+  final DocumentReference currentConf;
+  SeeCommentsScreen({this.currentConf});
+
   @override
-  _SeeCommentsScreenState createState() => _SeeCommentsScreenState();
+  _SeeCommentsScreenState createState() =>
+      _SeeCommentsScreenState(currentConf: this.currentConf);
 }
 
 class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
-  List<Map<String, String>> comments = [
-    // tratar disto no backend
-    {
-      'user': 'user1',
-      'comment':
-          'descri ption1descri ption1de scription1descrip tion1descrip tion1 description1descr iption1description1'
-    },
-    {
-      'user': 'user2',
-      'comment':
-          'description2descrip tion2des cription2 description2descripti on2descripti on2description 2description2'
-    },
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-    {'user': 'userN', 'comment': 'comment...'},
-  ];
+  final DocumentReference currentConf;
+  _SeeCommentsScreenState({this.currentConf});
 
-  List<Widget> displayComments() {
+  Widget displayComments(List<Map<String, dynamic>> comments) {
     List<Widget> containers = [];
     for (int i = 0; i < comments.length; i++) {
       containers.add(
@@ -65,7 +42,7 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
                     style: smallerText,
                   ),
                   SizedBox(width: 10),
-                  RatingStars(4),
+                  RatingStars(comments[i]['rating']),
                 ],
               ),
               SizedBox(
@@ -80,7 +57,7 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
         ),
       );
     }
-    return containers;
+    return Column(children: containers);
   }
 
   @override
@@ -94,10 +71,20 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
             style: bigText,
           ),
           SizedBox(height: 30),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: displayComments(),
-          ),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            FutureBuilder(
+                future: DatabaseService.getConferenceComments(this.currentConf),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    print(snapshot.data);
+                    return displayComments(snapshot.data);
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                })
+          ]),
         ],
       ),
     );

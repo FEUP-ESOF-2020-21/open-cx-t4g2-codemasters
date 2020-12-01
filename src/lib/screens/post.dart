@@ -267,8 +267,9 @@ class PostScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FlatButton(
-          onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SeeCommentsScreen())),
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  SeeCommentsScreen(currentConf: this._conf.confReference))),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
