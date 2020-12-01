@@ -5,7 +5,7 @@ class AuthService {
   static final FirebaseAuth auth = FirebaseAuth.instance;
   static String uEmail, uPassword;
 
-  static currentUid(){
+  static currentUid() {
     return auth.currentUser;
   }
   static Future<String> signUp(String email, String password) async {
