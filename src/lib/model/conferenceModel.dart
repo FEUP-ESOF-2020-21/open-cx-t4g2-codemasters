@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -63,9 +65,18 @@ class ConferenceModel {
         .add({'conference': this.ref, 'speaker': speakerRef});
   }
 
-  Future addImage() async{
+  Future addImage() async {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
+
+  // Function created for debug proposals.
+  void printVariables() {
+    List elements = [this.title, this.date, this.speakers, this.description, this.place, this.tag];
+    List elementsName = ['--TITLE:', '--DATE:', '--SPEAKERS', '--DESCRIPTION', '--PLACE', '--TAG'];
+    for (int i = 0; i < 6; i++) {
+      print(elementsName[i]);
+      print(elements[i]);
+    }
+  }
 }
-// table relating conferences and users => to think

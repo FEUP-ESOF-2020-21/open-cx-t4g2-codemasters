@@ -44,6 +44,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
 
   File _image;
+
   _CreateConferenceScreenState(this._home);
 
   final _picker = ImagePicker();
@@ -215,6 +216,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                       confModel.speakers == ""
                           ? confModel.speakers = value
                           : confModel.speakers += "," + value;
+                      confModel.printVariables();   // TODO: delete later
                     },
                     validator: notEmptyValidator,
                   ),
@@ -254,6 +256,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
+            confModel.printVariables();     // TODO: delete later
             _formKey.currentState.save();
             confModel.rate = 0;
             confModel.img = _image;
