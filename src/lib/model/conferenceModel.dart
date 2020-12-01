@@ -23,7 +23,7 @@ class ConferenceModel {
 
   Future confSetup() async {
     // gets the reference to add reference to conference_speaker.
-    await addImage();
+    if (this.imgURL != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,

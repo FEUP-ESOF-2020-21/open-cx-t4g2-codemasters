@@ -19,26 +19,6 @@ class CreateConferenceScreen extends StatefulWidget {
       _CreateConferenceScreenState(_home);
 }
 
-String dateValidator(String value) {
-  bool containsTwoSlashes = value.contains("/", 0) && value.contains("/", 3);
-  if (!containsTwoSlashes)
-    return "Date must contain the character '/' twice to separate the date elements.";
-
-  List<int> dateElems = (value.split("/")).map((e) => int.parse(e)).toList();
-
-  bool isUsingWrongDateFormat = dateElems[0] > 999 && dateElems[2] < 1000;
-  if (isUsingWrongDateFormat) return "Date must be in the format DD/MM/YYYY.";
-
-  bool hasInvalidValues = dateElems[0] > 31 || dateElems[1] > 12;
-  if (hasInvalidValues) return "Date must not contain invalid values.";
-
-  return null;
-}
-
-String notEmptyValidator(String value) {
-  if (value == "") return "Field must not be empty.";
-  return null;
-}
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
@@ -49,6 +29,30 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   final _picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
+
+  String dateValidator(String value) {
+
+    bool containsTwoSlashes = value.contains("/", 0) && value.contains("/", 3);
+    if (!containsTwoSlashes)
+      return "Date must contain the character '/' twice to separate the date elements.";
+
+    List<int> dateElems = (value.split("/")).map((e) => int.parse(e)).toList();
+
+    bool isUsingWrongDateFormat = dateElems[0] > 999 && dateElems[2] < 1000;
+    if (isUsingWrongDateFormat) return "Date must be in the format DD/MM/YYYY.";
+
+    bool hasInvalidValues = dateElems[0] > 31 || dateElems[1] > 12;
+    if (hasInvalidValues) return "Date must not contain invalid values.";
+
+    _formKey.currentState.save();
+    return null;
+  }
+
+  String notEmptyValidator(String value) {
+    if (value == "") return "Field must not be empty.";
+    _formKey.currentState.save();
+    return null;
+  }
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -74,7 +78,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Row generateImageRow(ConferenceModel confModel) {
+  Row generateImageRow() {
     return Row(
       children: [
         Container(
@@ -97,7 +101,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                   ),
             margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
           ),
-          onTap: () => letUserPickImage(confModel),
+          onTap: () => letUserPickImage(),
         ),
       ],
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,7 +114,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     Function onSavedFunction;
     String hintText = "";
     int maxSizeInput = 200;
-    Function valFunc = notEmptyValidator;
+    Function valFunc = this.notEmptyValidator;
     TextInputType inputType = TextInputType.text;
     double _width = 233;
 
@@ -130,7 +134,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             confModel.date = DateTime(int.parse(dateElems.last),
                 int.parse(dateElems[1]), int.parse(dateElems[0]));
           };
-          valFunc = dateValidator;
+          valFunc = this.dateValidator;
           hintText = "Insert the date here";
           inputType = TextInputType.datetime;
           break;
@@ -218,7 +222,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                           ? this._speakers = value
                           : this._speakers += "," + value;
                     },
-                    validator: notEmptyValidator,
+                    validator: this.notEmptyValidator,
                   ),
                 ),
                 Container(
@@ -259,7 +263,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
+            //_formKey.currentState.save();
             confModel.rate = 0;
             confModel.speakers = _speakers;
             confModel.img = _image;
@@ -293,7 +297,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Future letUserPickImage(ConferenceModel confModel) async {
+  Future letUserPickImage() async {
     final image = await _picker.getImage(source: ImageSource.gallery);
 
     setState(() {
@@ -322,7 +326,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
-      generateImageRow(confModel),
+      generateImageRow(),
       generateSubmitButton(confModel),
       SizedBox(height: 40),
     ];
