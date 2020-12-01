@@ -89,7 +89,7 @@ class DatabaseService {
       DocumentReference confReference) async {
     List<Map<String, dynamic>> commentsInfo = [];
 
-    String username, date, commentText;
+    String username;
     num rating;
 
     await dbReference
@@ -124,12 +124,9 @@ class DatabaseService {
           'date': formattedDate,
           'comment': confcomments.docs[i]['text']
         });
-
-        // print(commentsInfo);
       }
     });
     commentsInfo.sort((a, b) => a['date'].compareTo(b['date']));
-    print(commentsInfo);
     return commentsInfo;
   }
 }
