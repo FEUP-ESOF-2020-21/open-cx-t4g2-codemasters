@@ -182,6 +182,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
+  // Function to insert the speaker username.
   Row generateSpeakerRow() {
     Counter counter = Counter();
     var formKey = GlobalKey<FormState>();
@@ -205,7 +206,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onTap: () => showDialog(
             context: context,
             child: SimpleDialog(
-              title: Text("Insert the speaker's name:"),
+              title: Text("Insert the speaker's username:"),
               children: [
                 SizedBox(height: 20),
                 Form(
@@ -240,11 +241,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
       ),
     ];
-
     return Row(
       children: rowElems,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
     );
+  }
+
+  Row generateSpeakerProfile(){
+
   }
 
   Container generateSubmitButton(ConferenceModel confModel) {
