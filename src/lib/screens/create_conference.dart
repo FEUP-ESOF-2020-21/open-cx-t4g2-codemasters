@@ -6,6 +6,7 @@ import 'package:ESOF/style.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
+import 'package:ESOF/widgets/profile/profile_photo.dart';
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
@@ -72,33 +73,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Row generateImageRow(ConferenceModel confModel) {
-    return Row(
-      children: [
-        Container(
-          child: Text(
-            "Upload Image:",
-            style: mediumText,
-          ),
-          margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
-        ),
-        GestureDetector(
-          child: Container(
-            child: _image == null
-                ? Image.asset(
-                    "assets/icons/1x/plus_icon.png",
-                    scale: 30,
-                  )
-                : Image.file(
-                  _image,
-                  scale: 10,
-                  ),
-            margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
-          ),
-          onTap: () => letUserPickImage(confModel),
-        ),
-      ],
-      crossAxisAlignment: CrossAxisAlignment.center,
+  GestureDetector generateImageRow(ConferenceModel confModel) {
+    return GestureDetector(
+      child: Container(
+          child: _image == null
+              ? ProfilePhoto('assets/images/conference_test.jpg')
+              : ProfilePhotoFile(_image)
+      ),
+      onTap: () => letUserPickImage(confModel),
     );
   }
 
@@ -257,7 +239,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     List<Widget> listViewElems = [
       SizedBox(height: 40),
       generateHeader(),
-      SizedBox(height: 10),
+      SizedBox(height: 20),
+      generateImageRow(confModel),
+      SizedBox(height: 35),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("date", confModel),
@@ -269,7 +253,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
-      generateImageRow(confModel),
       generateSubmitButton(confModel),
       SizedBox(height: 40),
     ];
