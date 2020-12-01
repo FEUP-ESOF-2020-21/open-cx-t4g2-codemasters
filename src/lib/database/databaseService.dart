@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ESOF/model/userModel.dart';
+import 'package:intl/intl.dart';
 
 class DatabaseService {
   static final dbReference = FirebaseFirestore.instance;
@@ -82,5 +83,50 @@ class DatabaseService {
       'text': comment,
       'date': now
     });
+  }
+
+  static Future<List<Map<String, dynamic>>> getConferenceComments(
+      DocumentReference confReference) async {
+    List<Map<String, dynamic>> commentsInfo = [];
+
+    String username;
+    num rating;
+
+    await dbReference
+        .collection('Comments')
+        .where('conference', isEqualTo: confReference)
+        .get()
+        .then((confcomments) async {
+      for (int i = 0; i < confcomments.docs.length; i++) {
+        await confcomments.docs[i]['user'].get().then((user) {
+          username = user['username'];
+        });
+
+        Query ratingQuery = dbReference.collection('UserRating_Conference');
+        ratingQuery =
+            ratingQuery.where('user', isEqualTo: confcomments.docs[i]['user']);
+        ratingQuery = ratingQuery.where('conference', isEqualTo: confReference);
+        await ratingQuery.get().then((userRating) {
+          if (userRating.docs.length != 0)
+            rating = userRating.docs[0]['rating'];
+          else
+            rating = -1;
+        });
+
+        DateTime confTime = DateTime.fromMillisecondsSinceEpoch(
+            confcomments.docs[i]['date'].seconds * 1000);
+        String formattedDate =
+            DateFormat('yyyy-MM-dd - HH:mm:ss').format(confTime);
+
+        commentsInfo.add({
+          'user': username,
+          'rating': rating.toInt(),
+          'date': formattedDate,
+          'comment': confcomments.docs[i]['text']
+        });
+      }
+    });
+    commentsInfo.sort((a, b) => a['date'].compareTo(b['date']));
+    return commentsInfo;
   }
 }
