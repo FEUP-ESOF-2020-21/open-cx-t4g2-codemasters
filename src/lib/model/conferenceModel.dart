@@ -1,8 +1,9 @@
+import 'dart:convert';
+
 import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
-import '../services/cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;
@@ -13,15 +14,15 @@ class ConferenceModel {
   String imgURL;
   int rate;
   String description;
-  String speakers;
+  String speakers = "";
   String tag;
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
 
   Future confSetup() async {
-    // gets the reference to add reference to conference_speaker.
-    await addImage();
+    /// gets the reference to add reference to conference_speaker.
+    if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,
@@ -31,41 +32,69 @@ class ConferenceModel {
       'tag': this.tag,
       'img': this.imgURL
     });
-
     findSpeakersRef();
   }
 
-  // If speaker found return ref,
+  /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
+    print("SPEAKERS") ;
     var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+    print(usernames);
+    var reference;
 
     for (var username in usernames) {
-      // If there is a speaker with this username in database.
-      firestore
-          .collection("Speaker")
-          .where("username", isEqualTo: username)
-          .get()
-          .then((speakerRef) async {
-        if (speakerRef.docs.length == 0) {
-          Speaker speaker = new Speaker.overloadConstructor(username);
-          final speakerRef = await speaker.speakerSetup();
-          await addToConferenceTable(speakerRef);
-        } else {
-          await this.addToConferenceTable(speakerRef.docs[0].reference);
-        }
-      });
+      print(username);
+      reference = await Speaker.getSpeakerRef(username);
+      if (reference == null || reference == false) {
+        print("HERE");
+        Speaker speaker = new Speaker.overloadConstructor(username);
+        print("GET");
+        print(speaker.username);
+        final speakerRef = await speaker.speakerSetup();
+        print("REFERENCE");
+        print(speakerRef);
+        await addToConferenceTable(speakerRef);
+      } else {
+        await this.addToConferenceTable(reference);
+      }
     }
   }
 
+  /// Adds the speaker and coference to the conference_speaker table in firebase.
   Future addToConferenceTable(speakerRef) async {
     await firestore
         .collection("Conference_Speakers")
         .add({'conference': this.ref, 'speaker': speakerRef});
   }
 
-  Future addImage() async{
+  Future addImage() async {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
+
+/// Function created for debug proposals.
+  void printVariables() {
+    List elements = [
+      this.title,
+      this.date,
+      this.speakers,
+      this.description,
+      this.place,
+      this.tag,
+      this.img
+    ];
+    List elementsName = [
+      '--TITLE:',
+      '--DATE:',
+      '--SPEAKERS',
+      '--DESCRIPTION',
+      '--PLACE',
+      '--TAG' ,
+      '--IMG'
+    ];
+    for (int i = 0; i < 7; i++) {
+      print(elementsName[i]);
+      print(elements[i]);
+    }
+  }
 }
-// table relating conferences and users => to think
