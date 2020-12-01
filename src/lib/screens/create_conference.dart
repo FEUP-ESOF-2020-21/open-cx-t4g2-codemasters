@@ -32,6 +32,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   String dateValidator(String value) {
 
+    if (value.length == 0) return "Field must not be empty";
+
     bool containsTwoSlashes = value.contains("/", 0) && value.contains("/", 3);
     if (!containsTwoSlashes)
       return "Date must contain the character '/' twice to separate the date elements.";
@@ -130,9 +132,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           maxSizeInput = 10;
           onSavedFunction = (String value) {
-            List<String> dateElems = value.split("/");
-            confModel.date = DateTime(int.parse(dateElems.last),
-                int.parse(dateElems[1]), int.parse(dateElems[0]));
+            if (value.length != 0) {
+              List<String> dateElems = value.split("/");
+              confModel.date = DateTime(int.parse(dateElems.last),
+                  int.parse(dateElems[1]), int.parse(dateElems[0]));
+            }
           };
           valFunc = this.dateValidator;
           hintText = "Insert the date here";
@@ -189,7 +193,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   // Function to insert the speaker username.
   Row generateSpeakerRow() {
     Counter counter = Counter();
-    var formKey = GlobalKey<FormState>();
+    var _speakerFormKey = GlobalKey<FormState>();
 
     List<Widget> rowElems = [
       Container(
@@ -214,7 +218,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               children: [
                 SizedBox(height: 20),
                 Form(
-                  key: formKey,
+                  key: _speakerFormKey,
                   child: Field(
                     padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                     onSaved: (value) {
@@ -229,8 +233,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                   child: Button(
                     buttonText: "OK",
                     onPressedFunc: () {
-                      if (formKey.currentState.validate()) {
-                        formKey.currentState.save();
+                      if (_speakerFormKey.currentState.validate()) {
+                        _speakerFormKey.currentState.save();
                         counter.incrementCounter();
                         Navigator.pop(context);
                       }
