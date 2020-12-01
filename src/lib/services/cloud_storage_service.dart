@@ -1,7 +1,5 @@
 import 'dart:io';
-import 'package:flutter/cupertino.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 
 // This class uploads a image to the database
 class CloudStorageService {

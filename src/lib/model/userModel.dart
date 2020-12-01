@@ -1,15 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class UserModel {
   String username;
   String description;
   String imgPath;
   String uid;
-  String ref;
+  DocumentReference ref;
   int rate;
 
   String password;
   String email;
 
-  UserModel({Map<String, dynamic> data, String ref}) {
+  UserModel({Map<String, dynamic> data, DocumentReference ref}) {
     this.ref = ref;
 
     if (data != null) {
