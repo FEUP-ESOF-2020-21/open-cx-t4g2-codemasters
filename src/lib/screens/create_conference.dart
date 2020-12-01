@@ -47,6 +47,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
+  Counter counter = Counter();
 
   String _speakers = "";
   File _image;
@@ -72,7 +73,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             },
             validator: (String value) {
               _formKey.currentState.save();
-            },),
+            },
+          ),
           margin: EdgeInsets.fromLTRB(30, 0, 24, 20),
         )
       ],
@@ -80,17 +82,30 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-
-  GestureDetector generateImageRow(ConferenceModel confModel) {
-    return GestureDetector(
-      child: Container(
-          child: _image == null
-              ? ProfilePhoto('assets/images/conference_test.jpg')
-              : ProfilePhotoFile(_image)
-      ),
-      onTap: () => letUserPickImage(confModel),
-
+  Row generateImageRow(ConferenceModel confModel) {
+    return Row(
+      children: [
+            GestureDetector(
+          child: Container(
+              child: _image == null
+                  ? ProfilePhoto('assets/images/conference_test.jpg')
+                  : ProfilePhotoFile(_image)),
+          onTap: () => letUserPickImage(confModel),
+        )
+      ],
+        mainAxisAlignment: MainAxisAlignment.center
     );
+  }
+
+  Future letUserPickImage(ConferenceModel confModel) async {
+    final image = await _picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (image != null) {
+        _image = File(image.path);
+      } else
+        print("No image selected!");
+    });
   }
 
   Row generateGenericLabelFieldPair(String label, ConferenceModel confModel) {
@@ -157,8 +172,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: (String value) {
-         String validation = valFunc(value);
-        if (validation != null) return validation ;
+        String validation = valFunc(value);
+        if (validation != null) return validation;
         _formKey.currentState.save();
       },
       maxSizeInput: maxSizeInput,
@@ -187,7 +202,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   // Function to insert the speaker username.
   Row generateSpeakerRow() {
-    Counter counter = Counter();
     final _speakerFormKey = GlobalKey<FormState>();
 
     List<Widget> rowElems = [
@@ -206,46 +220,45 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             "assets/icons/1x/plus_icon.png",
             scale: 30,
           ),
-          onTap: () =>
-              showDialog(
-                context: context,
-                child: SimpleDialog(
-                  title: Text("Insert the speaker's username:"),
-                  children: [
-                    SizedBox(height: 20),
-                    Form(
-                      key: _speakerFormKey,
-                      child: Field(
-                        padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                        onSaved: (value) {
-                          this._speakers == ""
-                              ? this._speakers = value
-                              : this._speakers += "," + value;
-                        },
-                        validator: (value) {
-                          final validation = notEmptyValidator(value);
-                          if (validation != null) return validation ;
-                          _formKey.currentState.save();
-                        },
-                      ),
-                    ),
-                    Container(
-                      child: Button(
-                        buttonText: "OK",
-                        onPressedFunc: () {
-                          if (_speakerFormKey.currentState.validate()) {
-                            _speakerFormKey.currentState.save();
-                            counter.incrementCounter();
-                            Navigator.pop(context);
-                          }
-                        },
-                      ),
-                      padding: EdgeInsets.all(50),
-                    ),
-                  ],
-                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+          onTap: () => showDialog(
+            context: context,
+            child: SimpleDialog(
+              title: Text("Insert the speaker's username:"),
+              children: [
+                SizedBox(height: 20),
+                Form(
+                  key: _speakerFormKey,
+                  child: Field(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    onSaved: (value) {
+                      this._speakers == ""
+                          ? this._speakers = value
+                          : this._speakers += "," + value;
+                    },
+                    validator: (value) {
+                      final validation = notEmptyValidator(value);
+                      if (validation != null) return validation;
+                      _formKey.currentState.save();
+                    },
+                  ),
                 ),
-              ),
+                Container(
+                  child: Button(
+                    buttonText: "OK",
+                    onPressedFunc: () {
+                      if (_speakerFormKey.currentState.validate()) {
+                        _speakerFormKey.currentState.save();
+                        counter.incrementCounter();
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  padding: EdgeInsets.all(50),
+                ),
+              ],
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+          ),
         ),
       ),
     ];
@@ -255,93 +268,81 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-
-Container generateSubmitButton(ConferenceModel confModel) {
-  return Container(
-    margin: EdgeInsets.only(top: 30),
-    padding: EdgeInsets.symmetric(horizontal: 60),
-    child: Button(
-      buttonText: "Submit",
-      onPressedFunc: () async {
-        if (_formKey.currentState.validate()) {
-          _formKey.currentState.save();
-          confModel.rate = 0;
-          confModel.speakers = _speakers;
-          confModel.img = _image;
-          confModel.printVariables();
-          confModel.confSetup();
-          _home.revertToPrevScreen();
-        }
-      },
-    ),
-  );
-}
-
-
-Column generateHeader() {
-  return Column(
-    children: [
-      Container(
-        child: Text(
-          "Create Conference",
-          style: bigText,
-        ),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+  Container generateSubmitButton(ConferenceModel confModel) {
+    return Container(
+      margin: EdgeInsets.only(top: 30),
+      padding: EdgeInsets.symmetric(horizontal: 60),
+      child: Button(
+        buttonText: "Submit",
+        onPressedFunc: () async {
+          if (_formKey.currentState.validate()) {
+            _formKey.currentState.save();
+            confModel.rate = 0;
+            confModel.speakers = _speakers;
+            confModel.img = _image;
+            confModel.printVariables();
+            confModel.confSetup();
+            _home.revertToPrevScreen();
+          }
+        },
       ),
-      Container(
-        child: Text(
-          "Create here a post for the conference",
-          style: smallerText,
+    );
+  }
+
+  Column generateHeader() {
+    return Column(
+      children: [
+        Container(
+          child: Text(
+            "Create Conference",
+            style: bigText,
+          ),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         ),
-        margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
-      )
-    ],
-    crossAxisAlignment: CrossAxisAlignment.center,
-  );
-}
+        Container(
+          child: Text(
+            "Create here a post for the conference",
+            style: smallerText,
+          ),
+          margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
+        )
+      ],
+      crossAxisAlignment: CrossAxisAlignment.center,
+    );
+  }
 
-Future letUserPickImage() async {
-  final image = await _picker.getImage(source: ImageSource.gallery);
+  @override
+  Widget build(BuildContext context) {
+    ConferenceModel confModel = new ConferenceModel();
+    List<Widget> listViewElems = [
+      SizedBox(height: 40),
+      generateHeader(),
+      SizedBox(height: 20),
+      generateImageRow(confModel),
+      SizedBox(height: 35),
+      generateGenericLabelFieldPair("title", confModel),
+      SizedBox(height: 30),
+      generateGenericLabelFieldPair("date", confModel),
+      SizedBox(height: 30),
+      generateGenericLabelFieldPair("place", confModel),
+      SizedBox(height: 30),
+      generateSpeakerRow(),
+      SizedBox(height: 30),
+      generateGenericLabelFieldPair("tag", confModel),
+      SizedBox(height: 30),
+      generateDescriptionColumn(confModel),
+      SizedBox(height: 30),
+      generateSubmitButton(confModel),
+      SizedBox(height: 40),
+    ];
 
-  setState(() {
-    if (image != null) {
-      _image = File(image.path);
-    } else
-      print("No image selected!");
-  });
-}
-
-@override
-Widget build(BuildContext context) {
-  ConferenceModel confModel = new ConferenceModel();
-  List<Widget> listViewElems = [
-    SizedBox(height: 40),
-    generateHeader(),
-    SizedBox(height: 20),
-    generateSubmitButton(confModel),
-    SizedBox(height: 35),
-    generateGenericLabelFieldPair("title", confModel),
-    SizedBox(height: 30),
-    generateGenericLabelFieldPair("date", confModel),
-    SizedBox(height: 30),
-    generateGenericLabelFieldPair("place", confModel),
-    SizedBox(height: 30),
-    generateSpeakerRow(),
-    SizedBox(height: 30),
-    generateGenericLabelFieldPair("tag", confModel),
-    SizedBox(height: 30),
-    generateDescriptionColumn(confModel),
-    generateImageRow(),
-    
-    SizedBox(height: 40),
-  ];
-
-  return Scaffold(
-    body: Form(
-      child: ListView(
-        children: listViewElems,
+    return Scaffold(
+      body: Form(
+        child: ListView(
+          children: listViewElems,
+        ),
+        key: _formKey,
       ),
-      key: _formKey,
-    ),
-  );
-}}
+    );
+  }
+}
