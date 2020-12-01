@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ESOF/services/cloud_storage_service.dart';
+import 'dart:io';
 
 class UserModel {
   String username;
@@ -21,5 +23,10 @@ class UserModel {
       this.imgPath = data['imgPath'];
       this.rate = data['rate'];
     }
+  }
+
+  Future addImage(File img) async{
+    var storeImage = new CloudStorageService(img);
+    this.imgPath= await storeImage.uploadImage();
   }
 }
