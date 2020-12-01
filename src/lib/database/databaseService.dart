@@ -107,7 +107,10 @@ class DatabaseService {
             ratingQuery.where('user', isEqualTo: confcomments.docs[i]['user']);
         ratingQuery = ratingQuery.where('conference', isEqualTo: confReference);
         await ratingQuery.get().then((userRating) {
-          rating = userRating.docs[0]['rating'];
+          if (userRating.docs.length != 0)
+            rating = userRating.docs[0]['rating'];
+          else
+            rating = -1;
         });
 
         DateTime confTime = DateTime.fromMillisecondsSinceEpoch(
@@ -121,9 +124,11 @@ class DatabaseService {
           'date': formattedDate,
           'comment': confcomments.docs[i]['text']
         });
+
+        // print(commentsInfo);
       }
     });
-    // print(commentsInfo);
+    print(commentsInfo);
     return commentsInfo;
   }
 }

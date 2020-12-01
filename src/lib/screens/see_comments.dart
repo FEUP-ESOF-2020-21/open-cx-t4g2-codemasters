@@ -42,7 +42,9 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
                     style: smallerText,
                   ),
                   SizedBox(width: 10),
-                  RatingStars(comments[i]['rating']),
+                  comments[i]['rating'] != -1
+                      ? RatingStars(comments[i]['rating'])
+                      : Text(""),
                 ],
               ),
               SizedBox(
