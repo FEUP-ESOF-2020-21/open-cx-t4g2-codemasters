@@ -2,7 +2,6 @@ import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
-import '../services/cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;

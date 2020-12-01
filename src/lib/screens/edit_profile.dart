@@ -7,6 +7,8 @@ import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
+import 'package:ESOF/services/cloud_storage_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../style.dart';
 import 'utils/field.dart';
@@ -23,7 +25,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
   Icon _bio = Icon(Icons.description, color: Colors.black54);
   Icon _key = Icon(Icons.lock, color: Colors.black54);
-  Icon _image = Icon(Icons.image, color: Colors.black54);
 
   /// Upload image
   File _imageFile;
@@ -144,6 +145,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 resultEmail = await AuthService.updateEmail(user.email);
                 profileChanged = (resultEmail == null);
               }
+
               if (resultEmail == null && user.password != "") {
                 resultPassword =
                 await AuthService.updatePassword(user.password);
@@ -157,6 +159,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
                 if (user.description != "") {
                   userM.description = user.description;
+                  profileChanged = true;
+                }
+                if (this._imageFile != null){
+                  await user.addImage(this._imageFile);
+                  userM.imgPath = user.imgPath;
                   profileChanged = true;
                 }
 
