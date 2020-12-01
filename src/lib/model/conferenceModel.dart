@@ -4,7 +4,6 @@ import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
 import 'speaker.dart';
-import '../services/cloud_storage_result.dart';
 
 class ConferenceModel {
   var ref;
@@ -22,8 +21,8 @@ class ConferenceModel {
       FirebaseFirestore.instance; // instance to firestore
 
   Future confSetup() async {
-    // gets the reference to add reference to conference_speaker.
-    if (this.imgURL != null) await addImage();
+    /// gets the reference to add reference to conference_speaker.
+    if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
       'date': this.date,
@@ -36,10 +35,11 @@ class ConferenceModel {
     findSpeakersRef();
   }
 
-  // If speaker found return ref, otherwise create one.
+  /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
     var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
     var reference;
+
     for (var username in usernames) {
       reference = await Speaker.getSpeakerRef(username);
       if (reference == false) {
@@ -52,6 +52,7 @@ class ConferenceModel {
     }
   }
 
+  /// Adds the speaker and coference to the conference_speaker table in firebase.
   Future addToConferenceTable(speakerRef) async {
     await firestore
         .collection("Conference_Speakers")
@@ -63,7 +64,7 @@ class ConferenceModel {
     this.imgURL = await storeImage.uploadImage();
   }
 
-// Function created for debug proposals.
+/// Function created for debug proposals.
   void printVariables() {
     List elements = [
       this.title,
@@ -71,7 +72,8 @@ class ConferenceModel {
       this.speakers,
       this.description,
       this.place,
-      this.tag
+      this.tag,
+      this.img
     ];
     List elementsName = [
       '--TITLE:',
@@ -79,9 +81,10 @@ class ConferenceModel {
       '--SPEAKERS',
       '--DESCRIPTION',
       '--PLACE',
-      '--TAG'
+      '--TAG' ,
+      '--IMG'
     ];
-    for (int i = 0; i < 6; i++) {
+    for (int i = 0; i < 7; i++) {
       print(elementsName[i]);
       print(elements[i]);
     }

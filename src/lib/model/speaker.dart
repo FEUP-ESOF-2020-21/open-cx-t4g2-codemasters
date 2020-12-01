@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import '../auth/Authentication.dart';
 
 class Speaker {
   // final int id;
@@ -24,11 +24,14 @@ class Speaker {
   }
 
   Future speakerSetup() async {
+    var uid = await AuthService.currentUid();                 // The user who added the speaker
+
     return await firestore.collection("Speaker").add({
       'description': this._description,
       'name': this._name,
       'rating': this.rating,
-      'username': this._username
+      'username': this._username,
+      'user_creator': uid
     });
   }
 
