@@ -45,17 +45,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     });
   }
 
-  /// If the actual photo is null, display the default one.
-  displayPhoto(){
-    if (user.imgPath == null) return ProfilePhoto('assets/images/perfil.jpg');
-    else return ProfilePhotoNetwork(user.imgPath);
-  }
-
   GestureDetector generateImageRow(UserModel userModel) {
     return GestureDetector(
       child: Container(
         child: _imageFile == null
-            ? displayPhoto()
+            ? displayPhoto(userModel)
             : ProfilePhotoFile(_imageFile)
       ),
       onTap: () => letUserPickImage(userModel),

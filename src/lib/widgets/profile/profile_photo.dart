@@ -74,3 +74,8 @@ class ProfilePhotoFile extends StatelessWidget {
   }
 }
 
+/// If the actual photo is null, display the default one.
+displayPhoto(user){
+  if (user.imgPath == null) return ProfilePhoto('assets/images/perfil.jpg');
+  else return ProfilePhotoNetwork(user.imgPath);
+}

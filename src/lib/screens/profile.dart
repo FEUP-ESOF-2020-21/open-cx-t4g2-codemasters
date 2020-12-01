@@ -31,7 +31,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        ProfilePhoto('assets/images/conference_test.jpg'),
+                        displayPhoto(user),
                         SizedBox(height: 10.0),
                         ProfileName(user.username),
                         SizedBox(height: 30.0),
