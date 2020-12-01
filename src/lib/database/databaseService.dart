@@ -128,6 +128,7 @@ class DatabaseService {
         // print(commentsInfo);
       }
     });
+    commentsInfo.sort((a, b) => a['date'].compareTo(b['date']));
     print(commentsInfo);
     return commentsInfo;
   }
