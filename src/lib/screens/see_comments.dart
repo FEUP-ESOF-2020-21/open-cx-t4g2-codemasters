@@ -25,12 +25,10 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
           decoration: BoxDecoration(
             color: Colors.grey[300],
             borderRadius: BorderRadius.circular(10.0),
-            //border: Border.all(width: 0.5, color: accentOrange),
             boxShadow: [
               BoxShadow(
                 color: Colors.orangeAccent,
                 blurRadius: 3.0,
-                //offset: Offset(1, 1),
               ),
             ],
           ),
