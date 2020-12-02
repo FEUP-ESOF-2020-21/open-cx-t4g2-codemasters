@@ -34,7 +34,7 @@ abstract class FeedCarousel extends StatelessWidget {
                 onTap: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SeeAllTalksScreen())),
+                        builder: (context) => SeeAllTalksScreen(this.title))),
                 child: Text(
                   'See All',
                   style: seeAllTextFeed,

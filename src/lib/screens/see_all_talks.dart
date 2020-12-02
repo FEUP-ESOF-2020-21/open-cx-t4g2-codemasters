@@ -7,12 +7,24 @@ import '../style.dart';
 class SeeAllTalksScreen extends StatelessWidget {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef = [];
+  final String sortBy;
+
+  SeeAllTalksScreen(this.sortBy);
 
   List<Widget> drawAllTalks(context, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
     });
+    if (this.sortBy == "Recommended") {
+      // fazer algoritmo que nos dá uma pontuação de recomendação
+    } else if (this.sortBy == "Top Rated") {
+      conferences
+          .sort((conf1, conf2) => conf2['rate'].compareTo(conf1['rate']));
+    } else if (this.sortBy == "Coming Next") {
+      conferences
+          .sort((conf1, conf2) => conf1['date'].compareTo(conf2['date']));
+    }
     return displayConferences(context, conferences, conferencesRef);
   }
 
