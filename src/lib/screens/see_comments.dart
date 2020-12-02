@@ -19,7 +19,7 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
 
   Widget displayComments(List<Map<String, dynamic>> comments) {
     List<Widget> containers = [];
-    for (int i = 0; i < comments.length; i++) {
+    for (int i = comments.length - 1; i >= 0; i--) {
       containers.add(
         Container(
           decoration: BoxDecoration(
