@@ -1,6 +1,5 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
-import 'package:ESOF/screens/feed.dart';
 import 'package:ESOF/style.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';

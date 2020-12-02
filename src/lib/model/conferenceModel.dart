@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -37,7 +35,7 @@ class ConferenceModel {
 
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
-    print("SPEAKERS") ;
+    print("SPEAKERS");
     var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
     print(usernames);
     var reference;
@@ -72,7 +70,7 @@ class ConferenceModel {
     this.imgURL = await storeImage.uploadImage();
   }
 
-/// Function created for debug proposals.
+  /// Function created for debug proposals.
   void printVariables() {
     List elements = [
       this.title,
@@ -89,7 +87,7 @@ class ConferenceModel {
       '--SPEAKERS',
       '--DESCRIPTION',
       '--PLACE',
-      '--TAG' ,
+      '--TAG',
       '--IMG'
     ];
     for (int i = 0; i < 7; i++) {
