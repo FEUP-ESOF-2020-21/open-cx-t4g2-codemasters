@@ -1,70 +1,31 @@
 import 'package:ESOF/model/conference.dart';
-import 'package:ESOF/screens/see_all_talks.dart';
+import 'package:ESOF/screens/post.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../../style.dart';
-import '../../screens/post.dart';
 
-abstract class FeedCarousel extends StatelessWidget {
-  final String title;
+import '../style.dart';
+
+class SeeAllTalksScreen extends StatefulWidget {
+  @override
+  _SeeAllTalksScreenState createState() => _SeeAllTalksScreenState();
+}
+
+class _SeeAllTalksScreenState extends State<SeeAllTalksScreen> {
   List<Map<String, dynamic>> conferences = [];
-  List<DocumentReference> conferencesRef =
-      []; // Holds references to the Conferences in Firebase
+  List<DocumentReference> conferencesRef = [];
 
-  // If the conference has image return the url, otherwise returns a default.
   hasImage(conference) {
     return conference['img'] == null
         ? 'http://www.theides.org/img/about.jpg'
         : conference['img'];
   }
 
-  FeedCarousel(this.title, List<DocumentSnapshot> confs) {
+  List<Widget> drawAllTalks(List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                this.title,
-                style: mediumText,
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SeeAllTalksScreen())),
-                child: Text(
-                  'See All',
-                  style: seeAllTextFeed,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 280.0,
-          color: Colors.transparent,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: displayConferences(context),
-          ),
-        ),
-      ],
-    );
-  }
-
-  List<GestureDetector> displayConferences(context) {
     List<GestureDetector> containers = [];
     for (int i = 0; i < conferences.length; i++) {
       containers.add(
@@ -86,11 +47,17 @@ abstract class FeedCarousel extends StatelessWidget {
                         conferencesRef[i]))));
           },
           child: Container(
-            margin: EdgeInsets.all(10.0),
+            margin: EdgeInsets.all(20.0),
             width: 250,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.orangeAccent,
+                  blurRadius: 3.0,
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -140,5 +107,46 @@ abstract class FeedCarousel extends StatelessWidget {
       );
     }
     return containers;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: new StreamBuilder(
+          stream:
+              FirebaseFirestore.instance.collection("Conference").snapshots(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return SafeArea(
+                child: ListView(
+                  padding: EdgeInsets.symmetric(vertical: 35.0),
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'All Talks',
+                          style: bigText,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: drawAllTalks(snapshot.data.documents),
+                    ),
+                  ],
+                ),
+              );
+            }
+          }),
+      resizeToAvoidBottomPadding: false,
+    );
   }
 }
