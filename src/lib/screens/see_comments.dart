@@ -25,6 +25,14 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
           decoration: BoxDecoration(
             color: Colors.grey[300],
             borderRadius: BorderRadius.circular(10.0),
+            //border: Border.all(width: 0.5, color: accentOrange),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.orangeAccent,
+                blurRadius: 3.0,
+                //offset: Offset(1, 1),
+              ),
+            ],
           ),
           width: 350,
           margin: EdgeInsets.fromLTRB(20, 20, 20, 20),
@@ -32,9 +40,6 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 10,
-              ),
               Row(
                 children: [
                   Text(
@@ -53,6 +58,22 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
               Text(
                 comments[i]['comment'],
                 style: mediumText,
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    'Posted on ',
+                    style: descriptionTextFeed,
+                  ),
+                  Text(
+                    comments[i]['date'],
+                    style: descriptionTextFeed,
+                  ),
+                ],
               ),
             ],
           ),
