@@ -4,16 +4,11 @@ import 'package:flutter/material.dart';
 
 import '../style.dart';
 
-class SeeAllTalksScreen extends StatefulWidget {
-  @override
-  _SeeAllTalksScreenState createState() => _SeeAllTalksScreenState();
-}
-
-class _SeeAllTalksScreenState extends State<SeeAllTalksScreen> {
+class SeeAllTalksScreen extends StatelessWidget {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef = [];
 
-  List<Widget> drawAllTalks(List<DocumentSnapshot> confs) {
+  List<Widget> drawAllTalks(context, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
@@ -51,7 +46,7 @@ class _SeeAllTalksScreenState extends State<SeeAllTalksScreen> {
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: drawAllTalks(snapshot.data.documents),
+                      children: drawAllTalks(context, snapshot.data.documents),
                     ),
                   ],
                 ),
