@@ -1,9 +1,14 @@
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
+import 'package:ESOF/screens/rate_talk.dart';
+import 'package:ESOF/screens/see_comments.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
+import 'package:ESOF/widgets/common/RatingStars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'add_comment.dart';
 
 class PostScreen extends StatelessWidget {
   final Conference _conf;
@@ -163,17 +168,125 @@ class PostScreen extends StatelessWidget {
 
     stackChildren.add(ClipRRect(
       child: Container(
-        child: Image.asset(this._conf.photoPath),
+        child: Image.network(this._conf.photoPath),
       ),
       borderRadius: BorderRadius.circular(22),
     ));
     stackChildren.add(Container(
-      child: Text(this._conf.title, style: bigTextWhite),
+      child: Text(
+        this._conf.title,
+        style: bigTextWhite,
+        textAlign: TextAlign.center,
+      ),
     ));
 
     return Stack(
       children: stackChildren,
       alignment: AlignmentDirectional.bottomCenter,
+    );
+  }
+
+  Row generateRating() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          this._conf.rate.toStringAsFixed(2) + " / 5.0",
+          textScaleFactor: 1.2,
+        ),
+        SizedBox(
+          width: 20,
+        ),
+        RatingStars(this._conf.rate.round()),
+      ],
+    );
+  }
+
+  Row generateGiveRating(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FlatButton(
+          onPressed: () {
+            // print(this._conf.confReference);
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) =>
+                    RateTalkScreen(currentConf: this._conf.confReference)));
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.star,
+                size: 30,
+                color: Colors.yellow[700],
+              ),
+              SizedBox(width: 5.0),
+              Text(
+                'Rate Talk',
+                style: editProfileText,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row generateGiveComment(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FlatButton(
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  AddCommentScreen(currentConf: this._conf.confReference))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.comment,
+                size: 30,
+                color: Colors.grey,
+              ),
+              SizedBox(width: 5.0),
+              Text(
+                'Leave a comment',
+                style: mediumText,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row generateSeeComments(context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FlatButton(
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) =>
+                  SeeCommentsScreen(currentConf: this._conf.confReference))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.comment_bank,
+                size: 30,
+                color: Colors.grey,
+              ),
+              SizedBox(width: 5.0),
+              Text(
+                'See all comments',
+                style: mediumText,
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -199,6 +312,10 @@ class PostScreen extends StatelessWidget {
     // Row speakersRow = generateSpeakersRows();
     Column descriptionColumn = generateDescriptionColumn();
     Column tagColumn = generateTagColumn();
+    Row rating = generateRating();
+    Row giveRating = generateGiveRating(context);
+    Row giveComment = generateGiveComment(context);
+    Row seeComments = generateSeeComments(context);
 
     listViewElems.add(imageStack);
     listViewElems.add(SizedBox(height: 20));
@@ -210,6 +327,14 @@ class PostScreen extends StatelessWidget {
     listViewElems.add(SizedBox(height: 20));
     listViewElems.add(descriptionColumn);
     listViewElems.add(tagColumn);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(rating);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(giveRating);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(giveComment);
+    listViewElems.add(SizedBox(height: 20));
+    listViewElems.add(seeComments);
 
     Scaffold scaffold = Scaffold(
       body: ListView(

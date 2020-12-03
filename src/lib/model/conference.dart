@@ -6,7 +6,7 @@ class Conference {
   final String _title;
   final DateTime _happensOn;
   final String _place;
-  final int _rating;
+  final num _rating;
   final String _tag;
 
   DocumentReference _confReference;
@@ -20,12 +20,20 @@ class Conference {
     this._photo = photoPath;
   }*/
 
+  DocumentReference get confReference {
+    return _confReference;
+  }
+
   DateTime get date {
     return _happensOn;
   }
 
   String get place {
     return _place;
+  }
+
+  num get rate {
+    return _rating;
   }
 
   Future<List<Speaker>> getSpeakers() async {

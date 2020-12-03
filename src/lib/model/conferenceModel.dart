@@ -1,41 +1,98 @@
+import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
+import 'speaker.dart';
 
 class ConferenceModel {
-  String ref;
+  var ref;
   String title;
   DateTime date;
   String place;
   File img;
+  String imgURL;
   int rate;
   String description;
-  String speakers;
+  String speakers = "";
   String tag;
 
-  ConferenceMode({Map<String, dynamic> data, String ref}) {
-    this.ref = ref;
-    if (data != null) {
-      this.title = data['title'];
-      this.date = data['date'];
-      this.place = data['place'];
-      this.img = data['imgPath']; // TODO: how to hadle the image.
-      this.rate = data['rate'];
-      this.description = data['description'];
-      this.tag = data['tag'];
+  FirebaseFirestore firestore =
+      FirebaseFirestore.instance; // instance to firestore
+
+  Future confSetup() async {
+    /// gets the reference to add reference to conference_speaker.
+    if (this.img != null) await addImage();
+    this.ref = await firestore.collection('Conference').add({
+      'title': this.title,
+      'date': this.date,
+      'location': this.place,
+      'rate': this.rate,
+      'description': this.description,
+      'tag': this.tag,
+      'img': this.imgURL
+    });
+    findSpeakersRef();
+  }
+
+  /// If speaker found return ref, otherwise create one.
+  Future findSpeakersRef() async {
+    print("SPEAKERS");
+    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+    print(usernames);
+    var reference;
+
+    for (var username in usernames) {
+      print(username);
+      reference = await Speaker.getSpeakerRef(username);
+      if (reference == null || reference == false) {
+        print("HERE");
+        Speaker speaker = new Speaker.overloadConstructor(username);
+        print("GET");
+        print(speaker.username);
+        final speakerRef = await speaker.speakerSetup();
+        print("REFERENCE");
+        print(speakerRef);
+        await addToConferenceTable(speakerRef);
+      } else {
+        await this.addToConferenceTable(reference);
+      }
     }
   }
 
-    Future confSetup() async {
-      final dbReference = FirebaseFirestore.instance;
+  /// Adds the speaker and coference to the conference_speaker table in firebase.
+  Future addToConferenceTable(speakerRef) async {
+    await firestore
+        .collection("Conference_Speakers")
+        .add({'conference': this.ref, 'speaker': speakerRef});
+  }
 
-      return await dbReference.collection('Conference').add({
-        'title': this.title,
-        'date': this.date,
-        'location': this.place,
-        'rate': this.rate,
-        'description': this.description,
-        'tag': this.tag
-      });
+  Future addImage() async {
+    var storeImage = new CloudStorageService(this.img);
+    this.imgURL = await storeImage.uploadImage();
+  }
+
+  /// Function created for debug proposals.
+  void printVariables() {
+    List elements = [
+      this.title,
+      this.date,
+      this.speakers,
+      this.description,
+      this.place,
+      this.tag,
+      this.img
+    ];
+    List elementsName = [
+      '--TITLE:',
+      '--DATE:',
+      '--SPEAKERS',
+      '--DESCRIPTION',
+      '--PLACE',
+      '--TAG',
+      '--IMG'
+    ];
+    for (int i = 0; i < 7; i++) {
+      print(elementsName[i]);
+      print(elements[i]);
     }
   }
-// table relating conferences and users => to think
+}

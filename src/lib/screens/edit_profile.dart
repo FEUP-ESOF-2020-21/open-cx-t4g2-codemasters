@@ -1,11 +1,13 @@
+import 'dart:io';
+
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/userModel.dart';
-import 'package:ESOF/screens/login.dart';
 import 'package:ESOF/ui_elements.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ESOF/widgets/profile/profile_photo.dart';
 
-import '../auth/validation.dart';
 import '../style.dart';
 import 'utils/field.dart';
 import 'utils/label.dart';
@@ -21,11 +23,34 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Icon _email = Icon(Icons.alternate_email, color: Colors.black54);
   Icon _bio = Icon(Icons.description, color: Colors.black54);
   Icon _key = Icon(Icons.lock, color: Colors.black54);
-  Icon _image = Icon(Icons.image, color: Colors.black54);
+
+  /// Upload image
+  File _imageFile;
+  final _picker = ImagePicker();
 
   UserModel user = UserModel();
   bool editProfileFailed = false;
   String editProfileMsg;
+
+  Future letUserPickImage(UserModel userModel) async {
+    final image = await _picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (image != null) {
+        _imageFile = File(image.path);
+      } else
+        print("No image selected!");
+    });
+  }
+
+  GestureDetector generateImageRow(UserModel userModel) {
+    return GestureDetector(
+      child: Container(
+          child: _imageFile == null
+              ? displayPhoto(userModel)
+              : ProfilePhotoFile(_imageFile)),
+      onTap: () => letUserPickImage(userModel),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +59,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       children: [
         Label("New Photo:"),
         SizedBox(height: 20),
-        _image,
+        generateImageRow(user),
         SizedBox(height: 20),
         Label("New Name:"),
         Field(
@@ -110,6 +135,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 resultEmail = await AuthService.updateEmail(user.email);
                 profileChanged = (resultEmail == null);
               }
+
               if (resultEmail == null && user.password != "") {
                 resultPassword =
                     await AuthService.updatePassword(user.password);
@@ -123,6 +149,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 }
                 if (user.description != "") {
                   userM.description = user.description;
+                  profileChanged = true;
+                }
+                if (this._imageFile != null) {
+                  await user.addImage(this._imageFile);
+                  userM.imgPath = user.imgPath;
                   profileChanged = true;
                 }
 

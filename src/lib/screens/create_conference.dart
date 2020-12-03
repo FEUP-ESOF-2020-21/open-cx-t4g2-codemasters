@@ -1,23 +1,18 @@
 import 'dart:io';
 
+import 'package:ESOF/screens/utils/button.dart';
+import 'package:ESOF/screens/utils/counter.dart';
 import 'package:ESOF/screens/utils/field.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
-
-class CreateConferenceScreen extends StatefulWidget {
-  final _home;
-
-  CreateConferenceScreen(this._home);
-
-  @override
-  _CreateConferenceScreenState createState() =>
-      _CreateConferenceScreenState(_home);
-}
+import 'package:ESOF/widgets/profile/profile_photo.dart';
 
 String dateValidator(String value) {
+  if (value.length == 0) return "Field must not be empty";
+
   bool containsTwoSlashes = value.contains("/", 0) && value.contains("/", 3);
   if (!containsTwoSlashes)
     return "Date must contain the character '/' twice to separate the date elements.";
@@ -38,13 +33,26 @@ String notEmptyValidator(String value) {
   return null;
 }
 
-class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
+class CreateConferenceScreen extends StatefulWidget {
   final _home;
 
-  _CreateConferenceScreenState(this._home);
+  CreateConferenceScreen(this._home);
 
-  final _picker = ImagePicker();
+  @override
+  _CreateConferenceScreenState createState() =>
+      _CreateConferenceScreenState(_home);
+}
+
+class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
+  final _home;
   final _formKey = GlobalKey<FormState>();
+  final _picker = ImagePicker();
+  Counter counter = Counter();
+
+  String _speakers = "";
+  File _image;
+
+  _CreateConferenceScreenState(this._home);
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -55,14 +63,18 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         Container(
           child: Field(
-              maxLines: null,
-              inputType: TextInputType.multiline,
-              height: 100,
-              width: 360,
-              padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-              onSaved: (String value) {
-                confModel.description = value;
-              }),
+            maxLines: null,
+            inputType: TextInputType.multiline,
+            height: 100,
+            width: 360,
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+            onSaved: (String value) {
+              confModel.description = value;
+            },
+            validator: (String value) {
+              _formKey.currentState.save();
+            },
+          ),
           margin: EdgeInsets.fromLTRB(30, 0, 24, 20),
         )
       ],
@@ -73,31 +85,27 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Row generateImageRow(ConferenceModel confModel) {
     return Row(
       children: [
-        Container(
-          child: Text(
-            "Upload Image:",
-            style: mediumText,
-          ),
-          margin: EdgeInsets.fromLTRB(20, 30, 0, 0),
-        ),
-        GestureDetector(
+            GestureDetector(
           child: Container(
-            child: confModel.img == null
-                ? Image.asset(
-                    "assets/icons/1x/plus_icon.png",
-                    scale: 30,
-                  )
-                : Image.file(
-                    confModel.img,
-                    scale: 10,
-                  ),
-            margin: EdgeInsets.fromLTRB(100, 35, 0, 0),
-          ),
+              child: _image == null
+                  ? ProfilePhoto('assets/images/conference_test.jpg')
+                  : ProfilePhotoFile(_image)),
           onTap: () => letUserPickImage(confModel),
-        ),
+        )
       ],
-      crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center
     );
+  }
+
+  Future letUserPickImage(ConferenceModel confModel) async {
+    final image = await _picker.getImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (image != null) {
+        _image = File(image.path);
+      } else
+        print("No image selected!");
+    });
   }
 
   Row generateGenericLabelFieldPair(String label, ConferenceModel confModel) {
@@ -108,12 +116,16 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     int maxSizeInput = 200;
     Function valFunc = notEmptyValidator;
     TextInputType inputType = TextInputType.text;
-    double _width = 283;
+    double _width = 233;
 
     switch (leftElemText) {
       case "Title:":
         {
-          onSavedFunction = (String value) => confModel.title = value;
+          /// Not arrow function, since arrow function returns a value.
+          onSavedFunction = (String value) {
+            confModel.title = value;
+          };
+
           hintText = "Insert the title here";
           maxSizeInput = 30;
           break;
@@ -122,9 +134,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         {
           maxSizeInput = 10;
           onSavedFunction = (String value) {
-            List<String> dateElems = value.split("/");
-            confModel.date = DateTime(int.parse(dateElems.last),
-                int.parse(dateElems[1]), int.parse(dateElems[0]));
+            if (value.length != 0) {
+              List<String> dateElems = value.split("/");
+              confModel.date = DateTime(int.parse(dateElems.last),
+                  int.parse(dateElems[1]), int.parse(dateElems[0]));
+            }
           };
           valFunc = dateValidator;
           hintText = "Insert the date here";
@@ -133,24 +147,18 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         }
       case "Place:":
         {
-          onSavedFunction = (String value) => confModel.place = value;
+          onSavedFunction = (String value) {
+            confModel.place = value;
+          };
           hintText = "Insert the place here";
-          _width = 273;
-          break;
-        }
-      case "Speakers:":
-        {
-          //TODO: what to do with speakers
-          onSavedFunction = (String value) => confModel.speakers = value;
-          hintText = "Insert the speakers here";
-          _width = 238;
           break;
         }
       case "Tag:":
         {
-          onSavedFunction = (String value) => confModel.tag = value;
+          onSavedFunction = (String value) {
+            confModel.tag = value;
+          };
           hintText = "Insert the tag here";
-          _width = 290;
           break;
         }
 
@@ -163,7 +171,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       width: _width,
       hintTxt: hintText,
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-      validator: valFunc,
+      validator: (String value) {
+        String validation = valFunc(value);
+        if (validation != null) return validation;
+        _formKey.currentState.save();
+      },
       maxSizeInput: maxSizeInput,
       inputType: inputType,
     );
@@ -178,11 +190,81 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       ),
       Container(
         child: field,
+        margin: EdgeInsets.only(right: 20),
       )
     ];
 
     return Row(
       children: rowElems,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    );
+  }
+
+  // Function to insert the speaker username.
+  Row generateSpeakerRow() {
+    final _speakerFormKey = GlobalKey<FormState>();
+
+    List<Widget> rowElems = [
+      Container(
+        child: Text(
+          "Speakers:",
+          style: mediumText,
+        ),
+        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+      ),
+      counter,
+      Container(
+        margin: EdgeInsets.only(right: 20),
+        child: GestureDetector(
+          child: Image.asset(
+            "assets/icons/1x/plus_icon.png",
+            scale: 30,
+          ),
+          onTap: () => showDialog(
+            context: context,
+            child: SimpleDialog(
+              title: Text("Insert the speaker's username:"),
+              children: [
+                SizedBox(height: 20),
+                Form(
+                  key: _speakerFormKey,
+                  child: Field(
+                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                    onSaved: (value) {
+                      this._speakers == ""
+                          ? this._speakers = value
+                          : this._speakers += "," + value;
+                    },
+                    validator: (value) {
+                      final validation = notEmptyValidator(value);
+                      if (validation != null) return validation;
+                      _formKey.currentState.save();
+                    },
+                  ),
+                ),
+                Container(
+                  child: Button(
+                    buttonText: "OK",
+                    onPressedFunc: () {
+                      if (_speakerFormKey.currentState.validate()) {
+                        _speakerFormKey.currentState.save();
+                        counter.incrementCounter();
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                  padding: EdgeInsets.all(50),
+                ),
+              ],
+              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+            ),
+          ),
+        ),
+      ),
+    ];
+    return Row(
+      children: rowElems,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
     );
   }
 
@@ -190,27 +272,19 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     return Container(
       margin: EdgeInsets.only(top: 30),
       padding: EdgeInsets.symmetric(horizontal: 60),
-      child: FlatButton(
-        onPressed: () async {
+      child: Button(
+        buttonText: "Submit",
+        onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
             _formKey.currentState.save();
             confModel.rate = 0;
+            confModel.speakers = _speakers;
+            confModel.img = _image;
+            confModel.printVariables();
             confModel.confSetup();
             _home.revertToPrevScreen();
           }
         },
-        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        child: Text(
-          "Submit",
-          style: submitTextWhite,
-        ),
-        color: Colors.orangeAccent,
-        /* style: ElevatedButton.styleFrom(
-          primary: Colors.orangeAccent,
-        ), */
       ),
     );
   }
@@ -237,36 +311,27 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Future letUserPickImage(ConferenceModel confModel) async {
-    final image = await _picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (image != null)
-        confModel.img = File(image.path);
-      else
-        print("No image selected!");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     ConferenceModel confModel = new ConferenceModel();
     List<Widget> listViewElems = [
       SizedBox(height: 40),
       generateHeader(),
-      SizedBox(height: 10),
+      SizedBox(height: 20),
+      generateImageRow(confModel),
+      SizedBox(height: 35),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("date", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateGenericLabelFieldPair("speakers", confModel),
+      generateSpeakerRow(),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
-      generateImageRow(confModel),
+      SizedBox(height: 30),
       generateSubmitButton(confModel),
       SizedBox(height: 40),
     ];
