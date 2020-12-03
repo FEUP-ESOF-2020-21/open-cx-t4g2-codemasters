@@ -57,6 +57,11 @@ class ConferenceSearch extends SearchDelegate<String> {
 
 
   @override
+  Widget buildResults(BuildContext context) {
+
+  }
+
+  @override
   Widget buildSuggestions(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection('Conference').snapshots(),
