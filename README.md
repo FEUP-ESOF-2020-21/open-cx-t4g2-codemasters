@@ -129,7 +129,8 @@ So, what are you waiting for? Sign up today!
 As a user, i want to insert my personal information and a password to create an account so that I can access the app;
 
 ### User interface mockup
-[a introduzir]
+
+![signup](./docs/sign_up_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -246,7 +247,7 @@ Scenario: Edit talk’s post
 As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
 
 ### User interface mockup
-[a introduzir]
+![edit_profile](./docs/edit_profile_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -327,7 +328,7 @@ Scenario: Search for a talk by criteria
 As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
 
 ### User interface mockup
-[a introduzir]
+![explore](./docs/explore_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -348,7 +349,10 @@ Scenario: Search for a talk with a query
 As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
 
 ### User interface mockup
-[a introduzir]
+##### Search mockup
+![explore](./docs/explore_mockup.png)
+##### Talk page mockup
+![post](./docs/post_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -368,7 +372,7 @@ Scenario: See search results
 As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
 ### User interface mockup
-[a introduzir]
+![create_conference](./docs/create_conference_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -387,7 +391,11 @@ Scenario: A user wants to create a post
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
 ### User interface mockup
-[a introduzir]
+
+##### Feed mockup
+![feed](./docs/feed_mockup.png)
+##### Talk page mockup
+![post](./docs/post_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
