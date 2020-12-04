@@ -124,29 +124,7 @@ So, what are you waiting for? Sign up today!
 
 ## User Stories
 
-
 ### Story #1
-As a user, i want to insert my personal information and a password to create an account so that I can access the app;
-
-### User interface mockup
-
-![signup](./docs/sign_up_mockup.png)
-
-### Acceptance tests
-```Gherkin
-Scenario: Creating a new account
-  Given I open the app for the first time
-  And There is an option for creating a new account
-  When I select that option
-  And provide the information required for a profile
-  Then a new profile is created
-```
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #2
 As a user I want to be able to rate a talk so that other users can use my rating to decise if they want to attend a similar talk???
 
 ### User interface mockup
@@ -166,7 +144,7 @@ Scenario: Rate a talk.
 * Value: Must have
 * Effort: XL
 
-### Story #3
+### Story #2
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
 ### User interface mockup
@@ -185,7 +163,7 @@ Scenario: Leave a comment about a talk
 * Effort: XL
 
 
-### Story #4
+### Story #3
 As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
 ### User interface mockup
@@ -204,7 +182,7 @@ Scenario: See rating of a talk
 * Effort: M
 
 
-### Story #5
+### Story #4
 As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
 
 ### User interface mockup
@@ -223,7 +201,7 @@ Scenario: Edit rating of a talk
 * Effort: M
 
 
-### Story #6
+### Story #5
 As a user I want to be able to edit my talk’s post so that it can reflect the most current and up to date information about my talk 
 
 ### User interface mockup
@@ -243,7 +221,7 @@ Scenario: Edit talk’s post
 * Effort: M
 
 
-### Story #7
+### Story #6
 As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
 
 ### User interface mockup
@@ -263,7 +241,7 @@ Scenario: Edit the user profile
 * Effort: M
 
 
-### Story #8
+### Story #7
 As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
 
 ### User interface mockup
@@ -282,7 +260,7 @@ Scenario: Inspecting a speaker profile
 * Effort: A DEFINIR
 
 
-### Story #9
+### Story #8
 As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
 
 ### User interface mockup
@@ -303,7 +281,7 @@ Scenario: Search for a talk with filters
 * Effort: M
 
 
-### Story #10
+### Story #9
 As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are mote interesting to me
 
 ### User interface mockup
@@ -324,7 +302,7 @@ Scenario: Search for a talk by criteria
 * Effort: M
 
 
-### Story #11
+### Story #10
 As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
 
 ### User interface mockup
@@ -345,7 +323,7 @@ Scenario: Search for a talk with a query
 * Effort: XL
 
 
-### Story #12
+### Story #11
 As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
 
 ### User interface mockup
@@ -368,7 +346,7 @@ Scenario: See search results
 * Effort: L
 
 
-### Story #13
+### Story #12
 As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
 ### User interface mockup
@@ -387,7 +365,7 @@ Scenario: A user wants to create a post
 * Effort: L
 
 
-### Story #14
+### Story #13
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
 ### User interface mockup
