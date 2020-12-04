@@ -125,11 +125,10 @@ So, what are you waiting for? Sign up today!
 ## User Stories
 
 ### Story #1
-As a user I want to be able to rate a talk so that other users can use my rating to decise if they want to attend a similar talk???
+As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend a similar talk???
 
 ### User interface mockup
-[a introduzir]
-
+![leave_rating](./docs/leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -148,7 +147,7 @@ Scenario: Rate a talk.
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
 ### User interface mockup
-[a introduzir]
+![leave_comment](./docs/leave_comment_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -167,7 +166,7 @@ Scenario: Leave a comment about a talk
 As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
 ### User interface mockup
-[a introduzir]
+![rating](./docs/leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -393,7 +392,7 @@ As a user I want to be able to check my profile
 ### User interface mockup
 ![profile](./docs/profile_mockup.png)
 
-### Acceptance test
+### Acceptance tests
 ```Gherkin
 Scenario: A user wants to view the information in their profile
   Given There is a button that takes them to their profile page
@@ -401,6 +400,50 @@ Scenario: A user wants to view the information in their profile
   Then The user's profile is presented
 ```
 
+### Value and effort
+* Value: Cool to have
+* Effort: M
+
+### Story #15
+As a user I want to be able to see the comments left about a talk
+
+### User interface mockup
+
+##### Button to see all comments
+![see_comments](./docs/see_comments_mockup.png)
+##### Screen showing the comments
+![comments](./docs/comments_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: The user is in a talk's page
+  Given A button is present that allows them to see the comments
+  When The user taps the aforementioned button
+  Then A screen with the comments is shown
+```
+### Value and effort
+* Value: Cool to have
+* Effort: M
+
+### Story #16
+
+As a user I want to be able to see all the talks in the app's database
+
+### User interface mockup
+
+##### Button to see all talks
+![see_talks](./docs/see_all_mockup.png)
+
+##### Screen showing all the talks
+![all_talks](./docs/all_talks_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: The user is in the feed and wants to see all the talks available
+  Given A button is present that allows them to see all the talks
+  When The user taps the aforementioned button
+  Then A screen with all the talks is shown
+```
 ### Value and effort
 Value: Cool to have
 Effort: M
