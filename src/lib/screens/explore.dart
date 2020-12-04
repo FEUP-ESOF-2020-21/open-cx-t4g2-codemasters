@@ -75,8 +75,6 @@ class ConferenceSearch extends SearchDelegate<String> {
             _checkIfQueryContains(a, 'location') ||
             _checkIfQueryContains(a, 'tag'));
 
-
-
         return ListView(
           children: results
               .map<Widget>((a) => ListTile(
@@ -97,7 +95,7 @@ class ConferenceSearch extends SearchDelegate<String> {
                                   conference['rate'],
                                   conference['tag'],
                                   // nao percebi o que é o reference. Por enquanto está a null e funciona
-                                  null))));
+                                  a.reference))));
                     },
                   ))
               .toList(),
