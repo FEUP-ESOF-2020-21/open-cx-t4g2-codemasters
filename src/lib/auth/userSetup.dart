@@ -9,6 +9,6 @@ Future userSetup(UserModel userModel) async {
     'username': userModel.username,
     'rate': 0,
     'description': "",
-    'imgPath': "",
+    'imgPath': null,
   });
 }
