@@ -75,14 +75,12 @@ class ConferenceSearch extends SearchDelegate<String> {
             _checkIfQueryContains(a, 'location') ||
             _checkIfQueryContains(a, 'tag'));
 
-
-
         return ListView(
           children: results
-              .map<Widget>((a) => ListTile(
-                    title: Text(a.data()['title']),
+              .map<Widget>((result) => ListTile(
+                    title: Text(result.data()['title']),
                     onTap: () {
-                      var conference = a.data();
+                      var conference = result.data();
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -97,7 +95,7 @@ class ConferenceSearch extends SearchDelegate<String> {
                                   conference['rate'],
                                   conference['tag'],
                                   // nao percebi o que é o reference. Por enquanto está a null e funciona
-                                  null))));
+                                  result.reference))));
                     },
                   ))
               .toList(),
