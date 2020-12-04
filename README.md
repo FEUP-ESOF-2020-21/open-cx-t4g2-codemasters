@@ -387,6 +387,24 @@ Scenario: Looking at the feed
 * Value: Must have
 * Effort: M
 
+### Story #14
+As a user I want to be able to check my profile
+
+### User interface mockup
+![profile](./docs/profile_mockup.png)
+
+### Acceptance test
+```Gherkin
+Scenario: A user wants to view the information in their profile
+  Given There is a button that takes them to their profile page
+  When The user taps the aforementioned button
+  Then The user's profile is presented
+```
+
+### Value and effort
+Value: Cool to have
+Effort: M
+
 TO DO
 
 
