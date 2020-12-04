@@ -128,7 +128,12 @@ So, what are you waiting for? Sign up today!
 As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend a similar talk???
 
 ### User interface mockup
+
+##### Button to leave a rating
 ![leave_rating](./docs/leave_rating_mockup.png)
+
+##### Screen where the user can actually leave the rating
+![actually_leave_rating](./docs/actually_leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -147,7 +152,12 @@ Scenario: Rate a talk.
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
 ### User interface mockup
+
+##### Button to leave a comment
 ![leave_comment](./docs/leave_comment_mockup.png)
+
+##### Screen where the user can actually leave the comment
+![actually_leave_comment](./docs/actually_leave_comment_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -185,7 +195,12 @@ Scenario: See rating of a talk
 As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
 
 ### User interface mockup
-[a introduzir]
+
+##### Button to leave the new rating
+![leave_rating](./docs/leave_rating_mockup.png)
+
+##### Screen where the user actually can leave the new rating
+![actually_leave_rating](./docs/actually_leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
@@ -281,7 +296,7 @@ Scenario: Search for a talk with filters
 
 
 ### Story #9
-As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are mote interesting to me
+As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
 
 ### User interface mockup
 [a introduzir]
