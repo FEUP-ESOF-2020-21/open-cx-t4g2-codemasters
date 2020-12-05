@@ -10,5 +10,7 @@ Future userSetup(UserModel userModel) async {
     'rate': 0,
     'description': "",
     'imgPath': null,
+    'nPosts': 0,
+    'nRatings': 0
   });
 }

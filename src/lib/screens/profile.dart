@@ -41,11 +41,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             FlatButton(
                               onPressed: () => print('Showing user rates...'),
-                              child: CounterCountainer('rates', user.rate),
+                              child: CounterCountainer('rates', user.nRatings),
                             ),
                             FlatButton(
-                              onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => TalksAddedByUserScreen())),
-                              child: CounterCountainer('posts', 1),
+                              onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TalksAddedByUserScreen())),
+                              child: CounterCountainer('posts', user.nPosts),
                             ),
                             FlatButton(
                               onPressed: () =>
