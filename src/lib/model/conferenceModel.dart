@@ -76,30 +76,4 @@ class ConferenceModel {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
-
-  /// Function created for debug proposals.
-  void printVariables() {
-    List elements = [
-      this.title,
-      this.date,
-      this.speakers,
-      this.description,
-      this.place,
-      this.tag,
-      this.img
-    ];
-    List elementsName = [
-      '--TITLE:',
-      '--DATE:',
-      '--SPEAKERS',
-      '--DESCRIPTION',
-      '--PLACE',
-      '--TAG',
-      '--IMG'
-    ];
-    for (int i = 0; i < 7; i++) {
-      print(elementsName[i]);
-      print(elements[i]);
-    }
-  }
 }

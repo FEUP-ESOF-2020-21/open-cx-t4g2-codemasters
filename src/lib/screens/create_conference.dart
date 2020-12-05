@@ -298,9 +298,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             confModel.speakers = _speakers;
         
             confModel.img = _image;
-    
-            confModel.printVariables();
-     
+
             confModel.confSetup();
         
             _home.revertToPrevScreen();
@@ -354,12 +352,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),
       generateSubmitButton(confModel),
-      SizedBox(height: 40),
     ];
 
     return Scaffold(
       body: Form(
         child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 40),
           children: listViewElems,
         ),
         key: _formKey,
