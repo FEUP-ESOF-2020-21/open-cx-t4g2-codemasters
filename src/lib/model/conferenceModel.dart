@@ -37,6 +37,8 @@ class ConferenceModel {
       'img': this.imgURL,
       'user': userCreator.ref
     });
+
+    DatabaseService.incrementUserPosts(AuthService.auth.currentUser.uid);
     findSpeakersRef();
   }
 
