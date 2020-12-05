@@ -32,11 +32,30 @@ class _FeedScreenState extends State<FeedScreen> {
     }).toList();
   }
 
+  bool checkConfTag(List<String> confTags, List<String> userFavoriteTags) {
+    for (String confTag in confTags)
+      if (userFavoriteTags.contains(confTag.toUpperCase())) return true;
+
+    return false;
+  }
+
+  List<DocumentSnapshot> filterRecommended_Tags(
+      List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
+    return totalConferences.where((conference) {
+      List<String> separatedTags =
+          conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+      return checkConfTag(separatedTags, userFavoriteTags);
+    }).toList();
+  }
+
   List<DocumentSnapshot> filterRecommended(
       List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
-    // print('OH YES');
-    // print(userFavoriteTags);
-    return totalConferences;
+    List<DocumentSnapshot> totalRecommendedTags = filterRecommended_Tags(
+        totalConferences, userFavoriteTags); // Contains Favorite Tags
+    List<DocumentSnapshot> totalRecommendedRate =
+        filterTopRate(totalRecommendedTags); // Rate > minRate(4)
+
+    return totalRecommendedRate;
   }
 
   @override

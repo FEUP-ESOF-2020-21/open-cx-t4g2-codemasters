@@ -142,12 +142,15 @@ class DatabaseService {
       // print(userRatings.docs);
       for (int i = 0; i < userRatings.docs.length; i++) {
         await userRatings.docs[i]['conference'].get().then((conference) {
-          favoriteTags.add(conference['tag']);
+          List<String> separatedTags =
+              conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+          separatedTags.forEach((tag) {
+            favoriteTags.add(tag.toUpperCase());
+          });
         });
       }
     });
 
     return favoriteTags;
-    // print(favoriteTags);
   }
 }
