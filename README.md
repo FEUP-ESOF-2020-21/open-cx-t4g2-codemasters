@@ -124,82 +124,91 @@ So, what are you waiting for? Sign up today!
 
 ## User Stories
 
-
 ### Story #1
-As a user, i want to insert my personal information and create a password for my account so that I can access the app;
+As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend a similar talk???
 
 ### User interface mockup
-[a introduzir]
 
-### Scenery
-* Opening the app for the first time
-* **Given:** There is an option for creating a new account
-* **When:** The user selects that option
-* **And:** Provides the information required for a profile
-* **Then:** A new profile is created
+##### Button to leave a rating
+![leave_rating](./docs/leave_rating_mockup.png)
 
+##### Screen where the user can actually leave the rating
+![actually_leave_rating](./docs/actually_leave_rating_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #2
-As a user I want to be able to rate a talk so that other users can use my rating to decise if they want to attend a similar talk???
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* Rate a talk.
-* **Given:** A talk that I have attended
-* **When:** I tap “Rate this talk”
-* **Then:** I give a score between 0 and 10
-
-### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Rate a talk.
+  Given The post of a talk that I have attended
+  When I tap “Rate this talk”
+  Then I give a score between 0 and 10
+  And submit my rating
+```
 
 ### Value and effort
 * Value: Must have
 * Effort: XL
 
-### Story #3
+### Story #2
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
 ### User interface mockup
-[a introduzir]
 
-### Scenery
-* Leave a comment about a talk
-* **Given:** A talk that I have attended and rated
-* **When:** I tap “leave comment”
-* **Then:** I can post a comment about that talk
+##### Button to leave a comment
+![leave_comment](./docs/leave_comment_mockup.png)
+
+##### Screen where the user can actually leave the comment
+![actually_leave_comment](./docs/actually_leave_comment_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
-
+```Gherkin
+Scenario: Leave a comment about a talk
+  Given A talk's post that I have attended and rated
+  When I tap “Leave comment”
+  Then I can write a comment about that talk
+  And tap the submit button to submit my comment
+```
 ### Value and effort
 * Value: Must have
 * Effort: XL
 
 
-### Story #4
+### Story #3
 As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
 ### User interface mockup
-[a introduzir]
-
-### Scenery
-* See rating of a talk
-* **Given:** A talk that is presented in the feed
-* **When:** I click a talk post
-* **Then:** Conference rating is presented
+![rating](./docs/leave_rating_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: See rating of a talk
+  Given A talk's post that is presented in the feed
+  When I tap the talk post
+  Then the conference rating appears on screen
+```
+
+### Value and effort
+* Value: Must have
+* Effort: M
+
+
+### Story #4
+As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
+
+### User interface mockup
+
+##### Button to leave the new rating
+![leave_rating](./docs/leave_rating_mockup.png)
+
+##### Screen where the user actually can leave the new rating
+![actually_leave_rating](./docs/actually_leave_rating_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: Edit rating of a talk
+  Given A post of a talk that I have rated
+  When I tap the “Edit rating” button
+  Then I can change the previous rating
+```
 
 ### Value and effort
 * Value: Must have
@@ -207,40 +216,39 @@ As a user I want to be able to see the current rating of a talk so that I can ma
 
 
 ### Story #5
-As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* Edit rating of a talk
-* **Given:** A talk that I have rated
-* **When:** I tap “edit rating” button
-* **Then:** I can modify the initial rating
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Must have
-* Effort: M
-
-
-### Story #6
 As a user I want to be able to edit my talk’s post so that it can reflect the most current and up to date information about my talk 
 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Edit talk’s post
-* **Given:** A talk’s post that was published by me
-* **When:** I tap the “edit post” button
-* **And:** I change what I’ve written initially in the post
-* **Then:** The information on my post changes
+### Acceptance tests
+```Gherkin
+Scenario: Edit talk’s post
+  Given A talk’s post that was created by me
+  When I tap the “Edit post” button
+  And I change what I’ve written previously in the post
+  Then the information on my post changes
+```
+
+### Value and effort
+* Value: Could have
+* Effort: M
+
+
+### Story #6
+As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
+
+### User interface mockup
+![edit_profile](./docs/edit_profile_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Edit the user profile
+  Given My profile (screen or page????)
+  When I tap “Edit profile” button
+  And I change what I’ve written previously in my profile
+  Then the information in my profile changes
+```
 
 ### Value and effort
 * Value: Could have
@@ -248,61 +256,60 @@ As a user I want to be able to edit my talk’s post so that it can reflect the 
 
 
 ### Story #7
-As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* Edit the user profile
-* **Given:** My profile
-* **When:** I go to my profile
-* **And:** I tap “edit profile” button
-* **Then:**I should be able to edit my profile informations
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Could have
-* Effort: M
-
-
-### Story #8
 As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* Inspecting a speaker profile
-* **Given:** The speaker profile
-* **When:** I check it’s info
-* **Then:** I should see which talks a speaker participated
-
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Inspecting a speaker profile
+  Given The talk's speaker profile
+  When I tap the "View talks" button
+  Then I am redirected to a list of the talks the speaker participated
+```
 
 ### Value and effort
-* Value: Cool to
-* Effort: A DEFINIR
+* Value: Cool to have  
+* Effort: M
 
 
-### Story #9
-As a user I want to be able to apply filters to narrow down the search results, such as (the speaker, theme, rating, etc), so that I can find the talks best suited for me and my preferences
+### Story #8
+As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
 
 ### User interface mockup
 [a introduzir]
 
-### Scenery
-* A user is searching for something
-* **Given:** There is an option to apply filters
-* **When:** The user selects the filters they want to apply
-* **And:** Provides the values for each filter
-* **Then:** Only results that match the provided filters are shown
+### Acceptance tests
+```Gherkin
+Scenario: Search for a talk with filters
+  Given The explore screen
+  When I select the filters I want to apply
+  And provide the values for each filter
+  And tap the "Search" button
+  Then the filtered results are shown
+```
+
+### Value and effort
+* Value: Cool to have
+* Effort: M
+
+
+### Story #9
+As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
+
+### User interface mockup
+[a introduzir]
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Search for a talk by criteria
+  Given The explore screen
+  When I select the sorting criteria
+  And provide the values for each criteria (ascending/descending)
+  And tap the "Search" button
+  Then the sorted results are shown
+```
 
 ### Value and effort
 * Value: Cool to have
@@ -310,61 +317,62 @@ As a user I want to be able to apply filters to narrow down the search results, 
 
 
 ### Story #10
-As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are mote interesting to me
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* A user is searching for something
-* **Given:** There is an option to sort the results
-* **When:** The user selects the sorting criteria
-* **And:** Provides the values for each criteria (ascending/descending)
-* **Then:** The results are sorted based on the provided sorting criteria
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Cool to have
-* Effort: M
-
-
-### Story #11
 As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
 
 ### User interface mockup
-[a introduzir]
-
-### Scenery
-* A user is searching for something
-* **Given:** There is search bar where I can type
-* **When:** I enter some information in the search bar
-* **And:** I tap the “search” button
-* **Then:** Conferences and users related to what I’ve searched are shown
+![explore](./docs/explore_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Search for a talk with a query
+  Given The explore screen
+  When I tap the search bar
+  And enter some information 
+  And tap the "Search" button
+  Then the matching results are shown
+```
 
 ### Value and effort
 * Value: Must have
 * Effort: XL
 
 
-### Story #12
+### Story #11
 As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
 
 ### User interface mockup
-[a introduzir]
-
-### Scenery
-* A user is looking at search results
-* **Given:** The results are clickable
-* **When:** The user taps a result
-* **Then:** The user is taken to the page that corresponds to that result
+##### Search mockup
+![explore](./docs/explore_mockup.png)
+##### Talk page mockup
+![post](./docs/post_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: See search results
+  Given The explore screen
+  When I search a talk
+  And tap one of the results
+  Then I'm taken to the talk's post
+```
+
+### Value and effort
+* Value: Must have
+* Effort: L
+
+
+### Story #12
+As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
+
+### User interface mockup
+![create_conference](./docs/create_conference_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: A user wants to create a post
+  Given The bottom navigation bar
+  When I tap the "Create Post" button
+  Then I'm taken to the post creation page
+```
 
 ### Value and effort
 * Value: Must have
@@ -372,49 +380,171 @@ As a user I want to be able to interact with the search results (pick one and go
 
 
 ### Story #13
-As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
-
-### User interface mockup
-[a introduzir]
-
-### Scenery
-* A user wants to create a post
-* **Given:** A button that allows them to do so
-* **When:** The user taps that button
-* **Then:** The user is taken to the post creation page
-
-### Acceptance tests
-[a introduzir]
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #14
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
 ### User interface mockup
-[a introduzir]
 
-### Scenery
-* A user is looking at a feed
-* **Given:** The talks shown are clickable
-* **When:** The user taps a talk
-* **Then:** The user is taken to the page that corresponds to that talk
+##### Feed mockup
+![feed](./docs/feed_mockup.png)
+##### Talk page mockup
+![post](./docs/post_mockup.png)
 
 ### Acceptance tests
-[a introduzir]
+```Gherkin
+Scenario: Looking at the feed
+  Given The feed screen
+  When I tap a suggested talk
+  Then I'm taken to the talk's post
+```
 
 ### Value and effort
 * Value: Must have
 * Effort: M
 
+### Story #14
+As a user I want to be able to check my profile
+
+### User interface mockup
+![profile](./docs/profile_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: A user wants to view the information in their profile
+  Given There is a button that takes them to their profile page
+  When The user taps the aforementioned button
+  Then The user's profile is presented
+```
+
+### Value and effort
+* Value: Cool to have
+* Effort: M
+
+### Story #15
+As a user I want to be able to see the comments left about a talk
+
+### User interface mockup
+
+##### Button to see all comments
+![see_comments](./docs/see_comments_mockup.png)
+##### Screen showing the comments
+![comments](./docs/comments_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: The user is in a talk's page
+  Given A button is present that allows them to see the comments
+  When The user taps the aforementioned button
+  Then A screen with the comments is shown
+```
+### Value and effort
+* Value: Cool to have
+* Effort: M
+
+### Story #16
+
+As a user I want to be able to see all the talks in the app's database
+
+### User interface mockup
+
+##### Button to see all talks
+![see_talks](./docs/see_all_mockup.png)
+
+##### Screen showing all the talks
+![all_talks](./docs/all_talks_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: The user is in the feed and wants to see all the talks available
+  Given A button is present that allows them to see all the talks
+  When The user taps the aforementioned button
+  Then A screen with all the talks is shown
+```
+### Value and effort
+Value: Cool to have  
+Effort: M
+
 TO DO
 
 
-## Domain model
+### Domain model TODO
 
-TO DO
+To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
 
 ---
+
+## Architecture and Design TODO
+The architecture of a software system encompasses the set of key decisions about its overall organization. 
+
+A well written architecture document is brief but reduces the amount of time it takes new programmers to a project to understand the code to feel able to make modifications and enhancements.
+
+To document the architecture requires describing the decomposition of the system in their parts (high-level components) and the key behaviors and collaborations between them. 
+
+In this section you should start by briefly describing the overall components of the project and their interrelations. You should also describe how you solved typical problems you may have encountered, pointing to well-known architectural and design patterns, if applicable.
+
+### Logical architecture
+The purpose of this subsection is to document the high-level logical structure of the code, using a UML diagram with logical packages, without the worry of allocating to components, processes or machines.
+
+It can be beneficial to present the system both in a horizontal or vertical decomposition:
+* horizontal decomposition may define layers and implementation concepts, such as the user interface, business logic and concepts; 
+* vertical decomposition can define a hierarchy of subsystems that cover all layers of implementation.
+
+### Physical architecture
+The goal of this subsection is to document the high-level physical structure of the software system (machines, connections, software components installed, and their dependencies) using UML deployment diagrams or component diagrams (separate or integrated), showing the physical structure of the system.
+
+It should describe also the technologies considered and justify the selections made. Examples of technologies relevant for openCX are, for example, frameworks for mobile applications (Flutter vs ReactNative vs ...), languages to program with microbit, and communication with things (beacons, sensors, etc.).
+
+### Prototype
+To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
+
+In this subsection please describe in more detail which, and how, user(s) story(ies) were implemented.
+
+---
+
+## Implementation TODO
+Regular product increments are a good practice of product management. 
+
+While not necessary, sometimes it might be useful to explain a few aspects of the code that have the greatest potential to confuse software engineers about how it works. Since the code should speak by itself, try to keep this section as short and simple as possible.
+
+Use cross-links to the code repository and only embed real fragments of code when strictly needed, since they tend to become outdated very soon.
+
+---
+## Test TODO
+
+There are several ways of documenting testing activities, and quality assurance in general, being the most common: a strategy, a plan, test case specifications, and test checklists.
+
+In this section it is only expected to include the following:
+* test plan describing the list of features to be tested and the testing methods and tools;
+* test case specifications to verify the functionalities, using unit tests and acceptance tests.
+ 
+A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
+
+---
+## Configuration and change management TODO
+
+Configuration and change management are key activities to control change to, and maintain the integrity of, a project’s artifacts (code, models, documents).
+
+For the purpose of ESOF, we will use a very simple approach, just to manage feature requests, bug fixes, and improvements, using GitHub issues and following the [GitHub flow](https://guides.github.com/introduction/flow/).
+
+
+---
+
+## Project management TODO
+
+Software project management is an art and science of planning and leading software projects, in which software projects are planned, implemented, monitored and controlled.
+
+In the context of ESOF, we expect that each team adopts a project management tool capable of registering tasks, assign tasks to people, add estimations to tasks, monitor tasks progress, and therefore being able to track their projects.
+
+Example of tools to do this are:
+  * [Trello.com](https://trello.com)
+  * [Github Projects](https://github.com/features/project-management/com)
+  * [Pivotal Tracker](https://www.pivotaltracker.com)
+  * [Jira](https://www.atlassian.com/software/jira)
+
+We recommend to use the simplest tool that can possibly work for the team.
+
+
+---
+
+## Evolution - contributions to open-cx TODO
+
+Describe your contribution to open-cx (iteration 5), linking to the appropriate pull requests, issues, documentation.
