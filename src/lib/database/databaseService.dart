@@ -166,7 +166,7 @@ class DatabaseService {
       for (int i = 0; i < ratedOnes.docs.length; i++)
         ratedConfs.add(ratedOnes.docs[i]['conference']);
     });
-
+    print('.----------------------------------------------');
     print(ratedConfs);
     return ratedConfs;
   }

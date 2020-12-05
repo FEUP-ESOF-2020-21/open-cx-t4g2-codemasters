@@ -48,14 +48,31 @@ class _FeedScreenState extends State<FeedScreen> {
     }).toList();
   }
 
+  List<DocumentSnapshot> filterRecommended_NotRatedYet(
+      List<DocumentSnapshot> totalConferences,
+      List<DocumentReference> userRatedConfs) {
+    return totalConferences.where((conference) {
+      return !userRatedConfs.contains(conference.reference);
+    }).toList();
+  }
+
   List<DocumentSnapshot> filterRecommended(
-      List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
+      List<DocumentSnapshot> totalConferences,
+      List<String> userFavoriteTags,
+      List<DocumentReference> userRatedConfs) {
     List<DocumentSnapshot> totalRecommendedTags = filterRecommended_Tags(
         totalConferences, userFavoriteTags); // Contains Favorite Tags
+    print(totalRecommendedTags);
     List<DocumentSnapshot> totalRecommendedRate =
         filterTopRate(totalRecommendedTags); // Rate > minRate(4)
+    print(totalRecommendedRate);
+    List<DocumentSnapshot> totalRecommendedComingNext =
+        filterComingNext(totalRecommendedRate); // ComingNext
+    print(totalRecommendedComingNext);
+    List<DocumentSnapshot> totalRecommended = filterRecommended_NotRatedYet(
+        totalRecommendedComingNext, userRatedConfs); // Not rated yet!
 
-    return totalRecommendedRate;
+    return totalRecommended;
   }
 
   @override
@@ -76,24 +93,29 @@ class _FeedScreenState extends State<FeedScreen> {
                   padding: EdgeInsets.symmetric(vertical: 35.0),
                   children: <Widget>[
                     // We still need to parse the documents regarding each Category!
-                    SizedBox(height: 20.0),
                     FutureBuilder(
-                        future: DatabaseService.getUserFavoriteTags(
-                            AuthService.auth.currentUser.uid),
-                        builder: (context, snapTags) {
+                        future: Future.wait([
+                          DatabaseService.getUserFavoriteTags(
+                              AuthService.auth.currentUser.uid),
+                          DatabaseService.getUserRatedConfs(
+                              AuthService.auth.currentUser.uid)
+                        ]),
+                        builder:
+                            (context, AsyncSnapshot<List<dynamic>> snapTags) {
+                          // snapTags.data[0] -> getUserFavoriteTags
+                          // snapTags.data[1] -> getUserRatedConfs
                           if (snapTags.hasData)
                             return RecommendedCarousel(filterRecommended(
-                                snapshot.data.documents, snapTags.data));
+                                snapshot.data.documents,
+                                snapTags.data[0],
+                                snapTags.data[1]));
                           else
-                            return Center(
-                                child:
-                                    CircularProgressIndicator()); // passar as conferencias ordenadas por recomendação
+                            return Text(
+                                ""); // passar as conferencias ordenadas por recomendação
                         }),
-                    SizedBox(height: 20.0),
                     //TopRatedCarousel(),
                     TopRatedCarousel(filterTopRate(snapshot.data
                         .documents)), // passar as conferencias ordenadas por rating
-                    SizedBox(height: 20.0),
                     //ComingNextCarousel(),
                     ComingNextCarousel(filterComingNext(snapshot.data
                         .documents)), // passar as conferencias ordenadas por data

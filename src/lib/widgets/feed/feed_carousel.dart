@@ -19,39 +19,44 @@ abstract class FeedCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return conferences.length > 0
+        ? Column(
             children: <Widget>[
-              Text(
-                this.title,
-                style: mediumText,
+              SizedBox(height: 20.0),
+              Padding(
+                padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      this.title,
+                      style: mediumText,
+                    ),
+                    GestureDetector(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SeeAllTalksScreen(this.title))),
+                      child: Text(
+                        'See All',
+                        style: seeAllTextFeed,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SeeAllTalksScreen(this.title))),
-                child: Text(
-                  'See All',
-                  style: seeAllTextFeed,
+              Container(
+                height: 280.0,
+                color: Colors.transparent,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children:
+                      displayConferences(context, conferences, conferencesRef),
                 ),
               ),
             ],
-          ),
-        ),
-        Container(
-          height: 280.0,
-          color: Colors.transparent,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            children: displayConferences(context, conferences, conferencesRef),
-          ),
-        ),
-      ],
-    );
+          )
+        : Text("");
   }
 }
