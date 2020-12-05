@@ -34,8 +34,8 @@ class _FeedScreenState extends State<FeedScreen> {
 
   List<DocumentSnapshot> filterRecommended(
       List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
-    print('OH YES');
-    print(userFavoriteTags);
+    // print('OH YES');
+    // print(userFavoriteTags);
     return totalConferences;
   }
 
