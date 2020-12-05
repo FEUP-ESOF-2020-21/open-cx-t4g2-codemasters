@@ -14,6 +14,7 @@ abstract class FeedCarousel extends StatelessWidget {
 
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
     this.confs = confs;
+
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
@@ -54,8 +55,8 @@ abstract class FeedCarousel extends StatelessWidget {
                 color: Colors.transparent,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children:
-                      displayConferences(context, conferences, conferencesRef),
+                  children: displayConferences(
+                      context, conferences, conferencesRef, false),
                 ),
               ),
             ],

@@ -16,7 +16,7 @@ class SeeAllTalksScreen extends StatelessWidget {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
     });
-    return displayConferences(context, conferences, conferencesRef);
+    return displayConferences(context, conferences, conferencesRef, true);
   }
 
   @override
