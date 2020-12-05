@@ -83,18 +83,15 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
-    return Row(
-      children: [
-            GestureDetector(
-          child: Container(
-              child: _image == null
-                  ? ProfilePhoto('assets/images/conference_test.jpg')
-                  : ProfilePhotoFile(_image)),
-          onTap: () => letUserPickImage(confModel),
-        )
-      ],
-        mainAxisAlignment: MainAxisAlignment.center
-    );
+    return Row(children: [
+      GestureDetector(
+        child: Container(
+            child: _image == null
+                ? ProfilePhoto('assets/images/conference_test.jpg')
+                : ProfilePhotoFile(_image)),
+        onTap: () => letUserPickImage(confModel),
+      )
+    ], mainAxisAlignment: MainAxisAlignment.center);
   }
 
   Future letUserPickImage(ConferenceModel confModel) async {
@@ -315,18 +312,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Widget build(BuildContext context) {
     ConferenceModel confModel = new ConferenceModel();
     List<Widget> listViewElems = [
-      SizedBox(height: 40),
       generateHeader(),
       SizedBox(height: 20),
       generateImageRow(confModel),
       SizedBox(height: 35),
+      generateSpeakerRow(),
+      SizedBox(height: 40),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("date", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
-      SizedBox(height: 30),
-      generateSpeakerRow(),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
