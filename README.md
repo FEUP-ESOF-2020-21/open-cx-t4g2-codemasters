@@ -270,8 +270,8 @@ Scenario: Inspecting a speaker profile
 ```
 
 ### Value and effort
-* Value: Cool to
-* Effort: A DEFINIR
+* Value: Cool to have  
+* Effort: M
 
 
 ### Story #8
