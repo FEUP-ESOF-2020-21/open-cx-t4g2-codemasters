@@ -22,7 +22,7 @@ class TalksAddedByUserScreen extends StatelessWidget {
   }
 
   List<Widget> drawTalks(context) {
-    return displayConferences(context, conferences, conferencesRef);
+    return displayConferences(context, conferences, conferencesRef, true);
   }
 
   @override
