@@ -10,13 +10,13 @@ class ConferenceModel {
   var ref;
   String title;
   DateTime date;
-  String place;
+  String place = "";
   File img;
   String imgURL;
   int rate;
   String description;
   String speakers = "";
-  String tag;
+  String tag = "";
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
@@ -43,7 +43,7 @@ class ConferenceModel {
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
     print("SPEAKERS");
-    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+    var usernames = this.speakers.split(',');
     print(usernames);
     var reference;
 

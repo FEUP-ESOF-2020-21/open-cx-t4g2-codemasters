@@ -186,6 +186,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: (String value) {
         String validation = valFunc(value);
+        //print(validation);
         if (validation != null) return validation;
         _formKey.currentState.save();
       },
@@ -225,7 +226,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      counter,
+      this.counter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(
@@ -251,7 +252,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     validator: (value) {
                       final validation = notEmptyValidator(value);
                       if (validation != null) return validation;
-                      _formKey.currentState.save();
+                      //_formKey.currentState.save();
                     },
                   ),
                 ),
@@ -289,12 +290,19 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
+       
             _formKey.currentState.save();
+        
             confModel.rate = 0;
+       
             confModel.speakers = _speakers;
+        
             confModel.img = _image;
+
             confModel.confSetup();
+        
             _home.revertToPrevScreen();
+      
           }
         },
       ),
