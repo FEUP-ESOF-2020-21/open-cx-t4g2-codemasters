@@ -10,7 +10,10 @@ abstract class FeedCarousel extends StatelessWidget {
   List<DocumentReference> conferencesRef =
       []; // Holds references to the Conferences in Firebase
 
+  List<DocumentSnapshot> confs;
+
   FeedCarousel(this.title, List<DocumentSnapshot> confs) {
+    this.confs = confs;
     confs.forEach((conf) {
       this.conferences.add(conf.data());
       this.conferencesRef.add(conf.reference);
@@ -37,7 +40,7 @@ abstract class FeedCarousel extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  SeeAllTalksScreen(this.title))),
+                                  SeeAllTalksScreen(this.confs))),
                       child: Text(
                         'See All',
                         style: seeAllTextFeed,
