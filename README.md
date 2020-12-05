@@ -460,7 +460,7 @@ Scenario: The user is in the feed and wants to see all the talks available
   Then A screen with all the talks is shown
 ```
 ### Value and effort
-Value: Cool to have
+Value: Cool to have  
 Effort: M
 
 TO DO
