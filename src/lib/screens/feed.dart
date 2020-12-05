@@ -60,16 +60,12 @@ class _FeedScreenState extends State<FeedScreen> {
       List<DocumentSnapshot> totalConferences,
       List<String> userFavoriteTags,
       List<DocumentReference> userRatedConfs) {
-    // print(totalConferences);
     List<DocumentSnapshot> totalRecommendedTags = filterRecommended_Tags(
         totalConferences, userFavoriteTags); // Contains Favorite Tags
-    // print(totalRecommendedTags);
     List<DocumentSnapshot> totalRecommendedRate =
         filterTopRate(totalRecommendedTags); // Rate > minRate(4)
-    // print(totalRecommendedRate);
     List<DocumentSnapshot> totalRecommendedComingNext =
         filterComingNext(totalRecommendedRate); // ComingNext
-    // print(totalRecommendedComingNext);
     List<DocumentSnapshot> totalRecommended = filterRecommended_NotRatedYet(
         totalRecommendedComingNext, userRatedConfs); // Not rated yet!
 
