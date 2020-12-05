@@ -33,7 +33,6 @@ class ConferenceModel {
       'location': this.place,
       'rate': this.rate,
       'description': this.description,
-      'tag': this.tag,
       'img': this.imgURL,
       'user': userCreator.ref
     });
