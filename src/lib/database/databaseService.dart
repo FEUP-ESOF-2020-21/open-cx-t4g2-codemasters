@@ -78,6 +78,7 @@ class DatabaseService {
           'user': currentUser.ref,
           'rating': rating
         });
+        await incrementUserRatings(uid);
       } else {
         // Atualizar rating
         await dbReference
@@ -88,8 +89,6 @@ class DatabaseService {
 
       await updateConfRating(confReference);
     });
-
-    await incrementUserRatings(uid);
   }
 
   static Future leaveConfComment(
