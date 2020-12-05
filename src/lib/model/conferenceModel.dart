@@ -1,3 +1,6 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
+import 'package:ESOF/model/userModel.dart';
 import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -19,7 +22,10 @@ class ConferenceModel {
       FirebaseFirestore.instance; // instance to firestore
 
   Future confSetup() async {
-    /// gets the reference to add reference to conference_speaker.
+    // gets the reference to add reference to conference_speaker.
+    UserModel userCreator =
+        await DatabaseService.getUser(AuthService.auth.currentUser.uid);
+
     if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -28,7 +34,8 @@ class ConferenceModel {
       'rate': this.rate,
       'description': this.description,
       'tag': this.tag,
-      'img': this.imgURL
+      'img': this.imgURL,
+      'user': userCreator.ref
     });
     findSpeakersRef();
   }
