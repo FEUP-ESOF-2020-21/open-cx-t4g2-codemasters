@@ -150,7 +150,7 @@ class DatabaseService {
       }
     });
 
-    return favoriteTags;
+    return favoriteTags.toSet().toList();
   }
 
   static Future<List<DocumentReference>> getUserRatedConfs(String uid) async {
