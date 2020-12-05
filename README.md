@@ -515,15 +515,15 @@ There are several ways of documenting testing activities, and quality assurance 
 In this section it is only expected to include the following:
 * test plan describing the list of features to be tested and the testing methods and tools;
 * test case specifications to verify the functionalities, using unit tests and acceptance tests.
- 
+
 A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
 
 ---
-## Configuration and change management TODO
+## Configuration and change management 
 
-Configuration and change management are key activities to control change to, and maintain the integrity of, a project’s artifacts (code, models, documents).
+In this project, every time a group member developed a feature, he would first create a branch dedicated to it. He would only develop the feature inside this branch, alone or with another member of the group. When the feature was done and tested, the developer creates a pull request. This pull request needs to be approved by a minimum of two group members (excluding the developer).
 
-For the purpose of ESOF, we will use a very simple approach, just to manage feature requests, bug fixes, and improvements, using GitHub issues and following the [GitHub flow](https://guides.github.com/introduction/flow/).
+This management allows a better work flow for every collaborator and diminishes the total number of errors related to collaborating workspaces.
 
 
 ---
