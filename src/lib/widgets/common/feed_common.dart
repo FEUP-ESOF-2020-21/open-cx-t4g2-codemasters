@@ -1,4 +1,6 @@
 // If the conference has image return the url, otherwise returns a default.
+import 'dart:math';
+
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/post.dart';
 import 'package:flutter/material.dart';
@@ -12,9 +14,18 @@ hasImage(conference) {
       : conference['img'];
 }
 
-List<GestureDetector> displayConferences(context, conferences, conferencesRef) {
+List<GestureDetector> displayConferences(
+    context, conferences, conferencesRef, displayAll) {
   List<GestureDetector> containers = [];
-  for (int i = 0; i < conferences.length; i++) {
+  int numberOfConfs_Feed = 10;
+
+  int numConfsToDisplay;
+  if (displayAll)
+    numConfsToDisplay = conferences.length;
+  else
+    numConfsToDisplay = min(numberOfConfs_Feed, conferences.length);
+
+  for (int i = 0; i < numConfsToDisplay; i++) {
     containers.add(
       GestureDetector(
         onTap: () {

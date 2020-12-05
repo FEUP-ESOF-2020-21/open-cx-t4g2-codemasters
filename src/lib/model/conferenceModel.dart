@@ -10,13 +10,13 @@ class ConferenceModel {
   var ref;
   String title;
   DateTime date;
-  String place;
+  String place = "";
   File img;
   String imgURL;
   int rate;
   String description;
   String speakers = "";
-  String tag;
+  String tag = "";
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
@@ -45,7 +45,7 @@ class ConferenceModel {
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
     print("SPEAKERS");
-    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+    var usernames = this.speakers.split(',');
     print(usernames);
     var reference;
 
@@ -77,31 +77,5 @@ class ConferenceModel {
   Future addImage() async {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
-  }
-
-  /// Function created for debug proposals.
-  void printVariables() {
-    List elements = [
-      this.title,
-      this.date,
-      this.speakers,
-      this.description,
-      this.place,
-      this.tag,
-      this.img
-    ];
-    List elementsName = [
-      '--TITLE:',
-      '--DATE:',
-      '--SPEAKERS',
-      '--DESCRIPTION',
-      '--PLACE',
-      '--TAG',
-      '--IMG'
-    ];
-    for (int i = 0; i < 7; i++) {
-      print(elementsName[i]);
-      print(elements[i]);
-    }
   }
 }
