@@ -28,6 +28,21 @@ String dateValidator(String value) {
   return null;
 }
 
+String tagValidator(String value) {
+  if (value == "") return "Field must not be empty.";
+  List<String> separatedTags = value.split(new RegExp(r'; |, |\*|\n| '));
+  RegExp tag = RegExp(r'#.*');
+  bool warningMsg = false;
+  print(separatedTags);
+  separatedTags.forEach((element) {
+    if (!tag.hasMatch(element)) warningMsg = true;
+  });
+
+  if (warningMsg || separatedTags.length == 0)
+    return "Tags must start with a #";
+  return null;
+}
+
 String notEmptyValidator(String value) {
   if (value == "") return "Field must not be empty.";
   return null;
@@ -155,6 +170,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.tag = value;
           };
+          valFunc = tagValidator;
           hintText = "Insert the tag here";
           break;
         }
