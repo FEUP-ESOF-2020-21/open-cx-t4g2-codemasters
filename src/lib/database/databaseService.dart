@@ -129,4 +129,25 @@ class DatabaseService {
     commentsInfo.sort((a, b) => a['date'].compareTo(b['date']));
     return commentsInfo;
   }
+
+  static Future<List<String>> getUserFavoriteTags(String uid) async {
+    List<String> favoriteTags = [];
+    UserModel user = await getUser(uid);
+
+    await dbReference
+        .collection('UserRating_Conference')
+        .where('user', isEqualTo: user.ref)
+        .get()
+        .then((userRatings) async {
+      // print(userRatings.docs);
+      for (int i = 0; i < userRatings.docs.length; i++) {
+        await userRatings.docs[i]['conference'].get().then((conference) {
+          favoriteTags.add(conference['tag']);
+        });
+      }
+    });
+
+    return favoriteTags;
+    // print(favoriteTags);
+  }
 }

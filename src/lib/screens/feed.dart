@@ -1,3 +1,5 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,6 +32,13 @@ class _FeedScreenState extends State<FeedScreen> {
     }).toList();
   }
 
+  List<DocumentSnapshot> filterRecommended(
+      List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
+    print('OH YES');
+    print(userFavoriteTags);
+    return totalConferences;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +51,25 @@ class _FeedScreenState extends State<FeedScreen> {
                 child: CircularProgressIndicator(),
               );
             } else {
+              // filterRecommended(snapshot.data.documents, userFavoriteTags);
               return SafeArea(
                 child: ListView(
                   padding: EdgeInsets.symmetric(vertical: 35.0),
                   children: <Widget>[
                     // We still need to parse the documents regarding each Category!
                     SizedBox(height: 20.0),
-                    RecommendedCarousel(snapshot.data
-                        .documents), // passar as conferencias ordenadas por recomendação
+                    FutureBuilder(
+                        future: DatabaseService.getUserFavoriteTags(
+                            AuthService.auth.currentUser.uid),
+                        builder: (context, snapTags) {
+                          if (snapTags.hasData)
+                            return RecommendedCarousel(filterRecommended(
+                                snapshot.data.documents, snapTags.data));
+                          else
+                            return Center(
+                                child:
+                                    CircularProgressIndicator()); // passar as conferencias ordenadas por recomendação
+                        }),
                     SizedBox(height: 20.0),
                     //TopRatedCarousel(),
                     TopRatedCarousel(filterTopRate(snapshot.data
