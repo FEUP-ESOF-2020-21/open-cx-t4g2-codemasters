@@ -17,6 +17,24 @@ class DatabaseService {
     return userM;
   }
 
+  static Future<void> incrementUserPosts(String uid) async {
+    Query query = dbReference.collection('Users').where('uid', isEqualTo: uid);
+    QuerySnapshot user = await query.get();
+
+    DocumentReference docRef =
+        dbReference.collection('Users').doc(user.docs[0].id);
+    await docRef.update({"nPosts": FieldValue.increment(1)});
+  }
+
+  static Future<void> incrementUserRatings(String uid) async {
+    Query query = dbReference.collection('Users').where('uid', isEqualTo: uid);
+    QuerySnapshot user = await query.get();
+
+    DocumentReference docRef =
+        dbReference.collection('Users').doc(user.docs[0].id);
+    await docRef.update({"nRatings": FieldValue.increment(1)});
+  }
+
   static Future updateUser(DocumentReference ref, String username,
       String description, String imagePath) async {
     await ref.update({
@@ -71,6 +89,8 @@ class DatabaseService {
 
       await updateConfRating(confReference);
     });
+
+    await incrementUserRatings(uid);
   }
 
   static Future leaveConfComment(
