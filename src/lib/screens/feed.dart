@@ -60,15 +60,16 @@ class _FeedScreenState extends State<FeedScreen> {
       List<DocumentSnapshot> totalConferences,
       List<String> userFavoriteTags,
       List<DocumentReference> userRatedConfs) {
+    // print(totalConferences);
     List<DocumentSnapshot> totalRecommendedTags = filterRecommended_Tags(
         totalConferences, userFavoriteTags); // Contains Favorite Tags
-    print(totalRecommendedTags);
+    // print(totalRecommendedTags);
     List<DocumentSnapshot> totalRecommendedRate =
         filterTopRate(totalRecommendedTags); // Rate > minRate(4)
-    print(totalRecommendedRate);
+    // print(totalRecommendedRate);
     List<DocumentSnapshot> totalRecommendedComingNext =
         filterComingNext(totalRecommendedRate); // ComingNext
-    print(totalRecommendedComingNext);
+    // print(totalRecommendedComingNext);
     List<DocumentSnapshot> totalRecommended = filterRecommended_NotRatedYet(
         totalRecommendedComingNext, userRatedConfs); // Not rated yet!
 
@@ -90,7 +91,7 @@ class _FeedScreenState extends State<FeedScreen> {
               // filterRecommended(snapshot.data.documents, userFavoriteTags);
               return SafeArea(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: 35.0),
+                  padding: EdgeInsets.symmetric(vertical: 5.0),
                   children: <Widget>[
                     // We still need to parse the documents regarding each Category!
                     FutureBuilder(
@@ -110,8 +111,9 @@ class _FeedScreenState extends State<FeedScreen> {
                                 snapTags.data[0],
                                 snapTags.data[1]));
                           else
-                            return Text(
-                                ""); // passar as conferencias ordenadas por recomendação
+                            return Center(
+                                child:
+                                    CircularProgressIndicator()); // passar as conferencias ordenadas por recomendação
                         }),
                     //TopRatedCarousel(),
                     TopRatedCarousel(filterTopRate(snapshot.data

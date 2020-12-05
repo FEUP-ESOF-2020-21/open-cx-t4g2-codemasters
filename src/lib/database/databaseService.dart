@@ -139,7 +139,6 @@ class DatabaseService {
         .where('user', isEqualTo: user.ref)
         .get()
         .then((userRatings) async {
-      // print(userRatings.docs);
       for (int i = 0; i < userRatings.docs.length; i++) {
         await userRatings.docs[i]['conference'].get().then((conference) {
           List<String> separatedTags =
@@ -166,8 +165,7 @@ class DatabaseService {
       for (int i = 0; i < ratedOnes.docs.length; i++)
         ratedConfs.add(ratedOnes.docs[i]['conference']);
     });
-    print('.----------------------------------------------');
-    print(ratedConfs);
+
     return ratedConfs;
   }
 }
