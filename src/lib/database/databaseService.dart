@@ -153,4 +153,21 @@ class DatabaseService {
 
     return favoriteTags;
   }
+
+  static Future<List<DocumentReference>> getUserRatedConfs(String uid) async {
+    List<DocumentReference> ratedConfs = [];
+    UserModel user = await getUser(uid);
+
+    await dbReference
+        .collection('UserRating_Conference')
+        .where('user', isEqualTo: user.ref)
+        .get()
+        .then((ratedOnes) {
+      for (int i = 0; i < ratedOnes.docs.length; i++)
+        ratedConfs.add(ratedOnes.docs[i]['conference']);
+    });
+
+    print(ratedConfs);
+    return ratedConfs;
+  }
 }
