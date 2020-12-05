@@ -14,14 +14,14 @@ class TalksAddedByUserScreen extends StatelessWidget {
     UserModel user =
         await DatabaseService.getUser(AuthService.auth.currentUser.uid);
     confs.forEach((conf) {
-      //if (conf.reference['user'] == user.ref) {
+      if (conf.data()['user'] == user.ref) {
         this.conferences.add(conf.data());
         this.conferencesRef.add(conf.reference);
-      //}
+      }
     });
   }
 
-  List<Widget> drawTalks(context, List<DocumentSnapshot> confs) {
+  List<Widget> drawTalks(context) {
     return displayConferences(context, conferences, conferencesRef);
   }
 
@@ -37,30 +37,39 @@ class TalksAddedByUserScreen extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             } else {
-              filterConfsByUser(snapshot.data.documents);
-              return SafeArea(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: 35.0),
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Talks added by You',
-                          style: bigText,
+              return FutureBuilder(
+                  future: filterConfsByUser(snapshot.data.documents),
+                  builder: (context, snap) {
+                    if (snap.connectionState != ConnectionState.done) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return SafeArea(
+                        child: ListView(
+                          padding: EdgeInsets.symmetric(vertical: 35.0),
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Talks added by You',
+                                  style: bigText,
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: drawTalks(context),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: drawTalks(context, snapshot.data.documents),
-                    ),
-                  ],
-                ),
-              );
+                      );
+                    }
+                  });
             }
           }),
       resizeToAvoidBottomPadding: false,

@@ -277,7 +277,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             confModel.rate = 0;
             confModel.speakers = _speakers;
             confModel.img = _image;
-            confModel.printVariables();
             confModel.confSetup();
             _home.revertToPrevScreen();
           }
