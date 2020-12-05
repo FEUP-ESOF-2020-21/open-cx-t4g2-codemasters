@@ -140,13 +140,15 @@ class DatabaseService {
         .get()
         .then((userRatings) async {
       for (int i = 0; i < userRatings.docs.length; i++) {
-        await userRatings.docs[i]['conference'].get().then((conference) {
-          List<String> separatedTags =
-              conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
-          separatedTags.forEach((tag) {
-            favoriteTags.add(tag.toUpperCase());
+        if (userRatings.docs[i]['rating'] > 3) {
+          await userRatings.docs[i]['conference'].get().then((conference) {
+            List<String> separatedTags =
+                conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+            separatedTags.forEach((tag) {
+              favoriteTags.add(tag.toUpperCase());
+            });
           });
-        });
+        }
       }
     });
 
