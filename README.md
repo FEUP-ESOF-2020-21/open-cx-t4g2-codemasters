@@ -463,6 +463,29 @@ Scenario: The user is in the feed and wants to see all the talks available
 Value: Cool to have  
 Effort: M
 
+### Story #17
+
+As a user I want to be able to see all the posts I created
+
+### User interface mockup
+
+#### Button to see user's created talks
+![created talks button](./docs/button_toSee_MyPosts_mockup.png)
+
+#### Screen showing all created talks
+![all created talks](./docs/myPosts_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: A user wants to see the posts he created
+  Given: There is a button on the profile page that takes him to his posts page
+  When: The user taps the aforementioned button
+  Then: All the posts the user created are presented
+```
+### Value and effort
+Value: Cool to have  
+Effort: M
+
 TO DO
 
 
