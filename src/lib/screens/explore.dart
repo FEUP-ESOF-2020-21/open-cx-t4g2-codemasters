@@ -4,26 +4,6 @@ import 'package:ESOF/widgets/common/feed_common.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../style.dart';
-
-class ExploreScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Search Conferences"),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () =>
-                  {showSearch(context: context, delegate: ConferenceSearch())})
-        ],
-        backgroundColor: accentOrange,
-      ),
-    );
-  }
-}
-
 class ConferenceSearch extends SearchDelegate<String> {
   // If the conference has image return the url, otherwise returns a default.
   // Mudar para ficar mais modular!

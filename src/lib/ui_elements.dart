@@ -27,7 +27,6 @@ class _MyHomeState extends State<MyHome> {
     _pages = [
       CreateConferenceScreen(this),
       FeedScreen(),
-      ExploreScreen(),
       ProfileScreen(),
     ];
   }
@@ -35,7 +34,7 @@ class _MyHomeState extends State<MyHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar,
+      appBar: buildAppBar(context),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
           backgroundColor: accentOrange,
@@ -52,10 +51,6 @@ class _MyHomeState extends State<MyHome> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Image.asset("assets/icons/1x/zoom-2.png", scale: 1.5),
-              label: "Explore",
-            ),
-            BottomNavigationBarItem(
               icon: Image.asset("assets/icons/1x/single-01.png", scale: 1.5),
               label: "Profile",
             ),
@@ -70,7 +65,7 @@ class _MyHomeState extends State<MyHome> {
   }
 }
 
-final AppBar appBar = AppBar(
+/* final AppBar appBar = AppBar(
   actions: [
     Container(
       child: new Text("Rate-A-Talk", style: mediumText),
@@ -83,4 +78,22 @@ final AppBar appBar = AppBar(
     //width: double.infinity,
   ),
   backgroundColor: accentOrange,
-);
+); */
+
+AppBar buildAppBar(context) {
+  return AppBar(
+    title: Text("Rate-A-Talk"),
+    actions: <Widget>[
+      IconButton(
+          icon: Icon(Icons.search),
+          onPressed: () =>
+              {showSearch(context: context, delegate: ConferenceSearch())})
+    ],
+    leading: Container(
+    child: new Text("Logo", style: smallerText),
+    padding: EdgeInsets.fromLTRB(15, 18, 0, 0),
+    //width: double.infinity,
+  ),
+    backgroundColor: accentOrange,
+  );
+}
