@@ -5,8 +5,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ConferenceSearch extends SearchDelegate<String> {
-  // If the conference has image return the url, otherwise returns a default.
-  // Mudar para ficar mais modular!
+  List<Map<String, dynamic>> conferences = [];
+  List<DocumentReference> conferencesRef = [];
+  List<DocumentSnapshot> confs;
+
+  List<Widget> drawMatchedTalks(context, List<DocumentSnapshot> confs) {
+    confs.forEach((conf) {
+      this.conferences.add(conf.data());
+      this.conferencesRef.add(conf.reference);
+    });
+    return displayConferences(context, conferences, conferencesRef, true);
+  }
 
   bool _checkIfQueryContains(DocumentSnapshot doc, String keyword) {
     return doc
@@ -40,7 +49,11 @@ class ConferenceSearch extends SearchDelegate<String> {
   }
 
   @override
-  Widget buildResults(BuildContext context) {}
+  Widget buildResults(BuildContext context) {
+    return Column(
+      children: displayConferences(context, conferences, conferencesRef, true),
+    );
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -55,6 +68,24 @@ class ConferenceSearch extends SearchDelegate<String> {
             _checkIfQueryContains(a, 'location') ||
             _checkIfQueryContains(a, 'tag'));
 
+        // I NEED TO FILL THE LISTS conferences AND conferencesRef TO DISPLAY THE TALKS
+        // I NEED HELPP
+
+        //this.confs = results.map<DocumentSnapshot>((result) => result.data());
+
+        /* results.forEach((result) {
+          this.conferences.add(result.data);
+          this.conferencesRef.add(result.reference);
+        }); */
+
+        /* this.conferences = results
+            .map<Map<String, dynamic>>((result) => result.data())
+            .toList();
+
+        this.conferencesRef = results
+            .map<DocumentReference>((result) => result.reference)
+            .toList(); */
+
         return ListView(
           children: results
               .map<Widget>((result) => ListTile(
@@ -62,20 +93,23 @@ class ConferenceSearch extends SearchDelegate<String> {
                     onTap: () {
                       var conference = result.data();
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              //mudar para novo contrutor
-                              builder: (context) => PostScreen(new Conference(
-                                  hasImage(conference),
-                                  conference['title'],
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      conference['date'].seconds * 1000),
-                                  conference['location'],
-                                  conference['description'],
-                                  conference['rate'],
-                                  conference['tag'],
-                                  // nao percebi o que é o reference. Por enquanto está a null e funciona
-                                  result.reference))));
+                        context,
+                        MaterialPageRoute(
+                          //mudar para novo contrutor
+                          builder: (context) => PostScreen(
+                            new Conference(
+                                hasImage(conference),
+                                conference['title'],
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    conference['date'].seconds * 1000),
+                                conference['location'],
+                                conference['description'],
+                                conference['rate'],
+                                conference['tag'],
+                                result.reference),
+                          ),
+                        ),
+                      );
                     },
                   ))
               .toList(),
