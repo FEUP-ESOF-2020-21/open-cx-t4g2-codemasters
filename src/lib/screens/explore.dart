@@ -3,19 +3,11 @@ import 'package:ESOF/screens/post.dart';
 import 'package:ESOF/widgets/common/feed_common.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ESOF/style.dart';
 
 class ConferenceSearch extends SearchDelegate<String> {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef = [];
-  List<DocumentSnapshot> confs;
-
-  List<Widget> drawMatchedTalks(context, List<DocumentSnapshot> confs) {
-    confs.forEach((conf) {
-      this.conferences.add(conf.data());
-      this.conferencesRef.add(conf.reference);
-    });
-    return displayConferences(context, conferences, conferencesRef, true);
-  }
 
   bool _checkIfQueryContains(DocumentSnapshot doc, String keyword) {
     return doc
@@ -50,9 +42,31 @@ class ConferenceSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Column(
-      children: displayConferences(context, conferences, conferencesRef, true),
-    );
+    return Scaffold(
+        body: SafeArea(
+      child: ListView(
+        padding: EdgeInsets.symmetric(vertical: 35.0),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Search Results",
+                style: bigText,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:
+                displayConferences(context, conferences, conferencesRef, true),
+          ),
+        ],
+      ),
+    ));
   }
 
   @override
@@ -63,28 +77,20 @@ class ConferenceSearch extends SearchDelegate<String> {
         if (!snapshot.hasData) return new Text('Loading...');
         if (query == '') return new Text('');
 
-        var results = snapshot.data.documents.where((a) =>
-            _checkIfQueryContains(a, 'title') ||
-            _checkIfQueryContains(a, 'location') ||
-            _checkIfQueryContains(a, 'tag'));
-
-        // I NEED TO FILL THE LISTS conferences AND conferencesRef TO DISPLAY THE TALKS
-        // I NEED HELPP
-
-        //this.confs = results.map<DocumentSnapshot>((result) => result.data());
-
-        /* results.forEach((result) {
-          this.conferences.add(result.data);
-          this.conferencesRef.add(result.reference);
-        }); */
-
-        /* this.conferences = results
-            .map<Map<String, dynamic>>((result) => result.data())
+        List<DocumentSnapshot> results = snapshot.data.documents
+            .where((result) =>
+                _checkIfQueryContains(result, 'title') ||
+                _checkIfQueryContains(result, 'location') ||
+                _checkIfQueryContains(result, 'tag'))
             .toList();
 
-        this.conferencesRef = results
-            .map<DocumentReference>((result) => result.reference)
-            .toList(); */
+        this.conferences.clear();
+        this.conferencesRef.clear();
+
+        results.forEach((result) {
+          this.conferences.add(result.data());
+          this.conferencesRef.add(result.reference);
+        });
 
         return ListView(
           children: results
