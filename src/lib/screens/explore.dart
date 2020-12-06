@@ -42,6 +42,7 @@ class ConferenceSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
+    if (this.conferences.length == 0) return Text("");
     return Scaffold(
         body: SafeArea(
       child: ListView(
