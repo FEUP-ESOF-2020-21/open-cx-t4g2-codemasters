@@ -65,21 +65,6 @@ class _MyHomeState extends State<MyHome> {
   }
 }
 
-/* final AppBar appBar = AppBar(
-  actions: [
-    Container(
-      child: new Text("Rate-A-Talk", style: mediumText),
-      padding: EdgeInsets.fromLTRB(0, 18, 15, 0),
-    )
-  ],
-  leading: Container(
-    child: new Text("Logo", style: smallerText),
-    padding: EdgeInsets.fromLTRB(15, 18, 0, 0),
-    //width: double.infinity,
-  ),
-  backgroundColor: accentOrange,
-); */
-
 AppBar buildAppBar(context) {
   return AppBar(
     title: Text("Rate-A-Talk"),
@@ -89,10 +74,9 @@ AppBar buildAppBar(context) {
           onPressed: () =>
               {showSearch(context: context, delegate: ConferenceSearch())})
     ],
-    leading: Container(
-    child: new Text("Logo", style: smallerText),
-    padding: EdgeInsets.fromLTRB(15, 18, 0, 0),
-    //width: double.infinity,
+    leading: Container( 
+      child: Image.asset("assets/icons/1x/app-logo.png", scale: 1.2),
+      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
   ),
     backgroundColor: accentOrange,
   );
