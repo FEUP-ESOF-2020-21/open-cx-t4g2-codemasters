@@ -8,8 +8,9 @@ class SeeAllTalksScreen extends StatelessWidget {
   List<Map<String, dynamic>> conferences = [];
   List<DocumentReference> conferencesRef = [];
   List<DocumentSnapshot> confs;
+  final String title;
 
-  SeeAllTalksScreen(this.confs);
+  SeeAllTalksScreen(this.confs, this.title);
 
   List<Widget> drawAllTalks(context, List<DocumentSnapshot> confs) {
     confs.forEach((conf) {
@@ -30,7 +31,7 @@ class SeeAllTalksScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'All Talks',
+                this.title,
                 style: bigText,
               ),
             ],

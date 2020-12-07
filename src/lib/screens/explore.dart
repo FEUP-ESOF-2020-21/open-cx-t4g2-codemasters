@@ -3,30 +3,11 @@ import 'package:ESOF/screens/post.dart';
 import 'package:ESOF/widgets/common/feed_common.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../style.dart';
-
-class ExploreScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Search Conferences"),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () =>
-                  {showSearch(context: context, delegate: ConferenceSearch())})
-        ],
-        backgroundColor: accentOrange,
-      ),
-    );
-  }
-}
+import 'package:ESOF/style.dart';
 
 class ConferenceSearch extends SearchDelegate<String> {
-  // If the conference has image return the url, otherwise returns a default.
-  // Mudar para ficar mais modular!
+  List<Map<String, dynamic>> conferences = [];
+  List<DocumentReference> conferencesRef = [];
 
   bool _checkIfQueryContains(DocumentSnapshot doc, String keyword) {
     return doc
@@ -60,7 +41,34 @@ class ConferenceSearch extends SearchDelegate<String> {
   }
 
   @override
-  Widget buildResults(BuildContext context) {}
+  Widget buildResults(BuildContext context) {
+    if (this.conferences.length == 0) return Text("");
+    return Scaffold(
+        body: SafeArea(
+      child: ListView(
+        padding: EdgeInsets.symmetric(vertical: 35.0),
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Search Results",
+                style: bigText,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children:
+                displayConferences(context, conferences, conferencesRef, true),
+          ),
+        ],
+      ),
+    ));
+  }
 
   @override
   Widget buildSuggestions(BuildContext context) {
@@ -70,10 +78,20 @@ class ConferenceSearch extends SearchDelegate<String> {
         if (!snapshot.hasData) return new Text('Loading...');
         if (query == '') return new Text('');
 
-        var results = snapshot.data.documents.where((a) =>
-            _checkIfQueryContains(a, 'title') ||
-            _checkIfQueryContains(a, 'location') ||
-            _checkIfQueryContains(a, 'tag'));
+        List<DocumentSnapshot> results = snapshot.data.documents
+            .where((result) =>
+                _checkIfQueryContains(result, 'title') ||
+                _checkIfQueryContains(result, 'location') ||
+                _checkIfQueryContains(result, 'tag'))
+            .toList();
+
+        this.conferences.clear();
+        this.conferencesRef.clear();
+
+        results.forEach((result) {
+          this.conferences.add(result.data());
+          this.conferencesRef.add(result.reference);
+        });
 
         return ListView(
           children: results
@@ -82,20 +100,23 @@ class ConferenceSearch extends SearchDelegate<String> {
                     onTap: () {
                       var conference = result.data();
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              //mudar para novo contrutor
-                              builder: (context) => PostScreen(new Conference(
-                                  hasImage(conference),
-                                  conference['title'],
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                      conference['date'].seconds * 1000),
-                                  conference['location'],
-                                  conference['description'],
-                                  conference['rate'],
-                                  conference['tag'],
-                                  // nao percebi o que é o reference. Por enquanto está a null e funciona
-                                  result.reference))));
+                        context,
+                        MaterialPageRoute(
+                          //mudar para novo contrutor
+                          builder: (context) => PostScreen(
+                            new Conference(
+                                hasImage(conference),
+                                conference['title'],
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    conference['date'].seconds * 1000),
+                                conference['location'],
+                                conference['description'],
+                                conference['rate'],
+                                conference['tag'],
+                                result.reference),
+                          ),
+                        ),
+                      );
                     },
                   ))
               .toList(),
