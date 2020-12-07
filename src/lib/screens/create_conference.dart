@@ -244,7 +244,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      counter,
+      this.counter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(

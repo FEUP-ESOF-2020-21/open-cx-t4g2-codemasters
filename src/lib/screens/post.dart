@@ -341,7 +341,7 @@ class PostScreen extends StatelessWidget {
     ];
 
     //if post belongs to the current user
-
+    /*
     listViewElems = [
       Button(
         buttonText: "Edit post",
@@ -356,7 +356,7 @@ class PostScreen extends StatelessWidget {
       ),
       SizedBox(height: 20),
       ...tempListViewElems
-    ];
+    ];*/
     //else
     listViewElems = [...tempListViewElems];
 
