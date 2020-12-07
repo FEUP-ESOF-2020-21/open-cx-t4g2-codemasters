@@ -25,7 +25,7 @@ class _MyHomeState extends State<MyHome> {
 
   _MyHomeState() {
     _pages = [
-      CreateConferenceScreen(this, false),
+      CreateConferenceScreen(this, null),
       FeedScreen(),
       ExploreScreen(),
       ProfileScreen(),

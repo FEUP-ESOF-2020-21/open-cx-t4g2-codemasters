@@ -50,16 +50,16 @@ String notEmptyValidator(String value) {
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
-  final _edit;
+  final _model;
 
   CreateConferenceScreen(
     this._home,
-    this._edit
+    this._model
   );
 
   @override
   _CreateConferenceScreenState createState() =>
-      _CreateConferenceScreenState(_home, _edit);
+      _CreateConferenceScreenState(_home, _model);
 }
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
@@ -67,12 +67,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
   Counter counter = Counter();
-  final bool _edit;
+  final ConferenceModel _model;
 
   String _speakers = "";
   File _image;
 
-  _CreateConferenceScreenState(this._home, this._edit);
+  _CreateConferenceScreenState(this._home, this._model);
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
