@@ -36,6 +36,10 @@ class Conference {
     return _rating;
   }
 
+  String get title {
+    return _title;
+  }
+
   Future<List<Speaker>> getSpeakers() async {
     // List<Speaker> confSpeaker = [];
 

@@ -1,7 +1,9 @@
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
+import 'package:ESOF/screens/create_conference.dart';
 import 'package:ESOF/screens/rate_talk.dart';
 import 'package:ESOF/screens/see_comments.dart';
+import 'package:ESOF/screens/utils/button.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
@@ -317,24 +319,46 @@ class PostScreen extends StatelessWidget {
     Row giveComment = generateGiveComment(context);
     Row seeComments = generateSeeComments(context);
 
-    listViewElems.add(imageStack);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(dateRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(placeRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(speakersRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(descriptionColumn);
-    listViewElems.add(tagColumn);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(rating);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(giveRating);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(giveComment);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(seeComments);
+    List<Widget> tempListViewElems = [
+      imageStack,
+      SizedBox(height: 20),
+      dateRow,
+      SizedBox(height: 20),
+      placeRow,
+      SizedBox(height: 20),
+      speakersRow,
+      SizedBox(height: 20),
+      descriptionColumn,
+      tagColumn,
+      SizedBox(height: 20),
+      rating,
+      SizedBox(height: 20),
+      giveRating,
+      SizedBox(height: 20),
+      giveComment,
+      SizedBox(height: 20),
+      seeComments,
+    ];
+
+    //if post belongs to the current user
+
+    listViewElems = [
+      Button(
+        buttonText: "Edit post",
+        onPressedFunc: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateConferenceScreen(null, this._conf),
+            ),
+          );
+        },
+      ),
+      SizedBox(height: 20),
+      ...tempListViewElems
+    ];
+    //else
+    listViewElems = [...tempListViewElems];
 
     Scaffold scaffold = Scaffold(
       body: ListView(

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/utils/button.dart';
 import 'package:ESOF/screens/utils/counter.dart';
 import 'package:ESOF/screens/utils/field.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
+import 'package:ESOF/ui_elements.dart';
 
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
@@ -50,16 +52,13 @@ String notEmptyValidator(String value) {
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
-  final _model;
+  final _conf;
 
-  CreateConferenceScreen(
-    this._home,
-    this._model
-  );
+  CreateConferenceScreen(this._home, this._conf);
 
   @override
   _CreateConferenceScreenState createState() =>
-      _CreateConferenceScreenState(_home, _model);
+      _CreateConferenceScreenState(_home, _conf);
 }
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
@@ -67,12 +66,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
   Counter counter = Counter();
-  final ConferenceModel _model;
+  final Conference _conf;
 
   String _speakers = "";
   File _image;
 
-  _CreateConferenceScreenState(this._home, this._model);
+  _CreateConferenceScreenState(this._home, this._conf);
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -83,6 +82,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         Container(
           child: Field(
+            initialValue: this._conf == null ? "" : this._conf.description,
             maxLines: null,
             inputType: TextInputType.multiline,
             height: 100,
@@ -103,6 +103,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
+    // use provided image if applicable
     return Row(children: [
       GestureDetector(
         child: Container(
@@ -134,6 +135,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     Function valFunc = notEmptyValidator;
     TextInputType inputType = TextInputType.text;
     double _width = 233;
+    String initialValue = "";
 
     switch (leftElemText) {
       case "Title:":
@@ -142,7 +144,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.title = value;
           };
-
+          if (this._conf != null) initialValue = this._conf.title;
           hintText = "Insert the title here";
           maxSizeInput = 30;
           break;
@@ -157,6 +159,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                   int.parse(dateElems[1]), int.parse(dateElems[0]));
             }
           };
+          if (this._conf != null) {
+            var dateTimeDate = this._conf.date;
+            initialValue =
+                "${dateTimeDate.day.toString()}/${dateTimeDate.month.toString()}/${dateTimeDate.year.toString()}";
+          }
           valFunc = dateValidator;
           hintText = "Insert the date here";
           inputType = TextInputType.datetime;
@@ -185,6 +192,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     }
 
     Field field = Field(
+      initialValue: initialValue,
       onSaved: onSavedFunction,
       width: _width,
       hintTxt: hintText,
@@ -295,17 +303,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-            _formKey.currentState.save();
-
-            confModel.rate = 0;
-
-            confModel.speakers = _speakers;
-
-            confModel.img = _image;
-
-            confModel.confSetup();
-
-            _home.revertToPrevScreen();
+            if (_conf == null && _home != null) {
+              _formKey.currentState.save();
+              confModel.rate = 0;
+              confModel.speakers = _speakers;
+              confModel.img = _image;
+              confModel.confSetup();
+              _home.revertToPrevScreen();
+            } else {
+              //...
+              Navigator.pop(context);
+            }
           }
         },
       ),
