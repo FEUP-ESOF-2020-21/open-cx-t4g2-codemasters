@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
-import 'package:ESOF/ui_elements.dart';
 
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
@@ -103,13 +102,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
-    // use provided image if applicable
     return Row(children: [
       GestureDetector(
         child: Container(
-            child: _image == null
+            child: (_image == null && _conf == null)
                 ? ProfilePhoto('assets/images/conference_test.jpg')
-                : ProfilePhotoFile(_image)),
+                : ProfilePhotoFile(_conf == null ? _image : _conf.photo)),
         onTap: () => letUserPickImage(confModel),
       )
     ], mainAxisAlignment: MainAxisAlignment.center);
@@ -174,6 +172,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.place = value;
           };
+          if (this._conf != null) initialValue = this._conf.place;
           hintText = "Insert the place here";
           break;
         }
@@ -182,6 +181,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.tag = value;
           };
+          if (this._conf != null) initialValue = this._conf.title;
           valFunc = tagValidator;
           hintText = "Insert the tag here";
           break;
@@ -230,6 +230,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   // Function to insert the speaker username.
   Row generateSpeakerRow() {
     final _speakerFormKey = GlobalKey<FormState>();
+    if (_conf != null) {
+      var providedSpeakers = _conf.speakers;
+      this._speakers = providedSpeakers.join(",");
+      counter.counter = providedSpeakers.length;
+    }
 
     List<Widget> rowElems = [
       Container(
@@ -239,7 +244,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      this.counter,
+      counter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(
@@ -325,14 +330,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       children: [
         Container(
           child: Text(
-            "Create Conference",
+            _conf == null ? "Create Conference" : "Edit Conference",
             style: bigText,
           ),
           margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
         ),
         Container(
           child: Text(
-            "Create here a post for the conference",
+            _conf == null ? "Create here a post for the conference" : "Edit here the post for conference",
             style: smallerText,
           ),
           margin: EdgeInsets.fromLTRB(0, 0, 0, 30),

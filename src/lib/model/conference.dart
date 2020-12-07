@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "speaker.dart";
 
@@ -34,10 +36,6 @@ class Conference {
 
   num get rate {
     return _rating;
-  }
-
-  String get title {
-    return _title;
   }
 
   Future<List<Speaker>> getSpeakers() async {
@@ -83,5 +81,15 @@ class Conference {
 
   String get tag {
     return _tag;
+  }
+
+  File get photo {
+    // Implement this
+    return null;
+  }
+
+  List<String> get speakers {
+    // Implement this
+    return null;
   }
 }
