@@ -50,12 +50,16 @@ String notEmptyValidator(String value) {
 
 class CreateConferenceScreen extends StatefulWidget {
   final _home;
+  final _edit;
 
-  CreateConferenceScreen(this._home);
+  CreateConferenceScreen(
+    this._home,
+    this._edit
+  );
 
   @override
   _CreateConferenceScreenState createState() =>
-      _CreateConferenceScreenState(_home);
+      _CreateConferenceScreenState(_home, _edit);
 }
 
 class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
@@ -63,11 +67,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
   Counter counter = Counter();
+  final bool _edit;
 
   String _speakers = "";
   File _image;
 
-  _CreateConferenceScreenState(this._home);
+  _CreateConferenceScreenState(this._home, this._edit);
 
   Column generateDescriptionColumn(ConferenceModel confModel) {
     return Column(
@@ -290,19 +295,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-       
             _formKey.currentState.save();
-        
+
             confModel.rate = 0;
-       
+
             confModel.speakers = _speakers;
-        
+
             confModel.img = _image;
 
             confModel.confSetup();
-        
+
             _home.revertToPrevScreen();
-      
           }
         },
       ),
