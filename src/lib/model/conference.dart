@@ -87,9 +87,4 @@ class Conference {
     // Implement this
     return null;
   }
-
-  List<String> get speakers {
-    // Implement this
-    return null;
-  }
 }

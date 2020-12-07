@@ -68,6 +68,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final Conference _conf;
 
   String _speakers = "";
+  String _tempSpeakers = "";
   File _image;
 
   _CreateConferenceScreenState(this._home, this._conf);
@@ -227,76 +228,100 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
+  Future<List<String>> getSpeakers() async {
+    var speakers = await _conf.getSpeakers();
+    var speakerUsernames = speakers.map((speaker) => speaker.username).toList();
+    return speakerUsernames;
+  }
+
   // Function to insert the speaker username.
   Row generateSpeakerRow() {
     final _speakerFormKey = GlobalKey<FormState>();
-    if (_conf != null) {
-      var providedSpeakers = _conf.speakers;
-      this._speakers = providedSpeakers.join(",");
-      counter.counter = providedSpeakers.length;
-    }
 
-    List<Widget> rowElems = [
-      Container(
-        child: Text(
-          "Speakers:",
-          style: mediumText,
-        ),
-        margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-      ),
-      this.counter,
-      Container(
-        margin: EdgeInsets.only(right: 20),
-        child: GestureDetector(
-          child: Image.asset(
-            "assets/icons/1x/plus_icon.png",
-            scale: 30,
+    var futureCounter;
+    if (_conf != null)
+      futureCounter = FutureBuilder<List<String>>(
+        future: getSpeakers(),
+        builder: (BuildContext context, AsyncSnapshot<List<String>> snapshot) {
+          if (snapshot.hasData) {
+            var snapshotData = snapshot.data;
+            int count = snapshotData.length;
+            counter.counter = count;
+            this._speakers = snapshotData.join(",");
+            return counter;
+          } else if (snapshot.hasError) {
+            return Text("Couldn't get speakers!");
+          } else
+            return SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(),
+            );
+        },
+      );
+    else
+      futureCounter = counter;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          child: Text(
+            "Speakers:",
+            style: mediumText,
           ),
-          onTap: () => showDialog(
-            context: context,
-            child: SimpleDialog(
-              title: Text("Insert the speaker's username:"),
-              children: [
-                SizedBox(height: 20),
-                Form(
-                  key: _speakerFormKey,
-                  child: Field(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    onSaved: (value) {
-                      this._speakers == ""
-                          ? this._speakers = value
-                          : this._speakers += "," + value;
-                    },
-                    validator: (value) {
-                      final validation = notEmptyValidator(value);
-                      if (validation != null) return validation;
-                      //_formKey.currentState.save();
-                    },
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        ),
+        futureCounter,
+        Container(
+          margin: EdgeInsets.only(right: 20),
+          child: GestureDetector(
+            child: Image.asset(
+              "assets/icons/1x/plus_icon.png",
+              scale: 30,
+            ),
+            onTap: () => showDialog(
+              context: context,
+              child: SimpleDialog(
+                title: Text("Insert the speaker's username:"),
+                children: [
+                  SizedBox(height: 20),
+                  Form(
+                    key: _speakerFormKey,
+                    child: Field(
+                      padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                      onSaved: (value) {
+                        this._tempSpeakers == ""
+                            ? this._tempSpeakers = value
+                            : this._tempSpeakers += "," + value;
+                      },
+                      validator: (value) {
+                        final validation = notEmptyValidator(value);
+                        if (validation != null) return validation;
+                        //_formKey.currentState.save();
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  child: Button(
-                    buttonText: "OK",
-                    onPressedFunc: () {
-                      if (_speakerFormKey.currentState.validate()) {
-                        _speakerFormKey.currentState.save();
-                        counter.incrementCounter();
-                        Navigator.pop(context);
-                      }
-                    },
+                  Container(
+                    child: Button(
+                      buttonText: "OK",
+                      onPressedFunc: () {
+                        if (_speakerFormKey.currentState.validate()) {
+                          _speakerFormKey.currentState.save();
+                          counter.incrementCounter();
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                    padding: EdgeInsets.all(50),
                   ),
-                  padding: EdgeInsets.all(50),
-                ),
-              ],
-              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                ],
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              ),
             ),
           ),
-        ),
-      ),
-    ];
-    return Row(
-      children: rowElems,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        )
+      ],
     );
   }
 
@@ -311,7 +336,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             if (_conf == null && _home != null) {
               _formKey.currentState.save();
               confModel.rate = 0;
-              confModel.speakers = _speakers;
+              confModel.speakers = _speakers + "," + _tempSpeakers;
               confModel.img = _image;
               confModel.confSetup();
               _home.revertToPrevScreen();
@@ -337,7 +362,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         Container(
           child: Text(
-            _conf == null ? "Create here a post for the conference" : "Edit here the post for conference",
+            _conf == null
+                ? "Create here a post for the conference"
+                : "Edit here the post for conference",
             style: smallerText,
           ),
           margin: EdgeInsets.fromLTRB(0, 0, 0, 30),
