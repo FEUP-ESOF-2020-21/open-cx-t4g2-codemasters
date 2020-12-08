@@ -239,6 +239,7 @@ class PostScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FlatButton(
+          key: Key("Leave a comment"),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
                   AddCommentScreen(currentConf: this._conf.confReference))),
@@ -267,6 +268,7 @@ class PostScreen extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FlatButton(
+          key: Key("See all comments"),
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
                   SeeCommentsScreen(currentConf: this._conf.confReference))),

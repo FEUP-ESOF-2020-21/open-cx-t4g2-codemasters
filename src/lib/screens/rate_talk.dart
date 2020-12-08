@@ -119,8 +119,7 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                             this.currentConf,
                             _rating);
 
-                        // Return to Feed
-                        Navigator.of(context).pop();
+                        // Return to Rate
                         Navigator.of(context).pop();
                       },
                       child: Text(
