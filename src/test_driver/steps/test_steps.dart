@@ -12,14 +12,14 @@ class TapWidget extends Then1WithWorld<String, FlutterWorld> {
   RegExp get pattern => RegExp(r"I tap {string}");
 }
 
-class WriteText extends Then1WithWorld<String, FlutterWorld> {
+class Appears extends Then1WithWorld<String, FlutterWorld> {
   @override
-  Future<void> executeStep(String text) async {
-    // Write Question
-    final questionField = find.byValueKey("questionField");
-    await FlutterDriverUtils.tap(world.driver, questionField);
-    await world.driver.enterText(question);
+  Future<void> executeStep(String key) async {
+
+    final widget = find.byValueKey(key);
+    var exists = await FlutterDriverUtils.isPresent(world.driver, widget);
+    expectMatch(true, exists);
   }
   @override
-  RegExp get pattern => RegExp(r"When I write the question {string}");
+  RegExp get pattern => RegExp(r"{string} appears");
 }

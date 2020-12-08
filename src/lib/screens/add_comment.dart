@@ -30,7 +30,7 @@ class _AddCommentScreenState extends State<AddCommentScreen> {
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 250),
         children: [
           Column(
-            key: ,
+
             children: [
               Text(
                 'Comment:',
