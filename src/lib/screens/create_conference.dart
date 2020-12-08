@@ -64,7 +64,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
-  Counter counter = Counter();
+  Counter counter;
   final Conference _conf;
 
   String _speakers = "";
@@ -103,12 +103,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
+    if (_conf != null) _image = _conf.photo;
     return Row(children: [
       GestureDetector(
         child: Container(
-            child: (_image == null && _conf == null)
+            child: _image == null
                 ? ProfilePhoto('assets/images/conference_test.jpg')
-                : ProfilePhotoFile(_conf == null ? _image : _conf.photo)),
+                : ProfilePhotoFile(_image)),
         onTap: () => letUserPickImage(confModel),
       )
     ], mainAxisAlignment: MainAxisAlignment.center);
@@ -182,7 +183,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.tag = value;
           };
-          if (this._conf != null) initialValue = this._conf.title;
+          if (this._conf != null) initialValue = this._conf.tag;
           valFunc = tagValidator;
           hintText = "Insert the tag here";
           break;
@@ -246,7 +247,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           if (snapshot.hasData) {
             var snapshotData = snapshot.data;
             int count = snapshotData.length;
-            counter.counter = count;
+            counter = Counter(count);
             this._speakers = snapshotData.join(",");
             return counter;
           } else if (snapshot.hasError) {
@@ -259,8 +260,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             );
         },
       );
-    else
+    else {
+      counter = Counter(0);
       futureCounter = counter;
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
