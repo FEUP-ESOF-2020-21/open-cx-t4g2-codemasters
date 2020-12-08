@@ -139,9 +139,10 @@ As a user I want to be able to rate a talk so that other users can use my rating
 ```Gherkin
 Scenario: Rate a talk.
   Given The post of a talk that I have attended
-  When I tap “Rate this talk”
-  Then I give a score between 0 and 10
-  And submit my rating
+  When I tap "Rate talk"
+  And I insert a rate
+  And I tap "OK",
+  Then the talk's post appears
 ```
 
 ### Value and effort
@@ -163,9 +164,12 @@ As a user I want to be able to leave a comment about the talk so that I can give
 ```Gherkin
 Scenario: Leave a comment about a talk
   Given A talk's post that I have attended and rated
-  When I tap “Leave comment”
-  Then I can write a comment about that talk
-  And tap the submit button to submit my comment
+  When I tap "Leave a comment"
+  And I tap "Comment"
+  And I write "Hey that was great!"
+  And I tap "Leave Comment"
+  And I tap "See all comments"
+  Then my comment appears
 ```
 ### Value and effort
 * Value: Must have
@@ -175,15 +179,15 @@ Scenario: Leave a comment about a talk
 ### Story #3
 As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
-### User interface mockup
+### User interface mock-up
 ![rating](./docs/leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: See rating of a talk
   Given A talk's post that is presented in the feed
-  When I tap the talk post
-  Then the conference rating appears on screen
+  When I am in the talk's post
+  Then the current rating appears
 ```
 
 ### Value and effort
@@ -206,8 +210,10 @@ As a user I want to be able to edit the given rating to a talk so that I can cor
 ```Gherkin
 Scenario: Edit rating of a talk
   Given A post of a talk that I have rated
-  When I tap the “Edit rating” button
-  Then I can change the previous rating
+  When I tap "Rate talk"
+  And I insert a rate
+  And I tap "OK",
+  Then the talk's post appears
 ```
 
 ### Value and effort
@@ -238,16 +244,17 @@ Scenario: Edit talk’s post
 ### Story #6
 As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
 
-### User interface mockup
+### User interface mock-up
 ![edit_profile](./docs/edit_profile_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Edit the user profile
-  Given My profile (screen or page????)
-  When I tap “Edit profile” button
-  And I change what I’ve written previously in my profile
-  Then the information in my profile changes
+  Given My profile screen
+  When I tap "Edit Profile" button
+  And I write "pickipicki" in "New Name"
+  And I tap "Submit"
+  Then "pickipicki" appears
 ```
 
 ### Value and effort
@@ -258,10 +265,10 @@ Scenario: Edit the user profile
 ### Story #7
 As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
 
-### User interface mockup
+### User interface mock-up
 [a introduzir]
 
-### Acceptance tests
+### Acceptance tests A MUDAR QUANDO TIVER FEITO
 ```Gherkin
 Scenario: Inspecting a speaker profile
   Given The talk's speaker profile
@@ -277,10 +284,10 @@ Scenario: Inspecting a speaker profile
 ### Story #8
 As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
 
-### User interface mockup
+### User interface mock-up
 [a introduzir]
 
-### Acceptance tests
+### Acceptance tests A MUDAR QUANDO ESTIVER IMPLEMENTADO
 ```Gherkin
 Scenario: Search for a talk with filters
   Given The explore screen
@@ -298,10 +305,10 @@ Scenario: Search for a talk with filters
 ### Story #9
 As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
 
-### User interface mockup
+### User interface mock-up
 [a introduzir]
 
-### Acceptance tests
+### Acceptance tests	A MUDAR QUANDO ESTIVER IMPLEMENTADO
 ```Gherkin
 Scenario: Search for a talk by criteria
   Given The explore screen
@@ -319,17 +326,17 @@ Scenario: Search for a talk by criteria
 ### Story #10
 As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
 
-### User interface mockup
+### User interface mock-up
 ![explore](./docs/explore_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Search for a talk with a query
   Given The explore screen
-  When I tap the search bar
-  And enter some information 
-  And tap the "Search" button
-  Then the matching results are shown
+  When I tap "Search Bar"
+  And I write "Por que laranjas" in "Search Bar"
+  And tap the "Search" icon
+  Then "Por que laranjas são gostosas?" appears
 ```
 
 ### Value and effort
@@ -340,19 +347,21 @@ Scenario: Search for a talk with a query
 ### Story #11
 As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
 
-### User interface mockup
-##### Search mockup
+### User interface mock-up
+##### Search mock-up
 ![explore](./docs/explore_mockup.png)
-##### Talk page mockup
+##### Talk page mock-up
 ![post](./docs/post_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: See search results
   Given The explore screen
-  When I search a talk
-  And tap one of the results
-  Then I'm taken to the talk's post
+  When I tap "Search Bar"
+  And I write "Por que laranjas" in "Search Bar"
+  And tap the "Search" icon
+  And I tap "Por que laranjas são gostosas?" 
+  Then the screen of the talk appears
 ```
 
 ### Value and effort
@@ -363,14 +372,15 @@ Scenario: See search results
 ### Story #12
 As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
-### User interface mockup
+### User interface mock-up	ATUALIZAR
 ![create_conference](./docs/create_conference_mockup.png)
 
-### Acceptance tests
+### Acceptance tests TODO
 ```Gherkin
 Scenario: A user wants to create a post
   Given The bottom navigation bar
-  When I tap the "Create Post" button
+  When I tap "Create post"
+  And I fill
   Then I'm taken to the post creation page
 ```
 
@@ -382,14 +392,14 @@ Scenario: A user wants to create a post
 ### Story #13
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
-### User interface mockup
+### User interface mock-up ATUALIZAR
 
-##### Feed mockup
+##### Feed mock-up
 ![feed](./docs/feed_mockup.png)
-##### Talk page mockup
+##### Talk page mock-up
 ![post](./docs/post_mockup.png)
 
-### Acceptance tests
+### Acceptance tests ATUALIZAR
 ```Gherkin
 Scenario: Looking at the feed
   Given The feed screen
@@ -404,7 +414,7 @@ Scenario: Looking at the feed
 ### Story #14
 As a user I want to be able to check my profile
 
-### User interface mockup
+### User interface mock-up
 ![profile](./docs/profile_mockup.png)
 
 ### Acceptance tests
