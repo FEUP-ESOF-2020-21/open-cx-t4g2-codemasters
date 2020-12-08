@@ -363,24 +363,24 @@ class PostScreen extends StatelessWidget {
     //         return Center(child: CircularProgressIndicator());
     //     }) as List<Widget>;
     //if post belongs to the current user
-    /*
-    listViewElems = [
-      Button(
-        buttonText: "Edit post",
-        onPressedFunc: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => CreateConferenceScreen(null, this._conf),
-            ),
-          );
-        },
-      ),
-      SizedBox(height: 20),
-      ...tempListViewElems
-    ];*/
-    // else
-    //   listViewElems = [...tempListViewElems];
+
+    // listViewElems = [
+    //   Button(
+    //     buttonText: "Edit post",
+    //     onPressedFunc: () {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => CreateConferenceScreen(null, this._conf),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    //   SizedBox(height: 20),
+    //   ...tempListViewElems
+    // ];
+    //else
+    //listViewElems = [...tempListViewElems];
 
     Scaffold scaffold = Scaffold(
       body: ListView(

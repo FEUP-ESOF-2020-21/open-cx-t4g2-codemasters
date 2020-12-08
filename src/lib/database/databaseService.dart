@@ -192,11 +192,12 @@ class DatabaseService {
     return ratedConfs;
   }
 
-  static Future updateConference(Conference confModel) async {
-    await confModel.confReference.update({
+  static Future updateConference(
+      ConferenceModel confModel, DocumentReference ref) async {
+    await ref.update({
       'date': confModel.date,
       'description': confModel.description,
-      'img': confModel.photoPath,
+      'img': confModel.imgURL,
       'location': confModel.place,
       'tag': confModel.tag,
       'title': confModel.title,
