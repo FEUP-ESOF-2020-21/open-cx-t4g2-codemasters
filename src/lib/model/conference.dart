@@ -84,7 +84,6 @@ class Conference {
   }
 
   File get photo {
-    // Implement this
-    return null;
+    return File(_photo);
   }
 }

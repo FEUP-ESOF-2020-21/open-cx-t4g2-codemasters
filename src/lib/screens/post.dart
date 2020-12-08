@@ -1,3 +1,5 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
 import 'package:ESOF/screens/create_conference.dart';
@@ -340,6 +342,26 @@ class PostScreen extends StatelessWidget {
       seeComments,
     ];
 
+    // listViewElems = FutureBuilder(
+    //     future: DatabaseService.isConferenceOwner(
+    //         AuthService.auth.currentUser.uid, this._conf.confReference),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         return Button(
+    //           buttonText: "Edit post",
+    //           onPressedFunc: () {
+    //             Navigator.push(
+    //               context,
+    //               MaterialPageRoute(
+    //                 builder: (context) =>
+    //                     CreateConferenceScreen(null, this._conf),
+    //               ),
+    //             );
+    //           },
+    //         );
+    //       } else
+    //         return Center(child: CircularProgressIndicator());
+    //     }) as List<Widget>;
     //if post belongs to the current user
     /*
     listViewElems = [
@@ -357,12 +379,43 @@ class PostScreen extends StatelessWidget {
       SizedBox(height: 20),
       ...tempListViewElems
     ];*/
-    //else
-    listViewElems = [...tempListViewElems];
+    // else
+    //   listViewElems = [...tempListViewElems];
 
     Scaffold scaffold = Scaffold(
       body: ListView(
-        children: listViewElems,
+        children: [
+          FutureBuilder(
+              future: DatabaseService.isConferenceOwner(
+                  AuthService.auth.currentUser.uid, this._conf.confReference),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data) {
+                    List<Widget> retList = [
+                      Button(
+                        buttonText: "Edit post",
+                        onPressedFunc: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CreateConferenceScreen(null, this._conf),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      ...tempListViewElems
+                    ];
+                    return Column(children: retList);
+                  } else {
+                    return Column(children: [...tempListViewElems]);
+                  }
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              })
+        ],
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       ),
     );

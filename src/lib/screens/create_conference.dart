@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/screens/utils/button.dart';
 import 'package:ESOF/screens/utils/counter.dart';
@@ -108,8 +109,11 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         child: Container(
             child: (_image == null && _conf == null)
                 ? ProfilePhoto('assets/images/conference_test.jpg')
-                : ProfilePhotoFile(_conf == null ? _image : _conf.photo)),
-        onTap: () => letUserPickImage(confModel),
+                : ProfilePhotoNetwork(
+                    _conf == null ? _image : _conf.photoPath)),
+        onTap: () async {
+          return await letUserPickImage(confModel);
+        },
       )
     ], mainAxisAlignment: MainAxisAlignment.center);
   }
@@ -341,7 +345,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               confModel.confSetup();
               _home.revertToPrevScreen();
             } else {
-              //...
+              print(_conf.title);
+              DatabaseService.updateConference(_conf);
               Navigator.pop(context);
             }
           }
@@ -382,7 +387,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 20),
       generateImageRow(confModel),
       SizedBox(height: 35),
-      generateSpeakerRow(),
+      // generateSpeakerRow(),
       SizedBox(height: 40),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
