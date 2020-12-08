@@ -1,6 +1,7 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/userModel.dart';
+import 'package:ESOF/screens/talks_added_by_user.dart';
 import 'package:ESOF/widgets/profile/bio.dart';
 import 'package:ESOF/widgets/profile/counter_container.dart';
 import 'package:ESOF/widgets/profile/edit_profile.dart';
@@ -40,11 +41,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             FlatButton(
                               onPressed: () => print('Showing user rates...'),
-                              child: CounterCountainer('rates', user.rate),
+                              child: CounterCountainer('rates', user.nRatings),
                             ),
                             FlatButton(
-                              onPressed: () => print('Showing user posts...'),
-                              child: CounterCountainer('posts', 1),
+                              onPressed: () => Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TalksAddedByUserScreen())),
+                              child: CounterCountainer('posts', user.nPosts),
                             ),
                             FlatButton(
                               onPressed: () =>

@@ -97,7 +97,6 @@ class _SeeCommentsScreenState extends State<SeeCommentsScreen> {
                 future: DatabaseService.getConferenceComments(this.currentConf),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    print(snapshot.data);
                     return displayComments(snapshot.data);
                   } else {
                     return Center(

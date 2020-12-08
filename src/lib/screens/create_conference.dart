@@ -28,6 +28,21 @@ String dateValidator(String value) {
   return null;
 }
 
+String tagValidator(String value) {
+  if (value == "") return "Field must not be empty.";
+  List<String> separatedTags = value.split(new RegExp(r'; |, |\*|\n| '));
+  RegExp tag = RegExp(r'#.*');
+  bool warningMsg = false;
+  print(separatedTags);
+  separatedTags.forEach((element) {
+    if (!tag.hasMatch(element)) warningMsg = true;
+  });
+
+  if (warningMsg || separatedTags.length == 0)
+    return "Tags must start with a #";
+  return null;
+}
+
 String notEmptyValidator(String value) {
   if (value == "") return "Field must not be empty.";
   return null;
@@ -83,18 +98,15 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
-    return Row(
-      children: [
-            GestureDetector(
-          child: Container(
-              child: _image == null
-                  ? ProfilePhoto('assets/images/conference_test.jpg')
-                  : ProfilePhotoFile(_image)),
-          onTap: () => letUserPickImage(confModel),
-        )
-      ],
-        mainAxisAlignment: MainAxisAlignment.center
-    );
+    return Row(children: [
+      GestureDetector(
+        child: Container(
+            child: _image == null
+                ? ProfilePhoto('assets/images/conference_test.jpg')
+                : ProfilePhotoFile(_image)),
+        onTap: () => letUserPickImage(confModel),
+      )
+    ], mainAxisAlignment: MainAxisAlignment.center);
   }
 
   Future letUserPickImage(ConferenceModel confModel) async {
@@ -158,6 +170,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onSavedFunction = (String value) {
             confModel.tag = value;
           };
+          valFunc = tagValidator;
           hintText = "Insert the tag here";
           break;
         }
@@ -173,6 +186,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
       validator: (String value) {
         String validation = valFunc(value);
+        //print(validation);
         if (validation != null) return validation;
         _formKey.currentState.save();
       },
@@ -212,7 +226,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      counter,
+      this.counter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(
@@ -238,7 +252,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     validator: (value) {
                       final validation = notEmptyValidator(value);
                       if (validation != null) return validation;
-                      _formKey.currentState.save();
+                      //_formKey.currentState.save();
                     },
                   ),
                 ),
@@ -276,13 +290,19 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
+       
             _formKey.currentState.save();
+        
             confModel.rate = 0;
+       
             confModel.speakers = _speakers;
+        
             confModel.img = _image;
-            confModel.printVariables();
+
             confModel.confSetup();
+        
             _home.revertToPrevScreen();
+      
           }
         },
       ),
@@ -315,30 +335,29 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Widget build(BuildContext context) {
     ConferenceModel confModel = new ConferenceModel();
     List<Widget> listViewElems = [
-      SizedBox(height: 40),
       generateHeader(),
       SizedBox(height: 20),
       generateImageRow(confModel),
       SizedBox(height: 35),
+      generateSpeakerRow(),
+      SizedBox(height: 40),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("date", confModel),
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateSpeakerRow(),
-      SizedBox(height: 30),
       generateGenericLabelFieldPair("tag", confModel),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),
       generateSubmitButton(confModel),
-      SizedBox(height: 40),
     ];
 
     return Scaffold(
       body: Form(
         child: ListView(
+          padding: EdgeInsets.symmetric(vertical: 40),
           children: listViewElems,
         ),
         key: _formKey,

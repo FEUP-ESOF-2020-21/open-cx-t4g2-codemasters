@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     //Label Email
-    columnChildren.add(LabelSI("Email", EdgeInsets.fromLTRB(0, 30, 180, 10)));
+    columnChildren.add(LabelSI("Email", EdgeInsets.fromLTRB(0, 30, 220, 10)));
 
     //Username field
     columnChildren.add(Field(

@@ -9,6 +9,8 @@ class UserModel {
   String uid;
   DocumentReference ref;
   int rate;
+  int nPosts;
+  int nRatings;
 
   String password;
   String email;
@@ -22,11 +24,13 @@ class UserModel {
       this.description = data['description'];
       this.imgPath = data['imgPath'];
       this.rate = data['rate'];
+      this.nPosts = data['nPosts'];
+      this.nRatings = data['nRatings'];
     }
   }
 
-  Future addImage(File img) async{
+  Future addImage(File img) async {
     var storeImage = new CloudStorageService(img);
-    this.imgPath= await storeImage.uploadImage();
+    this.imgPath = await storeImage.uploadImage();
   }
 }

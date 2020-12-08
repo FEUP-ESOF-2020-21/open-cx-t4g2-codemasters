@@ -1,3 +1,6 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
+import 'package:ESOF/model/userModel.dart';
 import 'package:ESOF/services/cloud_storage_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'dart:io';
@@ -7,19 +10,22 @@ class ConferenceModel {
   var ref;
   String title;
   DateTime date;
-  String place;
+  String place = "";
   File img;
   String imgURL;
   int rate;
   String description;
   String speakers = "";
-  String tag;
+  String tag = "";
 
   FirebaseFirestore firestore =
       FirebaseFirestore.instance; // instance to firestore
 
   Future confSetup() async {
-    /// gets the reference to add reference to conference_speaker.
+    // gets the reference to add reference to conference_speaker.
+    UserModel userCreator =
+        await DatabaseService.getUser(AuthService.auth.currentUser.uid);
+
     if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -28,15 +34,18 @@ class ConferenceModel {
       'rate': this.rate,
       'description': this.description,
       'tag': this.tag,
-      'img': this.imgURL
+      'img': this.imgURL,
+      'user': userCreator.ref
     });
+
+    DatabaseService.incrementUserPosts(AuthService.auth.currentUser.uid);
     findSpeakersRef();
   }
 
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
     print("SPEAKERS");
-    var usernames = this.speakers.split(new RegExp(r'; |, |\*|\n'));
+    var usernames = this.speakers.split(',');
     print(usernames);
     var reference;
 
@@ -68,31 +77,5 @@ class ConferenceModel {
   Future addImage() async {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
-  }
-
-  /// Function created for debug proposals.
-  void printVariables() {
-    List elements = [
-      this.title,
-      this.date,
-      this.speakers,
-      this.description,
-      this.place,
-      this.tag,
-      this.img
-    ];
-    List elementsName = [
-      '--TITLE:',
-      '--DATE:',
-      '--SPEAKERS',
-      '--DESCRIPTION',
-      '--PLACE',
-      '--TAG',
-      '--IMG'
-    ];
-    for (int i = 0; i < 7; i++) {
-      print(elementsName[i]);
-      print(elements[i]);
-    }
   }
 }

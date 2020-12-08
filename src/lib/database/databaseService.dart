@@ -17,6 +17,24 @@ class DatabaseService {
     return userM;
   }
 
+  static Future<void> incrementUserPosts(String uid) async {
+    Query query = dbReference.collection('Users').where('uid', isEqualTo: uid);
+    QuerySnapshot user = await query.get();
+
+    DocumentReference docRef =
+        dbReference.collection('Users').doc(user.docs[0].id);
+    await docRef.update({"nPosts": FieldValue.increment(1)});
+  }
+
+  static Future<void> incrementUserRatings(String uid) async {
+    Query query = dbReference.collection('Users').where('uid', isEqualTo: uid);
+    QuerySnapshot user = await query.get();
+
+    DocumentReference docRef =
+        dbReference.collection('Users').doc(user.docs[0].id);
+    await docRef.update({"nRatings": FieldValue.increment(1)});
+  }
+
   static Future updateUser(DocumentReference ref, String username,
       String description, String imagePath) async {
     await ref.update({
@@ -41,7 +59,6 @@ class DatabaseService {
     });
 
     double averageRatingConf = confRatingSum / numRatings;
-    // print(averageRatingConf);
 
     confReference.update({'rate': averageRatingConf});
   }
@@ -61,6 +78,7 @@ class DatabaseService {
           'user': currentUser.ref,
           'rating': rating
         });
+        await incrementUserRatings(uid);
       } else {
         // Atualizar rating
         await dbReference
@@ -128,5 +146,46 @@ class DatabaseService {
     });
     commentsInfo.sort((a, b) => a['date'].compareTo(b['date']));
     return commentsInfo;
+  }
+
+  static Future<List<String>> getUserFavoriteTags(String uid) async {
+    List<String> favoriteTags = [];
+    UserModel user = await getUser(uid);
+
+    await dbReference
+        .collection('UserRating_Conference')
+        .where('user', isEqualTo: user.ref)
+        .get()
+        .then((userRatings) async {
+      for (int i = 0; i < userRatings.docs.length; i++) {
+        if (userRatings.docs[i]['rating'] > 3) {
+          await userRatings.docs[i]['conference'].get().then((conference) {
+            List<String> separatedTags =
+                conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+            separatedTags.forEach((tag) {
+              favoriteTags.add(tag.toUpperCase());
+            });
+          });
+        }
+      }
+    });
+
+    return favoriteTags.toSet().toList();
+  }
+
+  static Future<List<DocumentReference>> getUserRatedConfs(String uid) async {
+    List<DocumentReference> ratedConfs = [];
+    UserModel user = await getUser(uid);
+
+    await dbReference
+        .collection('UserRating_Conference')
+        .where('user', isEqualTo: user.ref)
+        .get()
+        .then((ratedOnes) {
+      for (int i = 0; i < ratedOnes.docs.length; i++)
+        ratedConfs.add(ratedOnes.docs[i]['conference']);
+    });
+
+    return ratedConfs;
   }
 }
