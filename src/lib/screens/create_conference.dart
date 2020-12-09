@@ -67,8 +67,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   Counter counter_speaker = Counter();
 
   bool canSubmit = true;
-  errorMessage _errorMessageSpeaker = errorMessage();
-  errorMessage _errorMessageTags = errorMessage();
 
   String _speakers = "";
   String _tags = "";
@@ -302,20 +300,45 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       child: Button(
           buttonText: "Submit",
           onPressedFunc: () async {
-
             // Reseting submit configurations
             // Checking if speakers or tag is empty
             canSubmit = true;
-            this._errorMessageSpeaker.setText("");
-            this._errorMessageTags.setText("");
+
+            List<Widget> errorWidgets = List();
 
             if (_speakers.isEmpty) {
               canSubmit = false;
-              this._errorMessageSpeaker.setText("Speaker field cannot be empty");
+              errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
             }
             if (_tags.isEmpty) {
               canSubmit = false;
-              this._errorMessageTags.setText("Tags field cannot be empty");
+              errorWidgets.add(ErrorMessage("Tags field cannot be empty!"));
+            }
+
+            if (!canSubmit && errorWidgets.length > 0) {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 5),
+                  title: Text("Error(s) detected"),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: errorWidgets,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                  actions: [
+                    Button(
+                      buttonText: "OK",
+                      padding: EdgeInsets.zero,
+                      onPressedFunc: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                  actionsPadding: EdgeInsets.symmetric(horizontal: 100),
+                ),
+              );
             }
 
             if (_formKey.currentState.validate() && canSubmit) {
@@ -374,8 +397,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),
       generateSubmitButton(confModel),
-      this._errorMessageSpeaker,
-      this._errorMessageTags,
     ];
 
     return Scaffold(

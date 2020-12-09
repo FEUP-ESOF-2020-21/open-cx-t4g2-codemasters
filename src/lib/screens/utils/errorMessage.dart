@@ -1,39 +1,15 @@
+import 'package:ESOF/style.dart';
 import 'package:flutter/cupertino.dart';
 
-class errorMessage extends StatefulWidget{
-  var _state = _errorMessageState("");
-  String _textError = "";
+class ErrorMessage extends StatelessWidget {
+  final String _message;
 
-
-  void setText(newText){
-    _textError = newText;
-    _state.setText(_textError);
-  }
-
-  @override
-  _errorMessageState createState(){
-    return this._state = new _errorMessageState(_textError);
-  }
-
-
-}
-class _errorMessageState extends State<errorMessage>{
-  String _textError;
-
-  _errorMessageState(this._textError);
+  ErrorMessage(this._message);
 
   @override
   Widget build(BuildContext context) {
-    return _textError == null || _textError.isEmpty ? SizedBox.shrink(): Text(
-      _textError,
+    return Container(
+      child: Text(_message),
     );
   }
-
-  void setText(String message){
-    setState(() {
-      _textError = message;
-    });
-
-  }
-
 }
