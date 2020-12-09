@@ -48,7 +48,7 @@ String notEmptyValidator(String value) {
   return null;
 }
 
-class CreateConferenceScreen extends StatefulWidget {
+class CreateConferenceScreen extends StatefulWidget{
   final _home;
 
   CreateConferenceScreen(this._home);
@@ -62,7 +62,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
-  Counter counter = Counter();
+  Counter counter_tag = Counter();
+  Counter counter_speaker = Counter();
 
   String _speakers = "";
   String _tags = "";
@@ -207,18 +208,21 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateSpeakerOrTagRow(String fieldName) {
+    var auxCounter;
     String formattedFieldName = capitalizeFirstLetter(fieldName) + "s:";
 
     String dialogText = "Insert the $fieldName's name:";
 
     Function onSavedFunc;
     if (fieldName == "speaker") {
+      auxCounter = this.counter_speaker;
       onSavedFunc = (value) {
         this._speakers == ""
             ? this._speakers = value
             : this._speakers += "," + value;
       };
     } else {
+      auxCounter = this.counter_tag;
       onSavedFunc = (value) {
         this._tags == "" ? this._tags = value : this._tags += "," + value;
       };
@@ -234,7 +238,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      this.counter,
+      auxCounter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(
@@ -266,7 +270,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     onPressedFunc: () {
                       if (_speakerFormKey.currentState.validate()) {
                         _speakerFormKey.currentState.save();
-                        counter.incrementCounter();
+                        auxCounter.incrementCounter();
                         Navigator.pop(context);
                       }
                     },
@@ -293,7 +297,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       child: Button(
         buttonText: "Submit",
         onPressedFunc: () async {
-          if (_formKey.currentState.validate()) {
+          /*var canSubmit = true;
+          if (_speakers.isEmpty|| _tags.isEmpty) canSubmit = false;*/
+          if (_formKey.currentState.validate() /*&& canSubmit*/) {
             _formKey.currentState.save();
 
             confModel.rate = 0;
