@@ -25,7 +25,9 @@ class ConferenceModel {
     // gets the reference to add reference to conference_speaker.
     UserModel userCreator =
         await DatabaseService.getUser(AuthService.auth.currentUser.uid);
-
+    print("Class");
+    print(this.tag);
+    print(this.speakers);
     if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -34,6 +36,7 @@ class ConferenceModel {
       'rate': this.rate,
       'description': this.description,
       'img': this.imgURL,
+      'tag': this.tag,
       'user': userCreator.ref
     });
 

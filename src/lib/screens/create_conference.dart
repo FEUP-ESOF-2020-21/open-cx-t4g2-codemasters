@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
+import 'package:ESOF/screens/utils/errorMessage.dart';
 
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
@@ -48,7 +49,7 @@ String notEmptyValidator(String value) {
   return null;
 }
 
-class CreateConferenceScreen extends StatefulWidget{
+class CreateConferenceScreen extends StatefulWidget {
   final _home;
 
   CreateConferenceScreen(this._home);
@@ -64,6 +65,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _picker = ImagePicker();
   Counter counter_tag = Counter();
   Counter counter_speaker = Counter();
+
+  bool canSubmit = true;
+  errorMessage _errorMessageSpeaker = errorMessage();
+  errorMessage _errorMessageTags = errorMessage();
 
   String _speakers = "";
   String _tags = "";
@@ -295,27 +300,34 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       margin: EdgeInsets.only(top: 30),
       padding: EdgeInsets.symmetric(horizontal: 60),
       child: Button(
-        buttonText: "Submit",
-        onPressedFunc: () async {
-          /*var canSubmit = true;
-          if (_speakers.isEmpty|| _tags.isEmpty) canSubmit = false;*/
-          if (_formKey.currentState.validate() /*&& canSubmit*/) {
-            _formKey.currentState.save();
+          buttonText: "Submit",
+          onPressedFunc: () async {
 
-            confModel.rate = 0;
+            // Reseting submit configurations
+            // Checking if speakers or tag is empty
+            canSubmit = true;
+            this._errorMessageSpeaker.setText("");
+            this._errorMessageTags.setText("");
 
-            confModel.speakers = _speakers;
+            if (_speakers.isEmpty) {
+              canSubmit = false;
+              this._errorMessageSpeaker.setText("Speaker field cannot be empty");
+            }
+            if (_tags.isEmpty) {
+              canSubmit = false;
+              this._errorMessageTags.setText("Tags field cannot be empty");
+            }
 
-            confModel.tag = _tags;
-
-            confModel.img = _image;
-
-            confModel.confSetup();
-
-            _home.revertToPrevScreen();
-          }
-        },
-      ),
+            if (_formKey.currentState.validate() && canSubmit) {
+              _formKey.currentState.save();
+              confModel.rate = 0;
+              confModel.speakers = this._speakers;
+              confModel.tag = _tags;
+              confModel.img = _image;
+              confModel.confSetup();
+              _home.revertToPrevScreen();
+            }
+          }),
     );
   }
 
@@ -362,6 +374,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),
       generateSubmitButton(confModel),
+      this._errorMessageSpeaker,
+      this._errorMessageTags,
     ];
 
     return Scaffold(
