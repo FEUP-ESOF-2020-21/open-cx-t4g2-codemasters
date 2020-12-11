@@ -499,7 +499,7 @@ Effort: M
 TO DO
 
 
-### Domain model TODO
+### Domain model
 
 ![domain_model](./docs/domain_model.png)
 
