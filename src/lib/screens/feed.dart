@@ -86,6 +86,7 @@ class _FeedScreenState extends State<FeedScreen> {
             } else {
               // filterRecommended(snapshot.data.documents, userFavoriteTags);
               return SafeArea(
+                key: Key("Feed"),
                 child: ListView(
                   padding: EdgeInsets.symmetric(vertical: 5.0),
                   children: <Widget>[
