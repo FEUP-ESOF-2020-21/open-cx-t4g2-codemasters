@@ -501,7 +501,7 @@ TO DO
 
 ### Domain model TODO
 
-To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
+![domain_model](./docs/domain_model.png)
 
 ---
 
