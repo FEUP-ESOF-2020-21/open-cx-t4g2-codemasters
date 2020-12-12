@@ -26,6 +26,7 @@ class ConferenceModel {
     UserModel userCreator =
         await DatabaseService.getUser(AuthService.auth.currentUser.uid);
 
+    treatTags();      // set tags in the right format
     if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -33,33 +34,32 @@ class ConferenceModel {
       'location': this.place,
       'rate': this.rate,
       'description': this.description,
-      'tag': this.tag,
       'img': this.imgURL,
+      'tag': this.tag,
       'user': userCreator.ref
     });
 
     DatabaseService.incrementUserPosts(AuthService.auth.currentUser.uid);
     findSpeakersRef();
   }
+  /// Set tags in the right format
+  void treatTags(){
+    List<String> auxTags = this.tag.split(",");
+    this.tag = "";
+    for (var singularTag in auxTags) this.tag += "#" + singularTag + " ";
+    this.tag.trimRight();
 
+  }
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
-    print("SPEAKERS");
     var usernames = this.speakers.split(',');
-    print(usernames);
     var reference;
 
     for (var username in usernames) {
-      print(username);
       reference = await Speaker.getSpeakerRef(username);
       if (reference == null || reference == false) {
-        print("HERE");
         Speaker speaker = new Speaker.overloadConstructor(username);
-        print("GET");
-        print(speaker.username);
         final speakerRef = await speaker.speakerSetup();
-        print("REFERENCE");
-        print(speakerRef);
         await addToConferenceTable(speakerRef);
       } else {
         await this.addToConferenceTable(reference);
