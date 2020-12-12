@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
+import 'package:ESOF/screens/utils/errorMessage.dart';
 
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
@@ -65,11 +66,18 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
-  Counter counter;
+
+  Counter counter_tag;
+  Counter counter_speaker;
+
   final Conference _conf;
 
   String _speakers = "";
   String _tempSpeakers = "";
+
+  String _tags = "";
+  String _tempTags = "";
+
   File _image;
 
   _CreateConferenceScreenState(this._home, this._conf);
@@ -179,16 +187,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           hintText = "Insert the place here";
           break;
         }
-      case "Tag:":
-        {
-          onSavedFunction = (String value) {
-            confModel.tag = value;
-          };
-          if (this._conf != null) initialValue = this._conf.tag;
-          valFunc = tagValidator;
-          hintText = "Insert the tag here";
-          break;
-        }
 
       default:
         print("Invalid value for leftElemText!");
@@ -230,13 +228,86 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  Future<List<String>> getSpeakers() async {
-    var speakers = await _conf.getSpeakers();
-    var speakerUsernames = speakers.map((speaker) => speaker.username).toList();
-    return speakerUsernames;
+  Row generateTagRow() {
+    final _tagFormKey = GlobalKey<FormState>();
+
+    if (_conf != null) {
+      _tags = _conf.tag;
+      int count = _tags.split(",").length;
+      counter_tag = Counter(count);
+    } else {
+      counter_tag = Counter(0);
+    }
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Container(
+          child: Text(
+            "Speakers:",
+            style: mediumText,
+          ),
+          margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
+        ),
+        counter_tag,
+        Container(
+          margin: EdgeInsets.only(right: 20),
+          child: GestureDetector(
+            child: Image.asset(
+              "assets/icons/1x/plus_icon.png",
+              scale: 30,
+            ),
+            onTap: () => showDialog(
+              context: context,
+              child: SimpleDialog(
+                title: Text("Insert the speaker's username:"),
+                children: [
+                  SizedBox(height: 20),
+                  Form(
+                    key: _tagFormKey,
+                    child: Field(
+                      padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
+                      onSaved: (value) {
+                        this._tempSpeakers == ""
+                            ? this._tempSpeakers = value
+                            : this._tempSpeakers += "," + value;
+                      },
+                      validator: (value) {
+                        final validation = notEmptyValidator(value);
+                        if (validation != null) return validation;
+                        //_formKey.currentState.save();
+                      },
+                    ),
+                  ),
+                  Container(
+                    child: Button(
+                      buttonText: "OK",
+                      onPressedFunc: () {
+                        if (_tagFormKey.currentState.validate()) {
+                          _tagFormKey.currentState.save();
+                          counter_speaker.incrementCounter();
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                    padding: EdgeInsets.all(50),
+                  ),
+                ],
+                contentPadding: EdgeInsets.symmetric(horizontal: 20),
+              ),
+            ),
+          ),
+        )
+      ],
+    );
   }
 
-  // Function to insert the speaker username.
+  Future<List<String>> getSpeakers() async {
+    var speakers = await _conf.getSpeakers();
+    var speakerNames = speakers.map((speaker) => speaker.name).toList();
+    return speakerNames;
+  }
+
   Row generateSpeakerRow() {
     final _speakerFormKey = GlobalKey<FormState>();
 
@@ -248,9 +319,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           if (snapshot.hasData) {
             var snapshotData = snapshot.data;
             int count = snapshotData.length;
-            counter = Counter(count);
+            counter_speaker = Counter(count);
             this._speakers = snapshotData.join(",");
-            return counter;
+            return counter_speaker;
           } else if (snapshot.hasError) {
             return Text("Couldn't get speakers!");
           } else
@@ -262,8 +333,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         },
       );
     else {
-      counter = Counter(0);
-      futureCounter = counter;
+      counter_speaker = Counter(0);
+      futureCounter = counter_speaker;
     }
 
     return Row(
@@ -312,7 +383,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                       onPressedFunc: () {
                         if (_speakerFormKey.currentState.validate()) {
                           _speakerFormKey.currentState.save();
-                          counter.incrementCounter();
+                          counter_speaker.incrementCounter();
                           Navigator.pop(context);
                         }
                       },
@@ -337,14 +408,54 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         buttonText: "Submit",
         onPressedFunc: () async {
           if (_formKey.currentState.validate()) {
-            if (_conf == null && _home != null) {
+            bool canSubmit = true;
+
+            List<Widget> errorWidgets = List();
+
+            if (_speakers.isEmpty) {
+              canSubmit = false;
+              errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
+            }
+            if (_tags.isEmpty) {
+              canSubmit = false;
+              errorWidgets.add(ErrorMessage("Tags field cannot be empty!"));
+            }
+
+            if (!canSubmit && errorWidgets.length > 0) {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 5),
+                  title: Text("Error(s) detected"),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: errorWidgets,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                  actions: [
+                    Button(
+                      buttonText: "OK",
+                      padding: EdgeInsets.zero,
+                      onPressedFunc: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                  actionsPadding: EdgeInsets.symmetric(horizontal: 100),
+                ),
+              );
+            }
+
+            if (_conf == null && _home != null && canSubmit) {
               _formKey.currentState.save();
               confModel.rate = 0;
               confModel.speakers = _speakers + "," + _tempSpeakers;
               confModel.img = _image;
+              confModel.tag = _tags;
               confModel.confSetup();
               _home.revertToPrevScreen();
-            } else {
+            } else if (canSubmit) {
               confModel.imgURL = _image.path;
               DatabaseService.updateConference(confModel, _conf.confReference);
               Navigator.pop(context);
@@ -395,7 +506,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateGenericLabelFieldPair("tag", confModel),
+      generateTagRow(),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),

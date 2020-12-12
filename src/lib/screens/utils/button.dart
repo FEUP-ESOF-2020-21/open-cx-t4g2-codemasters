@@ -6,8 +6,16 @@ class Button extends StatelessWidget {
   final String buttonText;
   final Function onPressedFunc;
   final EdgeInsets margin;
+  final EdgeInsets padding;
 
-  Button({this.onPressedFunc, this.buttonText, this.margin = EdgeInsets.zero});
+  
+
+  Button({
+    this.onPressedFunc,
+    this.buttonText,
+    this.margin = EdgeInsets.zero,
+    this.padding = const EdgeInsets.fromLTRB(0, 20, 0, 20)
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +23,7 @@ class Button extends StatelessWidget {
       margin: this.margin,
       child: FlatButton(
         onPressed: onPressedFunc,
-        padding: EdgeInsets.fromLTRB(0, 20, 0, 20),
+        padding: this.padding,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),

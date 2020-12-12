@@ -84,14 +84,6 @@ class PostScreen extends StatelessWidget {
       List<Widget> individualSpeakerRowChildren = List();
 
       individualSpeakerRowChildren.add(Container(
-        child: Image.asset(
-          speaker.imagePath,
-          scale: 20,
-        ),
-        padding: EdgeInsets.only(right: 10),
-      ));
-
-      individualSpeakerRowChildren.add(Container(
         child: Text(
           speaker.name,
           style: mediumText,
