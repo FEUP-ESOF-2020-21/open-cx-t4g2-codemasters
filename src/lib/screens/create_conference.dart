@@ -244,7 +244,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       children: [
         Container(
           child: Text(
-            "Speakers:",
+            "Tags:",
             style: mediumText,
           ),
           margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -260,7 +260,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             onTap: () => showDialog(
               context: context,
               child: SimpleDialog(
-                title: Text("Insert the speaker's username:"),
+                title: Text("Insert the tag's name:"),
                 children: [
                   SizedBox(height: 20),
                   Form(
@@ -268,9 +268,9 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     child: Field(
                       padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                       onSaved: (value) {
-                        this._tempSpeakers == ""
-                            ? this._tempSpeakers = value
-                            : this._tempSpeakers += "," + value;
+                        this._tags == ""
+                            ? this._tags = value
+                            : this._tags += "," + value;
                       },
                       validator: (value) {
                         final validation = notEmptyValidator(value);
@@ -285,7 +285,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                       onPressedFunc: () {
                         if (_tagFormKey.currentState.validate()) {
                           _tagFormKey.currentState.save();
-                          counter_speaker.incrementCounter();
+                          counter_tag.incrementCounter();
                           Navigator.pop(context);
                         }
                       },
@@ -358,7 +358,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
             onTap: () => showDialog(
               context: context,
               child: SimpleDialog(
-                title: Text("Insert the speaker's username:"),
+                title: Text("Insert the speaker's name:"),
                 children: [
                   SizedBox(height: 20),
                   Form(
