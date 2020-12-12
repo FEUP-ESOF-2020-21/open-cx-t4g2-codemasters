@@ -49,19 +49,13 @@ class Conference {
     await stream.then((value) async {
       for (int i = 0; i < value.docs.length; i++) {
         DocumentReference speaker = value.docs[i].data()['speaker'];
-        // print(speaker);
-        // speakerRef.add(speaker);
         DocumentSnapshot sp = await speaker.get();
 
         Map<String, dynamic> speakerObj = sp.data();
-        // print(speakerObj);
-        Speaker toAdd = new Speaker(speakerObj['name'], speakerObj['rate'],
-            'assets/images/default_profile_icon.jpeg');
+        Speaker toAdd = new Speaker(speakerObj['name']);
         speakerRef.add(toAdd);
-        // print(confSpeaker);
       }
     });
-    // print(speakerRef);
     return speakerRef;
   }
 
