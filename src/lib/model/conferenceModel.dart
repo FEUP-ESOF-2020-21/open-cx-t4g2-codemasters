@@ -52,13 +52,13 @@ class ConferenceModel {
   }
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
-    var usernames = this.speakers.split(',');
+    var names = this.speakers.split(',');
     var reference;
 
-    for (var username in usernames) {
-      reference = await Speaker.getSpeakerRef(username);
+    for (var name in names) {
+      reference = await Speaker.getSpeakerRef(name);
       if (reference == null || reference == false) {
-        Speaker speaker = new Speaker.overloadConstructor(username);
+        Speaker speaker = new Speaker(name);
         final speakerRef = await speaker.speakerSetup();
         await addToConferenceTable(speakerRef);
       } else {
