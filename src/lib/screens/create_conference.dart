@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
+import 'package:ESOF/screens/utils/errorMessage.dart';
 
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
@@ -62,9 +63,13 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _home;
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
-  Counter counter = Counter();
+  Counter counter_tag = Counter();
+  Counter counter_speaker = Counter();
+
+  bool canSubmit = true;
 
   String _speakers = "";
+  String _tags = "";
   File _image;
 
   _CreateConferenceScreenState(this._home);
@@ -165,15 +170,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           hintText = "Insert the place here";
           break;
         }
-      case "Tag:":
-        {
-          onSavedFunction = (String value) {
-            confModel.tag = value;
-          };
-          valFunc = tagValidator;
-          hintText = "Insert the tag here";
-          break;
-        }
 
       default:
         print("Invalid value for leftElemText!");
@@ -214,19 +210,38 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
     );
   }
 
-  // Function to insert the speaker username.
-  Row generateSpeakerRow() {
+  Row generateSpeakerOrTagRow(String fieldName) {
+    var auxCounter;
+    String formattedFieldName = capitalizeFirstLetter(fieldName) + "s:";
+
+    String dialogText = "Insert the $fieldName's name:";
+
+    Function onSavedFunc;
+    if (fieldName == "speaker") {
+      auxCounter = this.counter_speaker;
+      onSavedFunc = (value) {
+        this._speakers == ""
+            ? this._speakers = value
+            : this._speakers += "," + value;
+      };
+    } else {
+      auxCounter = this.counter_tag;
+      onSavedFunc = (value) {
+        this._tags == "" ? this._tags = value : this._tags += "," + value;
+      };
+    }
+
     final _speakerFormKey = GlobalKey<FormState>();
 
     List<Widget> rowElems = [
       Container(
         child: Text(
-          "Speakers:",
+          formattedFieldName,
           style: mediumText,
         ),
         margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
       ),
-      this.counter,
+      auxCounter,
       Container(
         margin: EdgeInsets.only(right: 20),
         child: GestureDetector(
@@ -237,18 +252,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           onTap: () => showDialog(
             context: context,
             child: SimpleDialog(
-              title: Text("Insert the speaker's username:"),
+              title: Text(dialogText),
               children: [
                 SizedBox(height: 20),
                 Form(
                   key: _speakerFormKey,
                   child: Field(
                     padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
-                    onSaved: (value) {
-                      this._speakers == ""
-                          ? this._speakers = value
-                          : this._speakers += "," + value;
-                    },
+                    onSaved: onSavedFunc,
                     validator: (value) {
                       final validation = notEmptyValidator(value);
                       if (validation != null) return validation;
@@ -262,7 +273,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     onPressedFunc: () {
                       if (_speakerFormKey.currentState.validate()) {
                         _speakerFormKey.currentState.save();
-                        counter.incrementCounter();
+                        auxCounter.incrementCounter();
                         Navigator.pop(context);
                       }
                     },
@@ -287,25 +298,59 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       margin: EdgeInsets.only(top: 30),
       padding: EdgeInsets.symmetric(horizontal: 60),
       child: Button(
-        buttonText: "Submit",
-        onPressedFunc: () async {
-          if (_formKey.currentState.validate()) {
-       
-            _formKey.currentState.save();
-        
-            confModel.rate = 0;
-       
-            confModel.speakers = _speakers;
-        
-            confModel.img = _image;
+          buttonText: "Submit",
+          onPressedFunc: () async {
+            // Reseting submit configurations
+            // Checking if speakers or tag is empty
+            canSubmit = true;
 
-            confModel.confSetup();
-        
-            _home.revertToPrevScreen();
-      
-          }
-        },
-      ),
+            List<Widget> errorWidgets = List();
+
+            if (_speakers.isEmpty) {
+              canSubmit = false;
+              errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
+            }
+            if (_tags.isEmpty) {
+              canSubmit = false;
+              errorWidgets.add(ErrorMessage("Tags field cannot be empty!"));
+            }
+
+            if (!canSubmit && errorWidgets.length > 0) {
+              showDialog(
+                context: context,
+                child: AlertDialog(
+                  contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 5),
+                  title: Text("Error(s) detected"),
+                  content: SingleChildScrollView(
+                    child: Column(
+                      children: errorWidgets,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                    ),
+                  ),
+                  actions: [
+                    Button(
+                      buttonText: "OK",
+                      padding: EdgeInsets.zero,
+                      onPressedFunc: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                  actionsPadding: EdgeInsets.symmetric(horizontal: 100),
+                ),
+              );
+            }
+
+            if (_formKey.currentState.validate() && canSubmit) {
+              _formKey.currentState.save();
+              confModel.rate = 0;
+              confModel.speakers = this._speakers;
+              confModel.tag = _tags;
+              confModel.img = _image;
+              confModel.confSetup();
+              _home.revertToPrevScreen();
+            }
+          }),
     );
   }
 
@@ -339,7 +384,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 20),
       generateImageRow(confModel),
       SizedBox(height: 35),
-      generateSpeakerRow(),
+      generateSpeakerOrTagRow("speaker"),
       SizedBox(height: 40),
       generateGenericLabelFieldPair("title", confModel),
       SizedBox(height: 30),
@@ -347,7 +392,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       SizedBox(height: 30),
       generateGenericLabelFieldPair("place", confModel),
       SizedBox(height: 30),
-      generateGenericLabelFieldPair("tag", confModel),
+      generateSpeakerOrTagRow("tag"),
       SizedBox(height: 30),
       generateDescriptionColumn(confModel),
       SizedBox(height: 30),
