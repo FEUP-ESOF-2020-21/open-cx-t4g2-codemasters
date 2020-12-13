@@ -13,6 +13,8 @@ import 'package:ESOF/model/conferenceModel.dart';
 import 'package:ESOF/widgets/profile/profile_photo.dart';
 import 'package:ESOF/screens/utils/errorMessage.dart';
 
+import '../ui_elements.dart';
+
 String dateValidator(String value) {
   if (value.length == 0) return "Field must not be empty";
 
@@ -506,7 +508,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               confModel.tag = _tags;
               confModel.img = _image;
               confModel.updateConference(_conf.confReference);
-              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MyHome(),
+                ),
+              );
             }
           }
         },

@@ -56,8 +56,8 @@ class ConferenceModel {
       'tag': tag,
       'title': title,
     });
-
-    findSpeakersRef();
+    if (this.speakers != "")
+      findSpeakersRef();
   }
 
   /// Set tags in the right format
