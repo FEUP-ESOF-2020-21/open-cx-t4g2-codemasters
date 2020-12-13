@@ -78,4 +78,5 @@ class ConferenceModel {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
+
 }

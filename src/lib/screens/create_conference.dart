@@ -76,7 +76,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   String _tempSpeakers = "";
 
   String _tags = "";
-  String _tempTags = "";
 
   File _image;
 
@@ -112,13 +111,37 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   }
 
   Row generateImageRow(ConferenceModel confModel) {
-    if (_conf != null) _image = _conf.photo;
+    var _displayImage;
+
+    print("IMAGE");
+    print(confModel.imgURL);
+    print(_image);
+
+    if (_conf != null) {
+      if (confModel.imgURL == null) {
+        if (_image == null)
+          _displayImage = ProfilePhoto('assets/images/conference_test.jpg');
+        else
+          _displayImage = ProfilePhotoFile(_image);
+      }
+      if (confModel.imgURL != null) {
+        if (_image == null)
+          _displayImage = ProfilePhotoNetwork(confModel.imgURL);
+        else
+          _displayImage = ProfilePhotoFile(_image);
+      }
+    }
+
+    if (_conf == null) {
+      if (_image == null)
+        _displayImage = ProfilePhoto('assets/images/conference_test.jpg');
+      else
+        _displayImage = ProfilePhotoFile(_image);
+    }
+
     return Row(children: [
       GestureDetector(
-        child: Container(
-            child: _image == null
-                ? ProfilePhoto('assets/images/conference_test.jpg')
-                : ProfilePhotoNetwork(_image.path)),
+        child: Container(child: _displayImage),
         onTap: () => letUserPickImage(confModel),
       )
     ], mainAxisAlignment: MainAxisAlignment.center);
@@ -233,7 +256,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
     if (_conf != null) {
       _tags = _conf.tag;
-      int count = _tags.split(",").length;
+      int count = _tags.split(' #').length;
       counter_tag = Counter(count);
     } else {
       counter_tag = Counter(0);
@@ -407,50 +430,56 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       child: Button(
         buttonText: "Submit",
         onPressedFunc: () async {
-          if (_formKey.currentState.validate()) {
-            bool canSubmit = true;
+          List<Widget> errorWidgets = List();
+          bool canSubmit = true;
+          print(_speakers);
+          print(_tempSpeakers);
+          print(_tags);
 
-            List<Widget> errorWidgets = List();
+          if ((_conf == null && _tempSpeakers.isEmpty) ||
+              (_conf != null && _speakers.isEmpty && _tempSpeakers.isEmpty)) {
+            canSubmit = false;
+            errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
+          }
 
-            if (_speakers.isEmpty) {
-              canSubmit = false;
-              errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
-            }
-            if (_tags.isEmpty) {
-              canSubmit = false;
-              errorWidgets.add(ErrorMessage("Tags field cannot be empty!"));
-            }
+          if (_tags.isEmpty) {
+            canSubmit = false;
+            errorWidgets.add(ErrorMessage("Tags field cannot be empty!"));
+          }
 
-            if (!canSubmit && errorWidgets.length > 0) {
-              showDialog(
-                context: context,
-                child: AlertDialog(
-                  contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 5),
-                  title: Text("Error(s) detected"),
-                  content: SingleChildScrollView(
-                    child: Column(
-                      children: errorWidgets,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                    ),
+          if (!canSubmit && errorWidgets.length > 0) {
+            showDialog(
+              context: context,
+              child: AlertDialog(
+                contentPadding: EdgeInsets.fromLTRB(24, 24, 24, 5),
+                title: Text("Error(s) detected"),
+                content: SingleChildScrollView(
+                  child: Column(
+                    children: errorWidgets,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                   ),
-                  actions: [
-                    Button(
-                      buttonText: "OK",
-                      padding: EdgeInsets.zero,
-                      onPressedFunc: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                  actionsPadding: EdgeInsets.symmetric(horizontal: 100),
                 ),
-              );
-            }
+                actions: [
+                  Button(
+                    buttonText: "OK",
+                    padding: EdgeInsets.zero,
+                    onPressedFunc: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
+                actionsPadding: EdgeInsets.symmetric(horizontal: 100),
+              ),
+            );
+          }
 
+          if (_formKey.currentState.validate()) {
             if (_conf == null && _home != null && canSubmit) {
               _formKey.currentState.save();
               confModel.rate = 0;
-              confModel.speakers = _speakers + "," + _tempSpeakers;
+              confModel.speakers = _speakers.isEmpty
+                  ? _tempSpeakers
+                  : _speakers + "," + _tempSpeakers;
               confModel.img = _image;
               confModel.tag = _tags;
               confModel.confSetup();
@@ -492,7 +521,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ConferenceModel confModel = new ConferenceModel();
+    ConferenceModel confModel;
+     if (_conf == null) confModel = new ConferenceModel();
+     else confModel = _conf.parseConferenceModel();
+
     List<Widget> listViewElems = [
       generateHeader(),
       SizedBox(height: 20),
