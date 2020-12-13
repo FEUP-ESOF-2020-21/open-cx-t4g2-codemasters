@@ -67,8 +67,8 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   final _formKey = GlobalKey<FormState>();
   final _picker = ImagePicker();
 
-  Counter counter_tag;
-  Counter counter_speaker;
+  Counter counter_tag = Counter(0);
+  Counter counter_speaker = Counter(0);
 
   final Conference _conf;
 
@@ -258,8 +258,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
       _tags = _conf.tag;
       int count = _tags.split(' #').length;
       counter_tag = Counter(count);
-    } else {
-      counter_tag = Counter(0);
     }
 
     return Row(
@@ -356,7 +354,6 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
         },
       );
     else {
-      counter_speaker = Counter(0);
       futureCounter = counter_speaker;
     }
 
