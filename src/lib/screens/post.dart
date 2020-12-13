@@ -18,7 +18,6 @@ class PostScreen extends StatelessWidget {
   final Conference _conf;
 
   PostScreen(this._conf);
-
   /**
    * Function that returns a row with two elements: two Text widgets, the first one having a processed 
    * string derived from the function's parameter and the second one is extracted from the conference
@@ -287,8 +286,8 @@ class PostScreen extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+    (context as Element).reassemble();
     List<Widget> listViewElems = List();
-
     Stack imageStack = generateImageStack();
     Row dateRow = generateGenericRow("date");
     Row placeRow = generateGenericRow("place");

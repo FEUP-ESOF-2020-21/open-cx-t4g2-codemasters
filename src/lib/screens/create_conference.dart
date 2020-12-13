@@ -72,6 +72,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
 
   final Conference _conf;
 
+  String _addedSpeakers = "";
   String _speakers = "";
   String _tempSpeakers = "";
 
@@ -289,9 +290,17 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     child: Field(
                       padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                       onSaved: (value) {
-                        this._tags == ""
-                            ? this._tags = value
-                            : this._tags += "," + value;
+                        if(_conf == null) {
+                          this._tags == ""
+                              ? this._tags = value
+                              : this._tags += "," + value;
+                        }
+                        else{
+                          this._tags == ""
+                              ? this._tags = "#" + value
+                              : this._tags += " #" + value;
+
+                        }
                       },
                       validator: (value) {
                         final validation = notEmptyValidator(value);
@@ -386,9 +395,16 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     child: Field(
                       padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                       onSaved: (value) {
-                        this._tempSpeakers == ""
-                            ? this._tempSpeakers = value
-                            : this._tempSpeakers += "," + value;
+                        if (_conf == null) {
+                          this._tempSpeakers == ""
+                              ? this._tempSpeakers = value
+                              : this._tempSpeakers += "," + value;
+                        }
+                        else{
+                          _addedSpeakers == ""
+                              ? _addedSpeakers = value
+                              : _addedSpeakers += "," + value;
+                        }
                       },
                       validator: (value) {
                         final validation = notEmptyValidator(value);
@@ -430,11 +446,15 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           List<Widget> errorWidgets = List();
           bool canSubmit = true;
           print(_speakers);
+          print("ADDED SPEAKERS ");
+          print(_addedSpeakers);
           print(_tempSpeakers);
+          // TAGS
+          print("TAG");
           print(_tags);
 
           if ((_conf == null && _tempSpeakers.isEmpty) ||
-              (_conf != null && _speakers.isEmpty && _tempSpeakers.isEmpty)) {
+              (_conf != null && _speakers.isEmpty && _addedSpeakers.isEmpty)) {
             canSubmit = false;
             errorWidgets.add(ErrorMessage("Speaker field cannot be empty!"));
           }
@@ -482,8 +502,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
               confModel.confSetup();
               _home.revertToPrevScreen();
             } else if (canSubmit) {
-              confModel.imgURL = _image.path;
-              DatabaseService.updateConference(confModel, _conf.confReference);
+              confModel.speakers = _addedSpeakers;
+              confModel.tag = _tags;
+              confModel.img = _image;
+              confModel.updateConference(_conf.confReference);
               Navigator.pop(context);
             }
           }
