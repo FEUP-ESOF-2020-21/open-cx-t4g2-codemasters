@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import "speaker.dart";
+import 'conferenceModel.dart';
 
 class Conference {
   final String _photo;
@@ -15,10 +18,6 @@ class Conference {
 
   Conference(this._photo, this._title, this._happensOn, this._place,
       this._description, this._rating, this._tag, this._confReference);
-  /*
-  void addPhoto(String photoPath) {
-    this._photo = photoPath;
-  }*/
 
   DocumentReference get confReference {
     return _confReference;
@@ -34,6 +33,26 @@ class Conference {
 
   num get rate {
     return _rating;
+  }
+
+  String get description {
+    return _description;
+  }
+
+  String get photoPath {
+    return _photo;
+  }
+
+  String get title {
+    return _title;
+  }
+
+  String get tag {
+    return _tag;
+  }
+
+  File get photo {
+    return File(_photo);
   }
 
   Future<List<Speaker>> getSpeakers() async {
@@ -59,19 +78,16 @@ class Conference {
     return speakerRef;
   }
 
-  String get description {
-    return _description;
-  }
+  ConferenceModel parseConferenceModel(){
+    ConferenceModel confModel= new ConferenceModel();
+    confModel.title = _title;
+    confModel.ref = _confReference;
+    confModel.place = _place;
+    confModel.rate = _rating;
+    confModel.tag = "";
+    confModel.imgURL = _photo;
 
-  String get photoPath {
-    return _photo;
-  }
 
-  String get title {
-    return _title;
-  }
-
-  String get tag {
-    return _tag;
+    return confModel;
   }
 }

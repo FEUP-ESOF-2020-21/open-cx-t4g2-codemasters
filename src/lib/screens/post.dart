@@ -1,7 +1,11 @@
+import 'package:ESOF/auth/Authentication.dart';
+import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/model/conference.dart';
 import 'package:ESOF/model/speaker.dart';
+import 'package:ESOF/screens/create_conference.dart';
 import 'package:ESOF/screens/rate_talk.dart';
 import 'package:ESOF/screens/see_comments.dart';
+import 'package:ESOF/screens/utils/button.dart';
 import 'package:ESOF/screens/utils/string_fomatting.dart';
 import 'package:ESOF/style.dart';
 import 'package:ESOF/widgets/common/RatingStars.dart';
@@ -14,7 +18,6 @@ class PostScreen extends StatelessWidget {
   final Conference _conf;
 
   PostScreen(this._conf);
-
   /**
    * Function that returns a row with two elements: two Text widgets, the first one having a processed 
    * string derived from the function's parameter and the second one is extracted from the conference
@@ -283,8 +286,8 @@ class PostScreen extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
+    (context as Element).reassemble();
     List<Widget> listViewElems = List();
-
     Stack imageStack = generateImageStack();
     Row dateRow = generateGenericRow("date");
     Row placeRow = generateGenericRow("place");
@@ -309,28 +312,101 @@ class PostScreen extends StatelessWidget {
     Row giveComment = generateGiveComment(context);
     Row seeComments = generateSeeComments(context);
 
-    listViewElems.add(imageStack);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(dateRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(placeRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(speakersRow);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(descriptionColumn);
-    listViewElems.add(tagColumn);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(rating);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(giveRating);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(giveComment);
-    listViewElems.add(SizedBox(height: 20));
-    listViewElems.add(seeComments);
+    List<Widget> tempListViewElems = [
+      imageStack,
+      SizedBox(height: 20),
+      dateRow,
+      SizedBox(height: 20),
+      placeRow,
+      SizedBox(height: 20),
+      speakersRow,
+      SizedBox(height: 20),
+      descriptionColumn,
+      tagColumn,
+      SizedBox(height: 20),
+      rating,
+      SizedBox(height: 20),
+      giveRating,
+      SizedBox(height: 20),
+      giveComment,
+      SizedBox(height: 20),
+      seeComments,
+    ];
+
+    // listViewElems = FutureBuilder(
+    //     future: DatabaseService.isConferenceOwner(
+    //         AuthService.auth.currentUser.uid, this._conf.confReference),
+    //     builder: (context, snapshot) {
+    //       if (snapshot.hasData) {
+    //         return Button(
+    //           buttonText: "Edit post",
+    //           onPressedFunc: () {
+    //             Navigator.push(
+    //               context,
+    //               MaterialPageRoute(
+    //                 builder: (context) =>
+    //                     CreateConferenceScreen(null, this._conf),
+    //               ),
+    //             );
+    //           },
+    //         );
+    //       } else
+    //         return Center(child: CircularProgressIndicator());
+    //     }) as List<Widget>;
+    //if post belongs to the current user
+
+    // listViewElems = [
+    //   Button(
+    //     buttonText: "Edit post",
+    //     onPressedFunc: () {
+    //       Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => CreateConferenceScreen(null, this._conf),
+    //         ),
+    //       );
+    //     },
+    //   ),
+    //   SizedBox(height: 20),
+    //   ...tempListViewElems
+    // ];
+    //else
+    //listViewElems = [...tempListViewElems];
 
     Scaffold scaffold = Scaffold(
       body: ListView(
-        children: listViewElems,
+        children: [
+          FutureBuilder(
+              future: DatabaseService.isConferenceOwner(
+                  AuthService.auth.currentUser.uid, this._conf.confReference),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data) {
+                    List<Widget> retList = [
+                      Button(
+                        buttonText: "Edit post",
+                        onPressedFunc: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  CreateConferenceScreen(null, this._conf),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 20),
+                      ...tempListViewElems
+                    ];
+                    return Column(children: retList);
+                  } else {
+                    return Column(children: [...tempListViewElems]);
+                  }
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              })
+        ],
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
       ),
     );

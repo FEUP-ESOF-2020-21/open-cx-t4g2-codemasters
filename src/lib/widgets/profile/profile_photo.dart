@@ -48,7 +48,6 @@ class ProfilePhotoNetwork extends StatelessWidget {
   }
 }
 
-
 /// Show image from the network
 class ProfilePhotoFile extends StatelessWidget {
   final File _image;
@@ -57,6 +56,8 @@ class ProfilePhotoFile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(_image);
+
     return Container(
       width: MediaQuery.of(context).size.width / 2,
       height: MediaQuery.of(context).size.width / 2,
@@ -75,7 +76,9 @@ class ProfilePhotoFile extends StatelessWidget {
 }
 
 /// If the actual photo is null, display the default one.
-displayPhoto(user){
-  if (user.imgPath == null) return ProfilePhoto('assets/images/perfil.jpg');
-  else return ProfilePhotoNetwork(user.imgPath);
+displayPhoto(user) {
+  if (user.imgPath == null)
+    return ProfilePhoto('assets/images/perfil.jpg');
+  else
+    return ProfilePhotoNetwork(user.imgPath);
 }

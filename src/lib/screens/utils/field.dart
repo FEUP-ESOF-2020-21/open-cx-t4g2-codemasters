@@ -15,6 +15,7 @@ class Field extends StatelessWidget {
   final int maxLines;
   final int maxSizeInput;
   final EdgeInsetsGeometry padding;
+  final String initialValue;
 
   Field(
       {this.hintTxt,
@@ -27,7 +28,8 @@ class Field extends StatelessWidget {
       this.height = 60,
       this.maxLines = 1,
       this.maxSizeInput = 1000,
-      this.padding = const EdgeInsets.all(0)});
+      this.padding = const EdgeInsets.all(0),
+      this.initialValue = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +40,7 @@ class Field extends StatelessWidget {
       width: width,
       padding: padding,
       child: TextFormField(
+        initialValue: this.initialValue,
         inputFormatters: [
           LengthLimitingTextInputFormatter(maxSizeInput),
         ],

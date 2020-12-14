@@ -42,6 +42,24 @@ class ConferenceModel {
     DatabaseService.incrementUserPosts(AuthService.auth.currentUser.uid);
     findSpeakersRef();
   }
+
+
+  Future updateConference (DocumentReference ref) async {
+
+    if (this.img != null) await addImage();
+
+    await ref.update({
+      'date': date,
+      'description': description,
+      'img': imgURL,
+      'location': place,
+      'tag': tag,
+      'title': title,
+    });
+    if (this.speakers != "")
+      findSpeakersRef();
+  }
+
   /// Set tags in the right format
   void treatTags(){
     List<String> auxTags = this.tag.split(",");
@@ -78,4 +96,5 @@ class ConferenceModel {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
+
 }

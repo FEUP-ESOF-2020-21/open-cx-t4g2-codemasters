@@ -2,13 +2,20 @@ import 'package:ESOF/style.dart';
 import 'package:flutter/material.dart';
 
 class Counter extends StatefulWidget {
-  var _state = _CounterState(0);
+  _CounterState _state;
 
-  int _counter = 0;
+  int _counter;
+
+  Counter(this._counter);
 
   incrementCounter() {
     _counter++;
     _state.incrementCounter();
+  }
+
+  set counter(int counter) {
+    _counter = counter;
+    _state.counter = counter;
   }
 
   @override
@@ -25,6 +32,12 @@ class _CounterState extends State<Counter> {
   incrementCounter() {
     setState(() {
       this._counter++;
+    });
+  }
+
+  set counter(int counter) {
+    setState(() {
+      _counter = counter;
     });
   }
 
