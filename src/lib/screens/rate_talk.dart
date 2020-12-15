@@ -1,6 +1,7 @@
 import 'package:ESOF/auth/Authentication.dart';
 import 'package:ESOF/database/databaseService.dart';
 import 'package:ESOF/style.dart';
+import 'package:ESOF/ui_elements.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -120,8 +121,8 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                             _rating);
 
                         // Return to Feed
-                        Navigator.of(context).pop();
-                        Navigator.of(context).pop();
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => MyHome()));
                       },
                       child: Text(
                         'OK',
