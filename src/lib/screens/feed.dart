@@ -7,12 +7,7 @@ import '../widgets/feed/recommended_carousel.dart';
 import '../widgets/feed/top_rated_carousel.dart';
 import '../widgets/feed/coming_next_carousel.dart';
 
-class FeedScreen extends StatefulWidget {
-  @override
-  _FeedScreenState createState() => _FeedScreenState();
-}
-
-class _FeedScreenState extends State<FeedScreen> {
+class FeedScreen extends StatelessWidget {
   final int minRate = 4;
 
   List<DocumentSnapshot> filterTopRate(
