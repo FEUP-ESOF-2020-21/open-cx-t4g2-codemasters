@@ -480,7 +480,7 @@ In our app's physical architecture only 2 entities are featured: the Firebase se
 
 ![](./docs/physical_architecture.png)
 
-Regarding the technologies, we used Flutter for the frontend and Firebase for the backend because of how much they streamline the development process.
+Regarding technologies, we used Flutter (with the Dart programming language) for the frontend and Firebase for the backend because of how much they streamline the development process.
 
 ### Prototype
 To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
