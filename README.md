@@ -125,9 +125,9 @@ So, what are you waiting for? Sign up today!
 ## User Stories
 
 ### Story #1
-As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend a similar talk???
+As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend it in the future
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave a rating
 ![leave_rating](./docs/leave_rating_mockup.png)
@@ -152,7 +152,7 @@ Scenario: Rate a talk.
 ### Story #2
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave a comment
 ![leave_comment](./docs/leave_comment_mockup.png)
@@ -198,7 +198,7 @@ Scenario: See rating of a talk
 ### Story #4
 As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave the new rating
 ![leave_rating](./docs/leave_rating_mockup.png)
@@ -222,18 +222,29 @@ Scenario: Edit rating of a talk
 
 
 ### Story #5
-As a user I want to be able to edit my talk’s post so that it can reflect the most current and up to date information about my talk 
+As a user I want to be able to edit my talks post so that it can reflect the most current and up to date information about my talk 
 
-### User interface mockup
-[a introduzir]
+### User interface mock-up
+##### Button to edit the talk post
+
+![Button of edit post](./docs/edit_post.PNG)
+
+
+
+##### Edit post screen
+
+![Button of edit post](./docs/edit_post2.PNG)
+
+
 
 ### Acceptance tests
 ```Gherkin
-Scenario: Edit talk’s post
-  Given A talk’s post that was created by me
-  When I tap the “Edit post” button
-  And I change what I’ve written previously in the post
-  Then the information on my post changes
+Scenario: Edit talk's post
+  Given A talk's post that was created by me
+  When I tap "Edit post"
+  And I write "Windows" in "Title"
+  And I tap "Submit"
+  Then I am in feed screen
 ```
 
 ### Value and effort
@@ -263,76 +274,38 @@ Scenario: Edit the user profile
 
 
 ### Story #7
-As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
+As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
 
 ### User interface mock-up
-[a introduzir]
+![edit_profile](./docs/search.PNG)
 
-### Acceptance tests A MUDAR QUANDO TIVER FEITO
+### Acceptance tests
 ```Gherkin
-Scenario: Inspecting a speaker profile
-  Given The talk's speaker profile
-  When I tap the "View talks" button
-  Then I am redirected to a list of the talks the speaker participated
+Scenario: Search for a talk by criteria
+  Given The home screen
+  When I tap the "Search Bar" icon
+  And I write "tech" in "Search Bar"
+  And tap the "Search" button
+  Then talks with the tag "tech" appears 
 ```
 
 ### Value and effort
-* Value: Cool to have  
+* Value: Cool to have
 * Effort: M
 
 
 ### Story #8
-As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
+As a user I want to be able to insert a query in the search bar, get matching results and interact with them so that I can look up talks that I might be interested in
 
 ### User interface mock-up
-[a introduzir]
+![explore](./docs/searchBar.PNG)
 
-### Acceptance tests A MUDAR QUANDO ESTIVER IMPLEMENTADO
-```Gherkin
-Scenario: Search for a talk with filters
-  Given The explore screen
-  When I select the filters I want to apply
-  And provide the values for each filter
-  And tap the "Search" button
-  Then the filtered results are shown
-```
-
-### Value and effort
-* Value: Cool to have
-* Effort: M
-
-
-### Story #9
-As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
-
-### User interface mock-up
-[a introduzir]
-
-### Acceptance tests	A MUDAR QUANDO ESTIVER IMPLEMENTADO
-```Gherkin
-Scenario: Search for a talk by criteria
-  Given The explore screen
-  When I select the sorting criteria
-  And provide the values for each criteria (ascending/descending)
-  And tap the "Search" button
-  Then the sorted results are shown
-```
-
-### Value and effort
-* Value: Cool to have
-* Effort: M
-
-
-### Story #10
-As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
-
-### User interface mock-up
-![explore](./docs/explore_mockup.png)
+![explore](./docs/search.PNG)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Search for a talk with a query
-  Given The explore screen
+  Given The home screen
   When I tap "Search Bar"
   And I write "Por que laranjas" in "Search Bar"
   And tap the "Search" icon
@@ -344,44 +317,19 @@ Scenario: Search for a talk with a query
 * Effort: XL
 
 
-### Story #11
-As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
-
-### User interface mock-up
-##### Search mock-up
-![explore](./docs/explore_mockup.png)
-##### Talk page mock-up
-![post](./docs/post_mockup.png)
-
-### Acceptance tests
-```Gherkin
-Scenario: See search results
-  Given The explore screen
-  When I tap "Search Bar"
-  And I write "Por que laranjas" in "Search Bar"
-  And tap the "Search" icon
-  And I tap "Por que laranjas são gostosas?" 
-  Then the screen of the talk appears
-```
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #12
+### Story #9
 As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
-### User interface mock-up	ATUALIZAR
+### User interface mock-up
 ![create_conference](./docs/create_conference_mockup.png)
 
-### Acceptance tests TODO
+### Acceptance tests 
 ```Gherkin
 Scenario: A user wants to create a post
   Given The bottom navigation bar
   When I tap "Create post"
-  And I fill
-  Then I'm taken to the post creation page
+  And I fill the necessary info to create a post
+  Then the talk's post is created
 ```
 
 ### Value and effort
@@ -389,21 +337,21 @@ Scenario: A user wants to create a post
 * Effort: L
 
 
-### Story #13
+### Story #10
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
-### User interface mock-up ATUALIZAR
+### User interface mock-up 
 
 ##### Feed mock-up
 ![feed](./docs/feed_mockup.png)
 ##### Talk page mock-up
 ![post](./docs/post_mockup.png)
 
-### Acceptance tests ATUALIZAR
+### Acceptance tests 
 ```Gherkin
-Scenario: Looking at the feed
+Scenario: Interacting with feed
   Given The feed screen
-  When I tap a suggested talk
+  When I tap a post talk 
   Then I'm taken to the talk's post
 ```
 
@@ -411,28 +359,28 @@ Scenario: Looking at the feed
 * Value: Must have
 * Effort: M
 
-### Story #14
-As a user I want to be able to check my profile
+### Story #11
+As a user I want to be able to check my profile so that I can see my current information
 
 ### User interface mock-up
 ![profile](./docs/profile_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
-Scenario: A user wants to view the information in their profile
-  Given There is a button that takes them to their profile page
-  When The user taps the aforementioned button
-  Then The user's profile is presented
+Scenario: The user wants to check his information
+  Given The home screen
+  When I tap "Profile"
+  Then My profile is presented
 ```
 
 ### Value and effort
 * Value: Cool to have
 * Effort: M
 
-### Story #15
-As a user I want to be able to see the comments left about a talk
+### Story #12
+As a user I want to be able to see the comments left about a talk so that I can better comprehend its quality 
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to see all comments
 ![see_comments](./docs/see_comments_mockup.png)
@@ -441,20 +389,20 @@ As a user I want to be able to see the comments left about a talk
 
 ### Acceptance tests
 ```Gherkin
-Scenario: The user is in a talk's page
-  Given A button is present that allows them to see the comments
-  When The user taps the aforementioned button
-  Then A screen with the comments is shown
+Scenario: The user wants to check out the comments
+  Given The post talk screen
+  When I tap "See all comments"
+  Then The list of comments appears
 ```
 ### Value and effort
 * Value: Cool to have
 * Effort: M
 
-### Story #16
+### Story #13
 
-As a user I want to be able to see all the talks in the app's database
+As a user I want to be able to see all the talks in the app so that I can find one that satisfies me
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to see all talks
 ![see_talks](./docs/see_all_mockup.png)
@@ -464,20 +412,20 @@ As a user I want to be able to see all the talks in the app's database
 
 ### Acceptance tests
 ```Gherkin
-Scenario: The user is in the feed and wants to see all the talks available
-  Given A button is present that allows them to see all the talks
-  When The user taps the aforementioned button
-  Then A screen with all the talks is shown
+Scenario: The user wants the see all talks
+  Given The home screen
+  When I tap "See all"
+  Then A list with all the talks appears
 ```
 ### Value and effort
 Value: Cool to have  
 Effort: M
 
-### Story #17
+### Story #14
 
-As a user I want to be able to see all the posts I created
+As a user I want to be able to see all the posts I created so that I can remember which talks I introduced to the app
 
-### User interface mockup
+### User interface mock-up
 
 #### Button to see user's created talks
 ![created talks button](./docs/button_toSee_MyPosts_mockup.png)
@@ -488,15 +436,13 @@ As a user I want to be able to see all the posts I created
 ### Acceptance tests
 ```Gherkin
 Scenario: A user wants to see the posts he created
-  Given: There is a button on the profile page that takes him to his posts page
-  When: The user taps the aforementioned button
-  Then: All the posts the user created are presented
+  Given The Profile screen
+  When I tap "posts"
+  Then a list of talks appears
 ```
 ### Value and effort
 Value: Cool to have  
 Effort: M
-
-TO DO
 
 
 ### Domain model
