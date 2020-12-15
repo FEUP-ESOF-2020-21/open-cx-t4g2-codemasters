@@ -1,6 +1,10 @@
+import 'package:ESOF/model/conference.dart';
+import 'package:ESOF/model/conferenceModel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ESOF/model/userModel.dart';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:ESOF/services/cloud_storage_service.dart';
 
 class DatabaseService {
   static final dbReference = FirebaseFirestore.instance;
@@ -187,5 +191,28 @@ class DatabaseService {
     });
 
     return ratedConfs;
+  }
+/*
+  static Future updateConference(
+      ConferenceModel confModel, DocumentReference ref) async {
+    if (confModel.img != null) await addImage(confModel);
+    await ref.update({
+      'date': confModel.date,
+      'description': confModel.description,
+      'img': confModel.imgURL,
+      'location': confModel.place,
+      'tag': confModel.tag,
+      'title': confModel.title,
+    });
+  }
+
+*/
+
+  static Future<bool> isConferenceOwner(
+      String uid, DocumentReference confRef) async {
+    UserModel user = await getUser(uid);
+
+    DocumentSnapshot result = await confRef.get();
+    return result.data()['user'] == user.ref;
   }
 }
