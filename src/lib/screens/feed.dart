@@ -7,18 +7,13 @@ import '../widgets/feed/recommended_carousel.dart';
 import '../widgets/feed/top_rated_carousel.dart';
 import '../widgets/feed/coming_next_carousel.dart';
 
-class FeedScreen extends StatefulWidget {
-  @override
-  _FeedScreenState createState() => _FeedScreenState();
-}
-
-class _FeedScreenState extends State<FeedScreen> {
+class FeedScreen extends StatelessWidget {
   final int minRate = 4;
 
   List<DocumentSnapshot> filterTopRate(
       List<DocumentSnapshot> totalConferences) {
     return totalConferences
-        .where((conference) => conference['rate'] > minRate)
+        .where((conference) => conference.data()['rate'] > minRate)
         .toList();
   }
 
@@ -26,7 +21,7 @@ class _FeedScreenState extends State<FeedScreen> {
       List<DocumentSnapshot> totalConferences) {
     return totalConferences.where((conference) {
       DateTime confTime = DateTime.fromMillisecondsSinceEpoch(
-          conference['date'].seconds * 1000);
+          conference.data()['date'].seconds * 1000);
 
       return confTime.compareTo(DateTime.now()) > 0;
     }).toList();
@@ -43,7 +38,7 @@ class _FeedScreenState extends State<FeedScreen> {
       List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
     return totalConferences.where((conference) {
       List<String> separatedTags =
-          conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+          conference.data()['tag'].split(new RegExp(r'; |, |\*|\n| '));
       return checkConfTag(separatedTags, userFavoriteTags);
     }).toList();
   }
@@ -68,7 +63,6 @@ class _FeedScreenState extends State<FeedScreen> {
         filterComingNext(totalRecommendedRate); // ComingNext
     List<DocumentSnapshot> totalRecommended = filterRecommended_NotRatedYet(
         totalRecommendedComingNext, userRatedConfs); // Not rated yet!
-
     return totalRecommended;
   }
 
