@@ -128,9 +128,12 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
           _displayImage = ProfilePhotoFile(_image);
       }
       if (confModel.imgURL != null) {
-        if (_image == null)
-          _displayImage = ProfilePhotoNetwork(confModel.imgURL);
-        else
+        if (_image == null) {
+          if (confModel.imgURL != 'http://www.theides.org/img/about.jpg')
+            _displayImage = ProfilePhotoNetwork(confModel.imgURL);
+          else
+            _displayImage = ProfilePhoto('assets/images/conference_test.jpg');
+        } else
           _displayImage = ProfilePhotoFile(_image);
       }
     }
@@ -292,16 +295,14 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                     child: Field(
                       padding: EdgeInsets.fromLTRB(15, 0, 15, 10),
                       onSaved: (value) {
-                        if(_conf == null) {
+                        if (_conf == null) {
                           this._tags == ""
                               ? this._tags = value
                               : this._tags += "," + value;
-                        }
-                        else{
+                        } else {
                           this._tags == ""
                               ? this._tags = "#" + value
                               : this._tags += " #" + value;
-
                         }
                       },
                       validator: (value) {
@@ -401,8 +402,7 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
                           this._tempSpeakers == ""
                               ? this._tempSpeakers = value
                               : this._tempSpeakers += "," + value;
-                        }
-                        else{
+                        } else {
                           _addedSpeakers == ""
                               ? _addedSpeakers = value
                               : _addedSpeakers += "," + value;
@@ -548,8 +548,10 @@ class _CreateConferenceScreenState extends State<CreateConferenceScreen> {
   @override
   Widget build(BuildContext context) {
     ConferenceModel confModel;
-     if (_conf == null) confModel = new ConferenceModel();
-     else confModel = _conf.parseConferenceModel();
+    if (_conf == null)
+      confModel = new ConferenceModel();
+    else
+      confModel = _conf.parseConferenceModel();
 
     List<Widget> listViewElems = [
       generateHeader(),

@@ -83,7 +83,6 @@ class Conference {
     confModel.title = _title;
     confModel.ref = _confReference;
     confModel.place = _place;
-    confModel.rate = _rating;
     confModel.tag = "";
     confModel.imgURL = _photo;
 
