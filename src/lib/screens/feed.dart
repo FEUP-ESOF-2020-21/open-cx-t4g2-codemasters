@@ -13,7 +13,7 @@ class FeedScreen extends StatelessWidget {
   List<DocumentSnapshot> filterTopRate(
       List<DocumentSnapshot> totalConferences) {
     return totalConferences
-        .where((conference) => conference['rate'] > minRate)
+        .where((conference) => conference.data()['rate'] > minRate)
         .toList();
   }
 
@@ -21,7 +21,7 @@ class FeedScreen extends StatelessWidget {
       List<DocumentSnapshot> totalConferences) {
     return totalConferences.where((conference) {
       DateTime confTime = DateTime.fromMillisecondsSinceEpoch(
-          conference['date'].seconds * 1000);
+          conference.data()['date'].seconds * 1000);
 
       return confTime.compareTo(DateTime.now()) > 0;
     }).toList();
@@ -38,7 +38,7 @@ class FeedScreen extends StatelessWidget {
       List<DocumentSnapshot> totalConferences, List<String> userFavoriteTags) {
     return totalConferences.where((conference) {
       List<String> separatedTags =
-          conference['tag'].split(new RegExp(r'; |, |\*|\n| '));
+          conference.data()['tag'].split(new RegExp(r'; |, |\*|\n| '));
       return checkConfTag(separatedTags, userFavoriteTags);
     }).toList();
   }
@@ -63,7 +63,6 @@ class FeedScreen extends StatelessWidget {
         filterComingNext(totalRecommendedRate); // ComingNext
     List<DocumentSnapshot> totalRecommended = filterRecommended_NotRatedYet(
         totalRecommendedComingNext, userRatedConfs); // Not rated yet!
-
     return totalRecommended;
   }
 
