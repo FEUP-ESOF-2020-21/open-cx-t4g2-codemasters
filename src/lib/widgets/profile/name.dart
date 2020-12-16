@@ -12,6 +12,7 @@ class ProfileName extends StatelessWidget {
       style: profileNameText,
       overflow: TextOverflow.ellipsis,
       maxLines: 1,
+      key: Key('Name'),
     );
   }
 }

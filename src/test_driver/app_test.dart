@@ -13,7 +13,13 @@ Future<void> main() {
       TestRunSummaryReporter(),
       JsonReporter(path: './report.json')
     ]
-    ..stepDefinitions = [TapWidget(), Appears()]
+    ..stepDefinitions = [
+      TapWidget(),
+      TapButton1(),
+      WriteNewBio(),
+      TapButton2(),
+      Appears()
+    ]
     ..restartAppBetweenScenarios = true
     ..targetAppPath = "test_driver/app.dart"
     ..exitAfterTestRun = true; // set to false if debugging to exit cleanly
