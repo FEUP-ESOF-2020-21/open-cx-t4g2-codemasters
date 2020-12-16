@@ -37,6 +37,7 @@ class _MyHomeState extends State<MyHome> {
       appBar: buildAppBar(context),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+          key: Key("Bottom Bar"),
           backgroundColor: accentOrange,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
@@ -70,6 +71,7 @@ AppBar buildAppBar(context) {
     title: Text("Rate-A-Talk"),
     actions: <Widget>[
       IconButton(
+        key: Key("Search Icon"),
           icon: Icon(Icons.search),
           onPressed: () =>
               {showSearch(context: context, delegate: ConferenceSearch())})
