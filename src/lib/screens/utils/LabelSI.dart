@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import '../../style.dart';
 
 class LabelSI extends StatelessWidget {
-
   final String _label;
   final EdgeInsetsGeometry _eig;
   LabelSI(this._label, this._eig);
@@ -15,7 +14,6 @@ class LabelSI extends StatelessWidget {
           _label,
           style: mediumText,
         ),
-        margin: this._eig
-    );
+        margin: this._eig);
   }
 }

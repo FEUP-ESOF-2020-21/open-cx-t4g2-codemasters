@@ -40,6 +40,7 @@ class Field extends StatelessWidget {
       width: width,
       padding: padding,
       child: TextFormField(
+        key: Key(hintTxt),
         initialValue: this.initialValue,
         inputFormatters: [
           LengthLimitingTextInputFormatter(maxSizeInput),

@@ -15,6 +15,7 @@ class BioProfile extends StatelessWidget {
           Text(
             'Bio',
             style: bioTitleProfile,
+            key: Key('Bio'),
           ),
           SizedBox(height: 15.0),
           Text(

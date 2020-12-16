@@ -52,10 +52,8 @@ class _MyHomeState extends State<MyHome> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Image.asset("assets/icons/1x/single-01.png", scale: 1.5),
-              label: "Profile",
-              title: Text("Profile", key: Key("Profile")),
-            ),
+                icon: Image.asset("assets/icons/1x/single-01.png", scale: 1.5),
+                label: "Profile"),
           ],
           onTap: (index) {
             setState(() {
