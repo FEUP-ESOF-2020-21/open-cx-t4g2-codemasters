@@ -487,7 +487,7 @@ While not necessary, sometimes it might be useful to explain a few aspects of th
 Use cross-links to the code repository and only embed real fragments of code when strictly needed, since they tend to become outdated very soon.
 
 ---
-## Test TODO
+## Test 
 
 There are several ways of documenting testing activities, and quality assurance in general, being the most common: a strategy, a plan, test case specifications, and test checklists.
 
@@ -496,6 +496,25 @@ In this section it is only expected to include the following:
 * test case specifications to verify the functionalities, using unit tests and acceptance tests.
 
 A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
+
+To test the code and the functionalities, it was used Mockito and Flutter_Gherkin.
+
+Only some features were tested. The selected ones are:
+
+- ESCREVER OS DOS UNITARIOS
+- [Edit Profile](./src/test_driver/features/profile.feature)
+
+### Edit Profile
+
+In this test, Flutter Gherkin was used as the testing tool. This tool requires the definition of several [steps](./src/test_driver/steps/test_steps.dart) in order to translate from Gherkin to Flutter. 
+
+This test verifies if the user can modify his biography.
+
+
+
+
+
+
 
 ---
 ## Configuration and change management 
