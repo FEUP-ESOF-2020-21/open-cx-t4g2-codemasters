@@ -20,6 +20,7 @@ class EditProfile extends StatelessWidget {
           Text(
             'Edit Profile',
             style: editProfileText,
+            key: Key('EditProfileBtn'),
           ),
         ],
       ),

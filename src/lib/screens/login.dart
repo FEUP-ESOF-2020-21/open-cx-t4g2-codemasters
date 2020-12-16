@@ -118,6 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Text(
             'LOGIN',
             style: submitTextWhite,
+            key: Key('submitBtn'),
           ),
         ),
       ),

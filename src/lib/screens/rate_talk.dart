@@ -120,9 +120,8 @@ class _RateTalkScreenState extends State<RateTalkScreen> {
                             this.currentConf,
                             _rating);
 
-                        // Return to Feed
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => MyHome()));
+                        // Return to Rate
+                        Navigator.of(context).pop();
                       },
                       child: Text(
                         'OK',

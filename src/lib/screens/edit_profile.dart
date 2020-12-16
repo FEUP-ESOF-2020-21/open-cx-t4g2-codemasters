@@ -186,12 +186,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Text(
             'Submit',
             style: submitTextWhite,
+            key: Key('submitBtn'),
           ),
         ),
       ],
     );
     SafeArea safeArea = new SafeArea(
       child: ListView(
+        key: Key('List'),
         padding: EdgeInsets.symmetric(vertical: 85.0),
         children: <Widget>[
           Column(

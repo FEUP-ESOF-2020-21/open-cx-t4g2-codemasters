@@ -37,6 +37,7 @@ class _MyHomeState extends State<MyHome> {
       appBar: buildAppBar(context),
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+          key: Key("Bottom Bar"),
           backgroundColor: accentOrange,
           type: BottomNavigationBarType.fixed,
           currentIndex: _currentIndex,
@@ -51,9 +52,8 @@ class _MyHomeState extends State<MyHome> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Image.asset("assets/icons/1x/single-01.png", scale: 1.5),
-              label: "Profile",
-            ),
+                icon: Image.asset("assets/icons/1x/single-01.png", scale: 1.5),
+                label: "Profile"),
           ],
           onTap: (index) {
             setState(() {
@@ -70,14 +70,15 @@ AppBar buildAppBar(context) {
     title: Text("Rate-A-Talk"),
     actions: <Widget>[
       IconButton(
+          key: Key("Search Icon"),
           icon: Icon(Icons.search),
           onPressed: () =>
               {showSearch(context: context, delegate: ConferenceSearch())})
     ],
-    leading: Container( 
+    leading: Container(
       child: Image.asset("assets/icons/1x/app-logo.png", scale: 1.2),
       padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-  ),
+    ),
     backgroundColor: accentOrange,
   );
 }

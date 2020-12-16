@@ -94,6 +94,7 @@ class ConferenceSearch extends SearchDelegate<String> {
         });
 
         return ListView(
+          key: Key("Search Results"),
           children: results
               .map<Widget>((result) => ListTile(
                     title: Text(result.data()['title']),
