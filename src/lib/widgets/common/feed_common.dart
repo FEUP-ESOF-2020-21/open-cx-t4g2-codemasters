@@ -61,8 +61,11 @@ List<GestureDetector> displayConferences(
                   height: 160,
                   child: Align(
                     alignment: Alignment.topCenter,
-                    child: Image.network(hasImage(conferences[i]),
-                        fit: BoxFit.cover),
+                    child: hasImage(conferences[i]) ==
+                            'http://www.theides.org/img/about.jpg'
+                        ? Image.asset('assets/images/conference_test.jpg')
+                        : Image.network(hasImage(conferences[i]),
+                            fit: BoxFit.cover),
                   ),
                 ),
               ),
