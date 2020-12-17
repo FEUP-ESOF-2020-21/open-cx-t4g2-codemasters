@@ -518,7 +518,7 @@ Only some features were tested. The selected ones are:
 ### Unit Testing
 In this test, we used *Mockito* and the default tools flutter has for tests. The tests aim the consistency of the recommended conferences algorithm and also verify the existence of some specific elements in the Login screen.
 
-### BDD Tests - Edit Profile
+### BDD Testing
 
 In this test, *Flutter Gherkin* was used as the testing tool. This tool requires the definition of several [steps]([./src/test_driver/steps/test_steps.dart](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/blob/master/src/test_driver/steps/test_steps.dart)) in order to translate from Gherkin to Flutter. 
 
