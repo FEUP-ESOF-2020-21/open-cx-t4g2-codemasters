@@ -125,9 +125,9 @@ So, what are you waiting for? Sign up today!
 ## User Stories
 
 ### Story #1
-As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend a similar talk???
+As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend it in the future
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave a rating
 ![leave_rating](./docs/leave_rating_mockup.png)
@@ -139,9 +139,10 @@ As a user I want to be able to rate a talk so that other users can use my rating
 ```Gherkin
 Scenario: Rate a talk.
   Given The post of a talk that I have attended
-  When I tap “Rate this talk”
-  Then I give a score between 0 and 10
-  And submit my rating
+  When I tap "Rate talk"
+  And I insert a rate
+  And I tap "OK",
+  Then the talk's post appears
 ```
 
 ### Value and effort
@@ -151,7 +152,7 @@ Scenario: Rate a talk.
 ### Story #2
 As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave a comment
 ![leave_comment](./docs/leave_comment_mockup.png)
@@ -163,9 +164,12 @@ As a user I want to be able to leave a comment about the talk so that I can give
 ```Gherkin
 Scenario: Leave a comment about a talk
   Given A talk's post that I have attended and rated
-  When I tap “Leave comment”
-  Then I can write a comment about that talk
-  And tap the submit button to submit my comment
+  When I tap "Leave a comment"
+  And I tap "Comment"
+  And I write "Hey that was great!"
+  And I tap "Leave Comment"
+  And I tap "See all comments"
+  Then my comment appears
 ```
 ### Value and effort
 * Value: Must have
@@ -175,15 +179,15 @@ Scenario: Leave a comment about a talk
 ### Story #3
 As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
 
-### User interface mockup
+### User interface mock-up
 ![rating](./docs/leave_rating_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: See rating of a talk
   Given A talk's post that is presented in the feed
-  When I tap the talk post
-  Then the conference rating appears on screen
+  When I am in the talk's post
+  Then the current rating appears
 ```
 
 ### Value and effort
@@ -194,7 +198,7 @@ Scenario: See rating of a talk
 ### Story #4
 As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to leave the new rating
 ![leave_rating](./docs/leave_rating_mockup.png)
@@ -206,8 +210,10 @@ As a user I want to be able to edit the given rating to a talk so that I can cor
 ```Gherkin
 Scenario: Edit rating of a talk
   Given A post of a talk that I have rated
-  When I tap the “Edit rating” button
-  Then I can change the previous rating
+  When I tap "Rate talk"
+  And I insert a rate
+  And I tap "OK",
+  Then the talk's post appears
 ```
 
 ### Value and effort
@@ -216,18 +222,29 @@ Scenario: Edit rating of a talk
 
 
 ### Story #5
-As a user I want to be able to edit my talk’s post so that it can reflect the most current and up to date information about my talk 
+As a user I want to be able to edit my talks post so that it can reflect the most current and up to date information about my talk 
 
-### User interface mockup
-[a introduzir]
+### User interface mock-up
+##### Button to edit the talk post
+
+![Button of edit post](./docs/edit_post.PNG)
+
+
+
+##### Edit post screen
+
+![Button of edit post](./docs/edit_post2.PNG)
+
+
 
 ### Acceptance tests
 ```Gherkin
-Scenario: Edit talk’s post
-  Given A talk’s post that was created by me
-  When I tap the “Edit post” button
-  And I change what I’ve written previously in the post
-  Then the information on my post changes
+Scenario: Edit talk's post
+  Given A talk's post that was created by me
+  When I tap "Edit post"
+  And I write "Windows" in "Title"
+  And I tap "Submit"
+  Then I am in feed screen
 ```
 
 ### Value and effort
@@ -238,16 +255,17 @@ Scenario: Edit talk’s post
 ### Story #6
 As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
 
-### User interface mockup
+### User interface mock-up
 ![edit_profile](./docs/edit_profile_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Edit the user profile
-  Given My profile (screen or page????)
-  When I tap “Edit profile” button
-  And I change what I’ve written previously in my profile
-  Then the information in my profile changes
+  Given My profile screen
+  When I tap "Edit Profile" button
+  And I write "pickipicki" in "New Name"
+  And I tap "Submit"
+  Then "pickipicki" appears
 ```
 
 ### Value and effort
@@ -256,59 +274,19 @@ Scenario: Edit the user profile
 
 
 ### Story #7
-As a user I want to be able to check which talks a speaker participated so that I can decide if I want to attend his next talk
-
-### User interface mockup
-[a introduzir]
-
-### Acceptance tests
-```Gherkin
-Scenario: Inspecting a speaker profile
-  Given The talk's speaker profile
-  When I tap the "View talks" button
-  Then I am redirected to a list of the talks the speaker participated
-```
-
-### Value and effort
-* Value: Cool to have  
-* Effort: M
-
-
-### Story #8
-As a user I want to be able to apply filters to narrow down the search results, such as the speaker, theme and rating, so that I can find the talks best suited for me and my preferences
-
-### User interface mockup
-[a introduzir]
-
-### Acceptance tests
-```Gherkin
-Scenario: Search for a talk with filters
-  Given The explore screen
-  When I select the filters I want to apply
-  And provide the values for each filter
-  And tap the "Search" button
-  Then the filtered results are shown
-```
-
-### Value and effort
-* Value: Cool to have
-* Effort: M
-
-
-### Story #9
 As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
 
-### User interface mockup
-[a introduzir]
+### User interface mock-up
+![edit_profile](./docs/search.PNG)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Search for a talk by criteria
-  Given The explore screen
-  When I select the sorting criteria
-  And provide the values for each criteria (ascending/descending)
+  Given The home screen
+  When I tap the "Search Bar" icon
+  And I write "tech" in "Search Bar"
   And tap the "Search" button
-  Then the sorted results are shown
+  Then talks with the tag "tech" appears 
 ```
 
 ### Value and effort
@@ -316,20 +294,22 @@ Scenario: Search for a talk by criteria
 * Effort: M
 
 
-### Story #10
-As a user I want to be able to insert a query in the search bar and get matching results so that I can look up talks that I might be interested in
+### Story #8
+As a user I want to be able to insert a query in the search bar, get matching results and interact with them so that I can look up talks that I might be interested in
 
-### User interface mockup
-![explore](./docs/explore_mockup.png)
+### User interface mock-up
+![explore](./docs/searchBar.PNG)
+
+![explore](./docs/search.PNG)
 
 ### Acceptance tests
 ```Gherkin
 Scenario: Search for a talk with a query
-  Given The explore screen
-  When I tap the search bar
-  And enter some information 
-  And tap the "Search" button
-  Then the matching results are shown
+  Given The home screen
+  When I tap "Search Bar"
+  And I write "Por que laranjas" in "Search Bar"
+  And tap the "Search" icon
+  Then "Por que laranjas são gostosas?" appears
 ```
 
 ### Value and effort
@@ -337,41 +317,19 @@ Scenario: Search for a talk with a query
 * Effort: XL
 
 
-### Story #11
-As a user I want to be able to interact with the search results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in
-
-### User interface mockup
-##### Search mockup
-![explore](./docs/explore_mockup.png)
-##### Talk page mockup
-![post](./docs/post_mockup.png)
-
-### Acceptance tests
-```Gherkin
-Scenario: See search results
-  Given The explore screen
-  When I search a talk
-  And tap one of the results
-  Then I'm taken to the talk's post
-```
-
-### Value and effort
-* Value: Must have
-* Effort: L
-
-
-### Story #12
+### Story #9
 As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
 
-### User interface mockup
+### User interface mock-up
 ![create_conference](./docs/create_conference_mockup.png)
 
-### Acceptance tests
+### Acceptance tests 
 ```Gherkin
 Scenario: A user wants to create a post
   Given The bottom navigation bar
-  When I tap the "Create Post" button
-  Then I'm taken to the post creation page
+  When I tap "Create post"
+  And I fill the necessary info to create a post
+  Then the talk's post is created
 ```
 
 ### Value and effort
@@ -379,21 +337,21 @@ Scenario: A user wants to create a post
 * Effort: L
 
 
-### Story #13
+### Story #10
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
-### User interface mockup
+### User interface mock-up 
 
-##### Feed mockup
+##### Feed mock-up
 ![feed](./docs/feed_mockup.png)
-##### Talk page mockup
+##### Talk page mock-up
 ![post](./docs/post_mockup.png)
 
-### Acceptance tests
+### Acceptance tests 
 ```Gherkin
-Scenario: Looking at the feed
+Scenario: Interacting with feed
   Given The feed screen
-  When I tap a suggested talk
+  When I tap a post talk 
   Then I'm taken to the talk's post
 ```
 
@@ -401,28 +359,28 @@ Scenario: Looking at the feed
 * Value: Must have
 * Effort: M
 
-### Story #14
-As a user I want to be able to check my profile
+### Story #11
+As a user I want to be able to check my profile so that I can see my current information
 
-### User interface mockup
+### User interface mock-up
 ![profile](./docs/profile_mockup.png)
 
 ### Acceptance tests
 ```Gherkin
-Scenario: A user wants to view the information in their profile
-  Given There is a button that takes them to their profile page
-  When The user taps the aforementioned button
-  Then The user's profile is presented
+Scenario: The user wants to check his information
+  Given The home screen
+  When I tap "Profile"
+  Then My profile is presented
 ```
 
 ### Value and effort
 * Value: Cool to have
 * Effort: M
 
-### Story #15
-As a user I want to be able to see the comments left about a talk
+### Story #12
+As a user I want to be able to see the comments left about a talk so that I can better comprehend its quality 
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to see all comments
 ![see_comments](./docs/see_comments_mockup.png)
@@ -431,20 +389,20 @@ As a user I want to be able to see the comments left about a talk
 
 ### Acceptance tests
 ```Gherkin
-Scenario: The user is in a talk's page
-  Given A button is present that allows them to see the comments
-  When The user taps the aforementioned button
-  Then A screen with the comments is shown
+Scenario: The user wants to check out the comments
+  Given The post talk screen
+  When I tap "See all comments"
+  Then The list of comments appears
 ```
 ### Value and effort
 * Value: Cool to have
 * Effort: M
 
-### Story #16
+### Story #13
 
-As a user I want to be able to see all the talks in the app's database
+As a user I want to be able to see all the talks in the app so that I can find one that satisfies me
 
-### User interface mockup
+### User interface mock-up
 
 ##### Button to see all talks
 ![see_talks](./docs/see_all_mockup.png)
@@ -454,21 +412,42 @@ As a user I want to be able to see all the talks in the app's database
 
 ### Acceptance tests
 ```Gherkin
-Scenario: The user is in the feed and wants to see all the talks available
-  Given A button is present that allows them to see all the talks
-  When The user taps the aforementioned button
-  Then A screen with all the talks is shown
+Scenario: The user wants the see all talks
+  Given The home screen
+  When I tap "See all"
+  Then A list with all the talks appears
 ```
 ### Value and effort
 Value: Cool to have  
 Effort: M
 
-TO DO
+### Story #14
+
+As a user I want to be able to see all the posts I created so that I can remember which talks I introduced to the app
+
+### User interface mock-up
+
+#### Button to see user's created talks
+![created talks button](./docs/button_toSee_MyPosts_mockup.png)
+
+#### Screen showing all created talks
+![all created talks](./docs/myPosts_mockup.png)
+
+### Acceptance tests
+```Gherkin
+Scenario: A user wants to see the posts he created
+  Given The Profile screen
+  When I tap "posts"
+  Then a list of talks appears
+```
+### Value and effort
+Value: Cool to have  
+Effort: M
 
 
-### Domain model TODO
+### Domain model
 
-To better understand the context of the software system, it is very useful to have a simple UML class diagram with all the key concepts (names, attributes) and relationships involved of the problem domain addressed by your module.
+![domain_model](./docs/domain_model.png)
 
 ---
 
@@ -497,9 +476,11 @@ In order to provide long-term maintenance of the code and allow easy understandi
 
 
 ### Physical architecture
-The goal of this subsection is to document the high-level physical structure of the software system (machines, connections, software components installed, and their dependencies) using UML deployment diagrams or component diagrams (separate or integrated), showing the physical structure of the system.
+In our app's physical architecture only 2 entities are featured: the Firebase server where the database with all the information required by the client; and the app itself, which the user interacts with.
 
-It should describe also the technologies considered and justify the selections made. Examples of technologies relevant for openCX are, for example, frameworks for mobile applications (Flutter vs ReactNative vs ...), languages to program with microbit, and communication with things (beacons, sensors, etc.).
+![](./docs/physical_architecture.png)
+
+Regarding technologies, we used Flutter (with the Dart programming language) for the frontend and Firebase for the backend because of how much they streamline the development process.
 
 ### Prototype
 To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
@@ -516,39 +497,50 @@ While not necessary, sometimes it might be useful to explain a few aspects of th
 Use cross-links to the code repository and only embed real fragments of code when strictly needed, since they tend to become outdated very soon.
 
 ---
-## Test TODO
+## Test 
 
 There are several ways of documenting testing activities, and quality assurance in general, being the most common: a strategy, a plan, test case specifications, and test checklists.
 
 In this section it is only expected to include the following:
 * test plan describing the list of features to be tested and the testing methods and tools;
 * test case specifications to verify the functionalities, using unit tests and acceptance tests.
- 
+
 A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
 
+To test the code and the functionalities, it was used Mockito and Flutter_Gherkin.
+
+Only some features were tested. The selected ones are:
+
+- ESCREVER OS DOS UNITARIOS
+- [Edit Profile](./src/test_driver/features/profile.feature)
+
+### Edit Profile
+
+In this test, Flutter Gherkin was used as the testing tool. This tool requires the definition of several [steps](./src/test_driver/steps/test_steps.dart) in order to translate from Gherkin to Flutter. 
+
+This test verifies if the user can modify his biography.
+
+
+
+
+
+
+
 ---
-## Configuration and change management TODO
+## Configuration and change management 
 
-Configuration and change management are key activities to control change to, and maintain the integrity of, a project’s artifacts (code, models, documents).
+In this project, every time a group member developed a feature, he would first create a branch dedicated to it. He would only develop the feature inside this branch, alone or with another member of the group. When the feature was done and tested, the developer creates a pull request. This pull request needs to be approved by a minimum of two group members (excluding the developer).
 
-For the purpose of ESOF, we will use a very simple approach, just to manage feature requests, bug fixes, and improvements, using GitHub issues and following the [GitHub flow](https://guides.github.com/introduction/flow/).
+This management allows a better work flow for every collaborator and diminishes the total number of errors related to collaborating workspaces.
 
 
 ---
 
-## Project management TODO
+## Project management 
 
-Software project management is an art and science of planning and leading software projects, in which software projects are planned, implemented, monitored and controlled.
+In order to facility team communication and organization, [GitHub Projects](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/projects/1) was used to do the Project Management of this project.
 
-In the context of ESOF, we expect that each team adopts a project management tool capable of registering tasks, assign tasks to people, add estimations to tasks, monitor tasks progress, and therefore being able to track their projects.
-
-Example of tools to do this are:
-  * [Trello.com](https://trello.com)
-  * [Github Projects](https://github.com/features/project-management/com)
-  * [Pivotal Tracker](https://www.pivotaltracker.com)
-  * [Jira](https://www.atlassian.com/software/jira)
-
-We recommend to use the simplest tool that can possibly work for the team.
+The project has 5 columns: **Backlog**, **To Do**, **In Progress**, **Done** and **User Stories**. This columns are quite self-explanatory, so an explanation is not needed. It is important to note that, at the end of any iteration, the tasks that weren't finished are passed to the next one, so that the In Progress column appears empty at the end of every iteration.
 
 
 ---
