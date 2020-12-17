@@ -507,18 +507,22 @@ In this section it is only expected to include the following:
 
 A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
 
-To test the code and the functionalities, it was used Mockito and Flutter_Gherkin.
+To test the code and the functionalities, it was used *Mockito* and *Flutter_Gherkin*.
 
 Only some features were tested. The selected ones are:
 
-- ESCREVER OS DOS UNITARIOS
-- [Edit Profile](./src/test_driver/features/profile.feature)
+- [Recommended Conference Algorithm](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/blob/master/src/test/recommended_test.dart)
+- [Login screen elements](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/blob/master/src/test/login_test.dart)
+- [Edit Profile](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/blob/master/src/test_driver/features/profile.feature)
 
-### Edit Profile
+### Unit Testing
+In this test, we used *Mockito* and the default tools flutter has for tests. The tests aim the consistency of the recommended conferences algorithm and also verify the existence of some specific elements in the Login screen.
 
-In this test, Flutter Gherkin was used as the testing tool. This tool requires the definition of several [steps](./src/test_driver/steps/test_steps.dart) in order to translate from Gherkin to Flutter. 
+### BDD Tests - Edit Profile
 
-This test verifies if the user can modify his biography.
+In this test, *Flutter Gherkin* was used as the testing tool. This tool requires the definition of several [steps]([./src/test_driver/steps/test_steps.dart](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/blob/master/src/test_driver/steps/test_steps.dart)) in order to translate from Gherkin to Flutter. 
+
+This test verifies if the user can edit his name.
 
 
 

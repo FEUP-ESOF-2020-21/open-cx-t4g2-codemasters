@@ -5,8 +5,8 @@ import 'package:gherkin/gherkin.dart';
 class TapWidget extends Given1WithWorld<String, FlutterWorld> {
   @override
   Future<void> executeStep(String key) async {
-    String email = 'rui@hotmail.com';
-    String password = '123123123';
+    String email = 'codemasters@esof.pt';
+    String password = '1234567';
 
     final emailInputField = find.byValueKey("Email");
     final passwordInputField = find.byValueKey("Password");
