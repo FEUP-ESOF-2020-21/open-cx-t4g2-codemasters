@@ -26,7 +26,7 @@ class ConferenceModel {
     UserModel userCreator =
         await DatabaseService.getUser(AuthService.auth.currentUser.uid);
 
-    treatTags();      // set tags in the right format
+    treatTags(); // set tags in the right format
     if (this.img != null) await addImage();
     this.ref = await firestore.collection('Conference').add({
       'title': this.title,
@@ -43,9 +43,7 @@ class ConferenceModel {
     findSpeakersRef();
   }
 
-
-  Future updateConference (DocumentReference ref) async {
-
+  Future updateConference(DocumentReference ref) async {
     if (this.img != null) await addImage();
 
     await ref.update({
@@ -53,21 +51,21 @@ class ConferenceModel {
       'description': description,
       'img': imgURL,
       'location': place,
-      'tag': tag,
+      'tag': tag.trimRight(),
       'title': title,
     });
-    if (this.speakers != "")
-      findSpeakersRef();
+    if (this.speakers != "") findSpeakersRef();
   }
 
   /// Set tags in the right format
-  void treatTags(){
+  void treatTags() {
     List<String> auxTags = this.tag.split(",");
     this.tag = "";
-    for (var singularTag in auxTags) this.tag += "#" + singularTag + " ";
-    this.tag.trimRight();
+    for (var singularTag in auxTags) this.tag += "#" + singularTag.trim() + " ";
 
+    this.tag = this.tag.trimRight();
   }
+
   /// If speaker found return ref, otherwise create one.
   Future findSpeakersRef() async {
     var names = this.speakers.split(',');
@@ -96,5 +94,4 @@ class ConferenceModel {
     var storeImage = new CloudStorageService(this.img);
     this.imgURL = await storeImage.uploadImage();
   }
-
 }
