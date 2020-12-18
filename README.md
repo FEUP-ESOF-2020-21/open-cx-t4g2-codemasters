@@ -492,19 +492,25 @@ The following user stories were implemented:
 - ##### As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
   - Implementation: in a talk's page there's a field showing the average rating
 - ##### As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
-- Implementation: 
+  - Implementation: 
 - ##### As a user I want to be able to edit my talks post so that it can reflect the most current and up to date information about my talk 
-- Implementation: in the page of a talk submitted by the user which is currently logged in there is a button which takes the user to a page where they can edit the talk's information
+  - Implementation: in the page of a talk submitted by the user which is currently logged in there is a button which takes the user to a page where they can edit the talk's information
 - ##### As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
-- Implementation: in a user's profile screen there is a button that takes them to a page where they can edit their info
+  - Implementation: in a user's profile screen there is a button that takes them to a page where they can edit their info
 - ##### As a user I want to be able to insert a query in the search bar, get matching results and interact with them so that I can look up talks that I might be interested in
-- Im
+  - Implementation: the query inserted by the user in the search bar is compared with the tags, description and title of the talks in the database in order to filter the results
 - ##### As a user I want to be able to create a post for a talk so that other users can see the post and attend the talk 
+  - Implementation: the navigation bar at the bottom of the screen has a button which, when tapped, takes the user to a screen where they can input information about a new talk and submit it
 - ##### As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
+  - Implementation: the talks shown on the feed detect when they're tapped and this event triggers a transition to the screen which shows information about the selected talk
 - ##### As a user I want to be able to check my profile so that I can see my current information
+  - Implementation: the navigation bar at the bottom of the screen has a button which, when tapped, takes the user to a screen where their information is shown
 - ##### As a user I want to be able to see the comments left about a talk so that I can better comprehend its quality 
+  - Implementation: in a talk's post there is a button which takes the user to a screen where the comments are shown
 - ##### As a user I want to be able to see all the talks in the app so that I can find one that satisfies me
+  - Implementation: in the feed there's a button which, when tapped, takes the user to a screen where all the talks are shown
 - ##### As a user I want to be able to see all the posts I created so that I can remember which talks I introduced to the app
+  - Implementation: in a user's profile there is a button which, when tapped, takes the user to a screen where all the talks submitted by them are shown
 
 ---
 
