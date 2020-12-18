@@ -483,9 +483,28 @@ In our app's physical architecture only 2 entities are featured: the Firebase se
 Regarding technologies, we used Flutter (with the Dart programming language) for the frontend and Firebase for the backend because of how much they streamline the development process.
 
 ### Prototype
-To help on validating all the architectural, design and technological decisions made, we usually implement a vertical prototype, a thin vertical slice of the system.
+The following user stories were implemented:
 
-In this subsection please describe in more detail which, and how, user(s) story(ies) were implemented.
+- ##### As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend it in the future
+  - Implementation: in a talk's page there's a button that takes the user to a page where they can rate the talk
+- ##### As a user I want to be able to leave a comment about the talk so that I can give feedback to the speakers and organizers
+  - Implementation: in a talk's page there's a button that takes the user to a page where they can leave a comment
+- ##### As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
+  - Implementation: in a talk's page there's a field showing the average rating
+- ##### As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
+- Implementation: 
+- ##### As a user I want to be able to edit my talks post so that it can reflect the most current and up to date information about my talk 
+- Implementation: in the page of a talk submitted by the user which is currently logged in there is a button which takes the user to a page where they can edit the talk's information
+- ##### As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
+- Implementation: in a user's profile screen there is a button that takes them to a page where they can edit their info
+- ##### As a user I want to be able to insert a query in the search bar, get matching results and interact with them so that I can look up talks that I might be interested in
+- Im
+- ##### As a user I want to be able to create a post for a talk so that other users can see the post and attend the talk 
+- ##### As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
+- ##### As a user I want to be able to check my profile so that I can see my current information
+- ##### As a user I want to be able to see the comments left about a talk so that I can better comprehend its quality 
+- ##### As a user I want to be able to see all the talks in the app so that I can find one that satisfies me
+- ##### As a user I want to be able to see all the posts I created so that I can remember which talks I introduced to the app
 
 ---
 
