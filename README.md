@@ -522,7 +522,7 @@ In general, the backend was responsible for the communication between the applic
 
 ### Recommended talks 
 The more complicated feature to be approached here is the algorithm for a recommendation. 
-- First things first, a talk created by a user can't be recommended to the own creator.  
+- First things first, a talk created by a user can't be recommended to its own creator.  
 - To a conference be shown it can't have already happened.  
 - The minimum rate of a conference in the recommended section is 4.  
 - If the user's rating to a conference with a certain tag is >=4 in at least one conference with this tag, then it will be considered a favorite.  
