@@ -318,7 +318,7 @@ Scenario: Search for a talk with a query
 
 
 ### Story #9
-As a user I want to be able to create a post for a talk so that other users can see post and attend the talk 
+As a user I want to be able to create a post for a talk so that other users can see the post and attend the talk 
 
 ### User interface mock-up
 ![create_conference](./docs/create_conference_mockup.png)
