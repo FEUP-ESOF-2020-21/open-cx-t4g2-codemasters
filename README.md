@@ -125,7 +125,7 @@ So, what are you waiting for? Sign up today!
 ## User Stories
 
 ### Story #1
-As a user I want to be able to rate a talk so that other users can use my rating to decide if they want to attend it in the future
+As a user I want to be able to rate a talk so that other users can evaluate the talk's quality
 
 ### User interface mock-up
 
@@ -508,12 +508,18 @@ The following user stories were implemented:
 
 ---
 
-## Implementation TODO
-Regular product increments are a good practice of product management. 
+## Implementation 
+The design of our app is straightforward. By looking at the code it's easy to understand its structure and how it was implemented.  
+However, some parts of the backend will be explained, since it can be a little hard to understand the overview behind it.  
+### General backend 
+In general, the backend was responsible for the communication between the application and the database. Forms and display of stored information are the main operations executed for the backend.  
 
-While not necessary, sometimes it might be useful to explain a few aspects of the code that have the greatest potential to confuse software engineers about how it works. Since the code should speak by itself, try to keep this section as short and simple as possible.
-
-Use cross-links to the code repository and only embed real fragments of code when strictly needed, since they tend to become outdated very soon.
+### Recommended talks 
+The more complicated feature to be approached here is the algorithm for a recommendation. 
+- First things first, a talk created by a user can't be recommended to the own creator.  
+- To a conference be shown it can't have already happened.  
+- The minimum rate of a conference in the recommended section is 4.  
+- If the user's rating to a conference with a certain tag is >=4 in at least one conference with this tag, then it will be considered a favorite.  
 
 ---
 ## Test 
