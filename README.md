@@ -272,29 +272,7 @@ Scenario: Edit the user profile
 * Value: Could have
 * Effort: M
 
-
 ### Story #7
-As a user I want to be able to sort the talks search results based on several criteria so that I can see first the talks that are more interesting to me
-
-### User interface mock-up
-![edit_profile](./docs/search.PNG)
-
-### Acceptance tests
-```Gherkin
-Scenario: Search for a talk by criteria
-  Given The home screen
-  When I tap the "Search Bar" icon
-  And I write "tech" in "Search Bar"
-  And tap the "Search" button
-  Then talks with the tag "tech" appears 
-```
-
-### Value and effort
-* Value: Cool to have
-* Effort: M
-
-
-### Story #8
 As a user I want to be able to insert a query in the search bar, get matching results and interact with them so that I can look up talks that I might be interested in
 
 ### User interface mock-up
@@ -317,7 +295,7 @@ Scenario: Search for a talk with a query
 * Effort: XL
 
 
-### Story #9
+### Story #8
 As a user I want to be able to create a post for a talk so that other users can see the post and attend the talk 
 
 ### User interface mock-up
@@ -337,7 +315,7 @@ Scenario: A user wants to create a post
 * Effort: L
 
 
-### Story #10
+### Story #9
 As a user I want to be able to interact with the feed results (pick one and go to the respective page) so that I can obtain more information about the talk I am interested in 
 
 ### User interface mock-up 
@@ -359,7 +337,7 @@ Scenario: Interacting with feed
 * Value: Must have
 * Effort: M
 
-### Story #11
+### Story #10
 As a user I want to be able to check my profile so that I can see my current information
 
 ### User interface mock-up
@@ -377,7 +355,7 @@ Scenario: The user wants to check his information
 * Value: Cool to have
 * Effort: M
 
-### Story #12
+### Story #11
 As a user I want to be able to see the comments left about a talk so that I can better comprehend its quality 
 
 ### User interface mock-up
@@ -398,7 +376,7 @@ Scenario: The user wants to check out the comments
 * Value: Cool to have
 * Effort: M
 
-### Story #13
+### Story #12
 
 As a user I want to be able to see all the talks in the app so that I can find one that satisfies me
 
@@ -421,7 +399,7 @@ Scenario: The user wants the see all talks
 Value: Cool to have  
 Effort: M
 
-### Story #14
+### Story #13
 
 As a user I want to be able to see all the posts I created so that I can remember which talks I introduced to the app
 
@@ -492,7 +470,7 @@ The following user stories were implemented:
 - ##### As a user I want to be able to see the current rating of a talk so that I can make the decision if I want to attend it
   - Implementation: in a talk's page there's a field showing the average rating
 - ##### As a user I want to be able to edit the given rating to a talk so that I can correct possibles errors I made in the previous rating
-  - Implementation: 
+  - Implementation: when a user leaves a rating by performing the steps mentioned in the the first story, it overrided any previously given rating to that talk
 - ##### As a user I want to be able to edit my talks post so that it can reflect the most current and up to date information about my talk 
   - Implementation: in the page of a talk submitted by the user which is currently logged in there is a button which takes the user to a page where they can edit the talk's information
 - ##### As a user I want to be able to edit my profile so that I can update my current information or correct errors in it
