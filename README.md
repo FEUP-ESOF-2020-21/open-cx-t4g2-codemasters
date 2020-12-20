@@ -429,17 +429,10 @@ Effort: M
 
 ---
 
-## Architecture and Design TODO
-The architecture of a software system encompasses the set of key decisions about its overall organization. 
+## Architecture and Design
+In this section we'll describe the logical and physical architectures of our project.
 
-A well written architecture document is brief but reduces the amount of time it takes new programmers to a project to understand the code to feel able to make modifications and enhancements.
-
-To document the architecture requires describing the decomposition of the system in their parts (high-level components) and the key behaviors and collaborations between them. 
-
-In this section you should start by briefly describing the overall components of the project and their interrelations. You should also describe how you solved typical problems you may have encountered, pointing to well-known architectural and design patterns, if applicable.
-
-### Logical architecture
-The purpose of this subsection is to document the high-level logical structure of the code, using a UML diagram with logical packages, without the worry of allocating to components, processes or machines.  
+### Logical architecture 
 In order to provide long-term maintenance of the code and allow easy understanding about it, our project was diveded in six sections: 
 - `auth`: Tasks resposible for the user athentication in the app. The login and signup backend are done by this module.  
 - `database`: Communication between the firestore database and some models of the app, so as the information from the cloud can be retrieved and also uploaded.  
@@ -508,15 +501,7 @@ The more complicated feature to be approached here is the algorithm for a recomm
 ---
 ## Test 
 
-There are several ways of documenting testing activities, and quality assurance in general, being the most common: a strategy, a plan, test case specifications, and test checklists.
-
-In this section it is only expected to include the following:
-* test plan describing the list of features to be tested and the testing methods and tools;
-* test case specifications to verify the functionalities, using unit tests and acceptance tests.
-
-A good practice is to simplify this, avoiding repetitions, and automating the testing actions as much as possible.
-
-To test the code and the functionalities, it was used *Mockito* and *Flutter_Gherkin*.
+To test the code and the functionalities, we used *Mockito* and *Flutter_Gherkin*.
 
 Only some features were tested. The selected ones are:
 
@@ -533,12 +518,6 @@ In this test, *Flutter Gherkin* was used as the testing tool. This tool requires
 
 This test verifies if the user can edit his name.
 
-
-
-
-
-
-
 ---
 ## Configuration and change management 
 
@@ -551,13 +530,13 @@ This management allows a better work flow for every collaborator and diminishes 
 
 ## Project management 
 
-In order to facility team communication and organization, [GitHub Projects](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/projects/1) was used to do the Project Management of this project.
+In order to facilitate team communication and organization, [GitHub Projects](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/projects/1) was used to do the Project Management of this project.
 
-The project has 5 columns: **Backlog**, **To Do**, **In Progress**, **Done** and **User Stories**. This columns are quite self-explanatory, so an explanation is not needed. It is important to note that, at the end of any iteration, the tasks that weren't finished are passed to the next one, so that the In Progress column appears empty at the end of every iteration.
+The project has 5 columns: **Backlog**, **To Do**, **In Progress**, **Done** and **User Stories**. These columns are quite self-explanatory. It is important to note that, at the end of any iteration, the tasks that weren't finished are passed to the next one, so that the In Progress column appears empty at the end of every iteration.
 
 
 ---
 
-## Evolution - contributions to open-cx TODO
+## Evolution - contributions to open-cx
 
 Describe your contribution to open-cx (iteration 5), linking to the appropriate pull requests, issues, documentation.
