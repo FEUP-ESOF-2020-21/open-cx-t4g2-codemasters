@@ -533,10 +533,3 @@ This management allows a better work flow for every collaborator and diminishes 
 In order to facilitate team communication and organization, [GitHub Projects](https://github.com/FEUP-ESOF-2020-21/open-cx-t4g2-codemasters/projects/1) was used to do the Project Management of this project.
 
 The project has 5 columns: **Backlog**, **To Do**, **In Progress**, **Done** and **User Stories**. These columns are quite self-explanatory. It is important to note that, at the end of any iteration, the tasks that weren't finished are passed to the next one, so that the In Progress column appears empty at the end of every iteration.
-
-
----
-
-## Evolution - contributions to open-cx
-
-Describe your contribution to open-cx (iteration 5), linking to the appropriate pull requests, issues, documentation.
